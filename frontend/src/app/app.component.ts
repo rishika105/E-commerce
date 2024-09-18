@@ -9,5 +9,10 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
+handleClick() {
+throw new Error('Method not implemented.');
+}
+
   title = 'my-project';
 }
