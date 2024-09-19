@@ -11,5 +11,10 @@ import { FooterComponent } from './footer/footer.component';
 })
 
 export class AppComponent {
+
+handleClick() {
+throw new Error('Method not implemented.');
+}
+
   title = 'my-project';
 }
