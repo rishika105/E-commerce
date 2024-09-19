@@ -1,62 +1,36 @@
-<div class="flex items-center justify-center h-screen bg-gray-100">
-  <div class="text-center p-6 bg-white shadow-lg rounded-lg">
-    <h1 class="text-4xl font-bold text-blue-600">angular version 18</h1>
-    <p class="mt-2 text-lg text-gray-700">
-      This is a simple web page styled with Tailwind CSS.
-    </p>
 
-    <h2 class="mt-4 text-xl text-gray-600">
-      Explore the features of this application
-    </h2>
+<nav class="bg-gray-50 border-b border-gray-200">
+  <div class="container mx-auto flex justify-between items-center py-4">
+      <!-- Logo -->
+      <a href="#" class="flex items-center text-red-600 text-2xl font-bold">
+          <span class="text-black">Shop</span><span class="text-red-600">Nest</span>
+      </a>
 
-    <div class="mt-6 space-x-4">
-      <!-- First button -->
-      <button
-        class="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300 transition-all duration-300 inline-flex items-center"
-        (click)="handleClick()"
-      >
-        <svg
-          class="w-5 h-5 mr-2"
-          fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"
-          ></path>
-          <path
-            d="M12 7a1 1 0 0 1 1 1v4a1 1 0 0 1-.293.707l-2 2a1 1 0 1 1-1.414-1.414L11 11.586V8a1 1 0 0 1 1-1z"
-          ></path>
-        </svg>
-        Click Me
-      </button>
+      <!-- Menu Links -->
+      <div class="hidden md:flex space-x-8 mt-2">
+          <a href="#" class="text-black hover:text-red-500" [routerLink] = "['/']">Home</a>
+          <a href="#" class="text-black hover:text-red-500" [routerLink]="['/about']"  >About Us</a>
+          <a href="#" class="text-black hover:text-red-500" [routerLink]="['/contact']" >Contact Us</a>
+          <a href="#" class="text-black hover:text-red-500" [routerLink]="['/register']" >Signup</a>
+          <a href="#" class="text-white mt-[-7px] pl-4 pr-4 pt-2 pb-2 rounded-md bg-red-500" [routerLink]="['/login']" >Login</a>
+      </div>
 
-      <!-- Second button -->
-      <button
-        class="px-6 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-all duration-300 inline-flex items-center"
-      >
-        <svg
-          class="w-5 h-5 mr-2"
-          fill="currentColor"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm-1 14a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0zm4-4a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0z"
-          ></path>
-        </svg>
-        Learn More
-      </button>
-    </div>
-
-    <div class="text-center">
-      <h1 class="text-4xl font-bold text-blue-600">
-        Welcome to My Angular App
-      </h1>
-      <p class="mt-4 text-lg text-gray-700">
-        This is a simple web page styled with Tailwind CSS.
-      </p>
-      <h2 class="text-4xl font-bold text-blue-600">Here to Help you</h2>
-    </div>
-  </div>
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden">
+          <button class="text-gray-800 hover:text-gray-600 focus:outline-none">
+              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+              </svg>
+          </button>
+      </div>
 </div>
+
+</nav>
+
+<!-- This is where the routed component (Login, Signup, etc.) will be displayed -->
+<router-outlet></router-outlet>
+
+<!-- common for all -->
+<app-footer></app-footer>
+
+
