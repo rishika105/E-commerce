@@ -1,1 +1,362 @@
-<h1>Home page</h1>
+<div class="container mx-auto p-4">
+  
+  <!-- Main Layout with Sidebar and Image Banner -->
+  <div class="flex mt-4">
+    
+    <!-- Sidebar in White Box for Women's and Men's Fashion -->
+    <div class="w-1/4 bg-white p-4 shadow-lg">
+      <ul class="space-y-2 text-black-600">
+        <li><a href="#" class="hover:text-black font-semibold">Women's Fashion</a></li>
+        <li><a href="#" class="hover:text-black font-semibold">Men's Fashion</a></li>
+        <li><a href="#" class="hover:text-black">Electronics</a></li>
+        <li><a href="#" class="hover:text-black">Home & Lifestyle</a></li>
+        <li><a href="#" class="hover:text-black">Medicine</a></li>
+        <li><a href="#" class="hover:text-black">Sports & Outdoor</a></li>
+        <li><a href="#" class="hover:text-black">Baby's & Toys</a></li>
+        <li><a href="#" class="hover:text-black">Groceries & Pets</a></li>
+        <li><a href="#" class="hover:text-black">Health & Beauty</a></li>
+      </ul>
+    </div>
+
+    <!-- Hero Image Section in Rectangular Box -->
+    <div class="w-3/4 pl-4">
+      <div class="bg-gray-100 rounded-lg overflow-hidden relative shadow-lg p-4">
+        <img src="path_to_iphone_image" alt="iPhone 14 Series" class="w-full object-cover">
+        <div class="absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center">
+          <div class="text-white text-center">
+            <h2 class="text-2xl font-semibold">Up to 10% off Voucher</h2>
+            <button class="bg-red-500 text-white px-4 py-2 mt-4">Shop Now</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Flash Sales Section -->
+  <section class="mt-10">
+    <div class="text-start">
+      <h3 class="text-2xl font-bold">Flash Sales</h3>
+      <div class="flex justify-start space-x-4 mt-2">
+        <div>
+          <span class="text-xl font-semibold">03 :</span>
+          <p class="text-black-500">Days</p>
+        </div>
+        <div>
+          <span class="text-xl font-semibold">23 :</span>
+          <p class="text-black-500">Hours</p>
+        </div>
+        <div>
+          <span class="text-xl font-semibold">19 :</span>
+          <p class="text-black-500">Minutes</p>
+        </div>
+        <div>
+          <span class="text-xl font-semibold">56 </span>
+          <p class="text-black-500">Seconds</p>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+
+    <!-- Flash Sales Products -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-6">
+      <!-- Product Box 1 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_gamepad_image" alt="Gamepad" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">HAVIT HV-G92 Gamepad</p>
+        <p class="text-red-500 line-through">$160</p>
+        <p class="text-black">$120</p>
+      </div>
+
+      <!-- Product Box 2 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_keyboard_image" alt="Keyboard" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">AK-900 Wired Keyboard</p>
+        <p class="text-red-500 line-through">$960</p>
+        <p class="text-black">$560</p>
+      </div>
+
+      <!-- Product Box 3 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_monitor_image" alt="Monitor" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">IPS LCD Gaming Monitor</p>
+        <p class="text-red-500 line-through">$400</p>
+        <p class="text-black">$370</p>
+      </div>
+
+      <!-- Product Box 4 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_chair_image" alt="Chair" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">S-Series Comfort Chair</p>
+        <p class="text-red-500 line-through">$400</p>
+        <p class="text-black">$375</p>
+      </div>
+
+      <!-- Product Box 5 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_chair_image" alt="Chair" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">S-Series Comfort Chair</p>
+        <p class="text-red-500 line-through">$400</p>
+        <p class="text-black">$375</p>
+      </div>
+    </div>
+
+<!-- Space between product grid and the button -->
+<div class="text-center mt-8">
+  <button class="bg-red-500 text-white px-4 py-2">View All Products</button>
+</div>
+
+    <!-- Line Separator -->
+    <div class="border-t-2 border-black-300 mt-8"></div>
+
+  <!-- Browse By Category Section without Arrow and Square Boxes -->
+<section class="mt-10">
+  <h3 class="text-2xl font-bold mb-6">Browse By Category</h3>
+
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+    <!-- Category 1: Phones -->
+    <div class="text-center">
+      <div class="bg-gray-200 p-4 rounded flex justify-center items-center w-full h-32">
+        <ng-icon name="heroDevicePhoneMobile" class="w-40 h-40"></ng-icon>
+      </div>
+      <p class="mt-2">Phones</p>
+    </div>
+
+    <!-- Category 2: Computers -->
+    <div class="text-center">
+      <div class="bg-gray-200 p-4 rounded flex justify-center items-center w-full h-32">
+        <ng-icon name="heroComputerDesktop" class="w-10 h-10"></ng-icon>
+      </div>
+      <p class="mt-2">Computers</p>
+    </div>
+
+    <!-- Category 3: SmartWatch -->
+    <div class="text-center">
+      <div class="bg-gray-200 p-4 rounded flex justify-center items-center w-full h-32">
+        <ng-icon name="heroSwatch" class="w-10 h-10"></ng-icon>
+      </div>
+      <p class="mt-2">SmartWatch</p>
+    </div>
+
+    <!-- Category 4: Camera -->
+    <div class="text-center">
+      <div class="bg-gray-200 p-4 rounded flex justify-center items-center w-full h-32">
+        <ng-icon name="heroCamera" class="w-10 h-10"></ng-icon>
+      </div>
+      <p class="mt-2">Camera</p>
+    </div>
+
+    <!-- Category 6: Gaming -->
+    <div class="text-center">
+      <div class="bg-gray-200 p-4 rounded flex justify-center items-center w-full h-32">
+        <ng-icon name="heroDeviceTablet" class="w-10 h-10"></ng-icon>
+      </div>
+      <p class="mt-2">Gaming</p>
+    </div>
+  </div>
+</section>
+
+<!-- Line Separator -->
+<div class="border-t-2 border-black-300 mt-8"></div>
+
+ <!-- Best Selling Products Section -->
+ <section class="mt-10">
+  <div class="flex justify-between items-center">
+    <h3 class="text-2xl font-bold">Best Selling Products</h3>
+    <button class="bg-red-500 text-white px-4 py-2">View All</button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+    <!-- Product Box 1 -->
+    <div class="border p-4 text-center">
+      <img src="path_to_north_coat_image" alt="The North Coat" class="w-full object-cover h-32 mx-auto">
+      <p class="text-lg font-bold mt-2">The North Coat</p>
+      <p class="text-red-500 line-through">$360</p>
+      <p class="text-black">$260</p>
+    </div> 
+
+    <!-- Product Box 1 -->
+    <div class="border p-4 text-center">
+      <img src="path_to_Gucci_duffle_image" alt="Gucci duffle bag" class="w-full object-cover h-32 mx-auto">
+      <p class="text-lg font-bold mt-2">Gucci duffle bag</p>
+      <p class="text-red-500 line-through">$360</p>
+      <p class="text-black">$260</p>
+    </div> 
+
+    <!-- Product Box 1 -->
+    <div class="border p-4 text-center">
+      <img src="path_to_north_coat_image" alt="RGB Liquid CPU Cooler" class="w-full object-cover h-32 mx-auto">
+      <p class="text-lg font-bold mt-2">RGB Liquid CPU Cooler</p>
+      <p class="text-red-500 line-through">$360</p>
+      <p class="text-black">$260</p>
+    </div> 
+
+    <!-- Product Box 1 -->
+    <div class="border p-4 text-center">
+      <img src="path_to_north_coat_image" alt="Small BookSelf" class="w-full object-cover h-32 mx-auto">
+      <p class="text-lg font-bold mt-2">Small BookSelf</p>
+      <p class="text-red-500 line-through">$360</p>
+      <p class="text-black">$260</p>
+    </div> 
+
+    <!-- Enhance Your Music Experience Section -->
+<section class="mt-10 bg-gray-100 p-6 text-center">
+  <h3 class="text-2xl font-bold">Enhance Your Music Experience</h3>
+  <p class="mt-2">23 Hours 05 Days 59 Minutes 35 Seconds</p>
+  <img src="path_to_jbl_image" alt="JBL Speaker" class="mx-auto mt-4">
+</section>
+</div>
+
+<div class="container mx-auto p-4">
+  <!-- Our Products Section -->
+  <section class="mt-10">
+    <div class="flex justify-between items-center">
+      <h3 class="text-2xl font-bold">Explore Our Products</h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mt-6">
+      <!-- Product 1 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_dog_food_image" alt="Breed Dry Dog Food" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">Breed Dry Dog Food</p>
+        <p class="text-red-500">$100</p>
+        <p class="text-gray-500">(35 reviews)</p>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_camera_image" alt="CANON EOS DSLR Camera" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">CANON EOS DSLR Camera</p>
+        <p class="text-red-500">$360</p>
+        <p class="text-gray-500">(95 reviews)</p>
+        <button class="bg-black text-white px-4 py-2 mt-2">Add To Cart</button>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_laptop_image" alt="ASUS FHD Gaming Laptop" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">ASUS FHD Gaming Laptop</p>
+        <p class="text-red-500">$700</p>
+        <p class="text-gray-500">(325 reviews)</p>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_curology_product_image" alt="Curology Product Set" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">Curology Product Set</p>
+        <p class="text-red-500">$500</p>
+        <p class="text-gray-500">(145 reviews)</p>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_kids_car_image" alt="Kids Electric Car" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">Kids Electric Car</p>
+        <p class="text-red-500">$960</p>
+        <p class="text-gray-500">(85 reviews)</p>
+      </div>
+
+      <!-- Product 6 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_soccer_cleats_image" alt="Jr. Zoom Soccer Cleats" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">Jr. Zoom Soccer Cleats</p>
+        <p class="text-red-500">$1160</p>
+        <p class="text-gray-500">(35 reviews)</p>
+      </div>
+
+      <!-- Product 7 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_gamepad_image" alt="GP11 Shooter USB Gamepad" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">GP11 Shooter USB Gamepad</p>
+        <p class="text-red-500">$660</p>
+        <p class="text-gray-500">(55 reviews)</p>
+      </div>
+
+      <!-- Product 8 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_jacket_image" alt="Quilted Satin Jacket" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">Quilted Satin Jacket</p>
+        <p class="text-red-500">$660</p>
+        <p class="text-gray-500">(55 reviews)</p>
+      </div>
+    </div>
+
+   <!-- Space between product grid and the button -->
+<div class="text-center mt-8">
+  <button class="bg-red-500 text-white px-4 py-2">View All Products</button>
+</div>
+
+  <!-- New Arrival Section -->
+  <section class="mt-10">
+    <div class="flex justify-between items-center">
+      <h3 class="text-2xl font-bold">New Arrival</h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+      <!-- New Arrival Product 1 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_ps5_image" alt="PlayStation 5" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">PlayStation 5</p>
+        <p class="text-black-500 font-semibold">Black and White version of the PS5 coming out on sale.</p>
+        <button class="bg-black text-white px-4 py-2 mt-2">Shop Now</button>
+      </div>
+
+      <!-- New Arrival Product 2 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_womens_collection_image" alt="Women's Collections" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">Women's Collections</p>
+        <p class="text-black-500 font-semibold">Featured woman collections that give you another vibe.</p>
+        <button class="bg-black text-white px-4 py-2 mt-2">Shop Now</button>
+      </div>
+
+      <!-- New Arrival Product 3 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_speakers_image" alt="Speakers" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">Speakers</p>
+        <p class="text-black-500 font-semibold">Amazon wireless speakers</p>
+        <button class="bg-black text-white px-4 py-2 mt-2">Shop Now</button>
+      </div>
+
+      <!-- New Arrival Product 4 -->
+      <div class="border p-4 text-center">
+        <img src="path_to_perfume_image" alt="Perfume" class="w-full object-cover h-32 mx-auto">
+        <p class="text-lg font-bold mt-2">Perfume</p>
+        <p class="text-black-500 font-semibold">GUCCI INTENSEO EDP</p>
+        <button class="bg-black text-white px-4 py-2 mt-2">Shop Now</button>
+      </div>
+    </div>
+  </section>
+
+<!-- Services Section (Without Boxes) -->
+<section class="py-12 bg-white">
+  <div class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+      <!-- Free & Fast Delivery -->
+      <div>
+          <div class="w-16 h-16 mx-auto bg-gray-200 text-black rounded-full flex items-center justify-center mb-4">
+              <ng-icon name="heroTruck" class="w-10 h-10 text-black-500"></ng-icon>
+          </div>
+          <h3 class="text-2xl font-bold text-black mb-4">FREE AND FAST DELIVERY</h3> <!-- Added mb-4 here -->
+          <p class="text-black-600 font-semibold">We ensure fast and free delivery for all your purchases.</p>
+      </div>
+      
+      <!-- 24/7 Customer Service -->
+      <div>
+          <div class="w-16 h-16 mx-auto bg-gray-200 text-black rounded-full flex items-center justify-center mb-4">
+              <ng-icon name="heroPhone" class="w-10 h-10"></ng-icon>
+          </div>
+          <h3 class="text-2xl font-bold text-black mb-4">24/7 CUSTOMER SERVICE</h3> <!-- Added mb-4 here -->
+          <p class="text-black-600 font-semibold">Our customer service team is here to help you anytime.</p>
+      </div>
+
+      <!-- Money Back Guarantee -->
+      <div>
+          <div class="w-16 h-16 mx-auto bg-gray-200 text-black rounded-full flex items-center justify-center mb-4">
+              <ng-icon name="heroCheckBadge" class="w-10 h-10"></ng-icon>
+          </div>
+          <h3 class="text-2xl font-bold text-black mb-4">MONEY BACK GUARANTEE</h3> <!-- Added mb-4 here -->
+          <p class="text-black-600 font-semibold">We offer a money-back guarantee for any valid returns.</p>
+      </div>
+  </div>
+</section>
+
