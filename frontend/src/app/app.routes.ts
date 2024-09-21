@@ -5,6 +5,7 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
+import { CategoryComponent } from './category/category.component';
 
 export const routes: Routes = [
   {
@@ -37,5 +38,9 @@ export const routes: Routes = [
   {
     path: "**",
     component: ErrorComponent
+  },
+  {
+    path: "category",
+    component: CategoryComponent
   }
 ];
