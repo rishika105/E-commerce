@@ -7,6 +7,7 @@ import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
 import { CategoryComponent } from './category/category.component';
 
+
 export const routes: Routes = [
   {
     path: "login",
@@ -28,19 +29,22 @@ export const routes: Routes = [
     path: "home",
     component: HomeComponent
   },
-  // Default route that redirects to 'home'
+
+
   {
-    path: "",
-    redirectTo: "home",
-    pathMatch: "full"
+    path: 'category/:name', component: CategoryComponent
   },
-  // Wildcard route for 404 error page
-  {
-    path: "**",
-    component: ErrorComponent
-  },
-  {
-    path: "category",
-    component: CategoryComponent
-  }
+  { path: '', redirectTo: '/category/smartphones', pathMatch: 'full' },  // Default route to smartphones
+  { path: '**', redirectTo: '/category/smartphones' } , // Fallback route
+     // Default route that redirects to 'home'
+     {
+      path: "",
+      redirectTo: "home",
+      pathMatch: "full"
+    },
+    // Wildcard route for 404 error page
+    {
+      path: "**",
+      component: ErrorComponent
+    },
 ];

@@ -1,21 +1,44 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { ProductService } from '../services/product.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styles: ``
+  styles: ``,
+  standalone:true,
+  imports: [CommonModule]
 })
 export class CategoryComponent implements OnInit {
-  categoryName: string = 'Smartphones';
-  products: any[] = []; // Use any[] to hold products
+  products: any[] = [];
+  categoryName: string = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService
+  ) {}
 
-  ngOnInit() {
-    // Fetch the JSON data
-    this.http.get<{ products: any[] }>('../../assets/data/data.json').subscribe((data) => {
-      this.products = data.products; // Assign the products array
+  ngOnInit(): void {
+    this.route.params.subscribe((params) => {
+      this.categoryName = params['name'];
+      this.fetchProductsByCategory();
     });
   }
+
+  fetchProductsByCategory(): void {
+    this.productService.getProductsByCategory(this.categoryName).subscribe(
+      (products) => {
+        this.products = products;
+        // console.log('Fetched products:', this.products);
+      },
+      (error) => {
+        console.error('Error fetching products:', error);
+      }
+    );
+  }
+
+
+
 }
