@@ -5,7 +5,10 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
-import { CategoryComponent } from './category/category.component';
+
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductDetailsComponent } from './product-details/product-details.component.spec';
+import { AuthGuard } from './auth.guard';
 
 
 export const routes: Routes = [
@@ -31,11 +34,13 @@ export const routes: Routes = [
   },
 
 
+//private routes only can access
   {
-    path: 'category/:name', component: CategoryComponent
+    path: 'product',
+    canActivate: [AuthGuard],
+    component: ProductDetailsComponent
   },
-  { path: '', redirectTo: '/category/smartphones', pathMatch: 'full' },  // Default route to smartphones
-  { path: '**', redirectTo: '/category/smartphones' } , // Fallback route
+
      // Default route that redirects to 'home'
      {
       path: "",
