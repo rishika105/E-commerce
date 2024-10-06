@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { setLoading, setToken, clearToken, setOtpSent } from '../actions/auth.action';  // Import your actions
+import { setLoading, setToken, clearToken, setOtpSent } from '../actions/auth.action';
 
 export interface AuthState {
   token: string | null;
@@ -7,13 +7,16 @@ export interface AuthState {
   otpSent: boolean;
 }
 
+function isBrowser(): boolean {
+  return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
+}
+
 const initialState: AuthState = {
-  token: localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')!) : null,
+  token: isBrowser() && localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')!) : null,
   loading: false,
   otpSent: false,
 };
 
-// Use the imported actions in the reducer
 export const authReducer = createReducer(
   initialState,
   on(setLoading, (state, { loading }) => ({
@@ -21,14 +24,18 @@ export const authReducer = createReducer(
     loading,
   })),
   on(setToken, (state, { token }) => {
-    localStorage.setItem('token', JSON.stringify(token));
+    if (isBrowser()) {
+      localStorage.setItem('token', JSON.stringify(token));
+    }
     return {
       ...state,
       token,
     };
   }),
   on(clearToken, (state) => {
-    localStorage.removeItem('token');
+    if (isBrowser()) {
+      localStorage.removeItem('token');
+    }
     return {
       ...state,
       token: null,

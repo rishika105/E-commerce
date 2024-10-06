@@ -17,8 +17,8 @@ export class AuthService {
   }
 
   // Step 2: Register user after verifying OTP
-  registerUser(userData: { name: string; email: string; password: string; confirmPassword: string; otp: string; role: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth/register`, userData);
+  register( name: string, email: string, password: string, confirmPassword: string, role: string, otp: string ): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/register`, {name, email, password, confirmPassword, role, otp});
   }
 
   // Step 3: Login User and get JWT Token

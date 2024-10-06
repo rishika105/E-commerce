@@ -6,8 +6,6 @@ import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
 
-import { ProductListComponent } from './product-list/product-list.component';
-import { ProductDetailsComponent } from './product-details/product-details.component.spec';
 import { AuthGuard } from './auth.guard';
 
 
@@ -34,12 +32,12 @@ export const routes: Routes = [
   },
 
 
-//private routes only can access
-  {
-    path: 'product',
-    canActivate: [AuthGuard],
-    component: ProductDetailsComponent
-  },
+// //private routes only can access
+//   {
+//     path: 'product',
+//     canActivate: [AuthGuard],
+//     component: ProductDetailsComponent
+//   },
 
      // Default route that redirects to 'home'
      {

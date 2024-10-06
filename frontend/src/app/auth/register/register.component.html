@@ -1,60 +1,88 @@
-<body class="bg-gray-100">
-  <!-- Container for the register form -->
-  <div class="min-h-screen flex flex-col items-center justify-center mb-10">
-    <div class="bg-white shadow-md rounded-lg overflow-hidden flex w-full max-w-4xl">
-      <!-- Left Side Image Section -->
-      <div class="hidden md:block md:w-1/2 bg-red-100">
-        <img src="../../../assets/images/register.svg" alt="ShopNest Image" class="h-full w-full object-cover">
+<div class="signup-container">
+  <div class="bg-slate-500 p-4 rounded-md mb-5">
+    <h2 class="text-2xl font-semibold mb-4 text-white">Sign Up</h2>
+    <p class="mb-6 text-white">Fill in the details to register</p>
+  </div>
+
+  <form [formGroup]="signupForm" (ngSubmit)="onSubmitSignup()">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Name -->
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+        <input id="name" type="text" placeholder="Name" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" formControlName="name">
+        <div *ngIf="signupForm.get('name')?.touched && signupForm.get('name')?.invalid">
+          <small class="text-red-500" *ngIf="signupForm.get('name')?.hasError('required')">Name is required</small>
+        </div>
       </div>
 
-      <!-- Right Side Register Form -->
-      <div class="w-full md:w-1/2 p-8">
-        <!-- Logo -->
-        <div class="flex justify-center mb-6">
-          <a href="#" class="flex items-center text-2xl font-bold text-red-500">
-            <!-- Add your logo text here -->
-          </a>
+      <!-- Email -->
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+        <input id="email" type="email" placeholder="Email" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" formControlName="email">
+        <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid">
+          <small class="text-red-500" *ngIf="signupForm.get('email')?.hasError('required')">Email is required</small>
+          <small class="text-red-500" *ngIf="signupForm.get('email')?.hasError('email')">Invalid email</small>
         </div>
+      </div>
 
-        <!-- Register Form -->
-        <h2 class="text-2xl font-bold text-center text-gray-700 mb-4">Create an Account</h2>
-        <form action="#" class="space-y-6">
-          <!-- Name Field -->
-          <div>
-            <label for="name" class="block text-sm text-gray-700">Full Name</label>
-            <input type="text" id="name" name="name" required
-                   class="w-full px-4 py-2 mt-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400">
-          </div>
-          <!-- Email Field -->
-          <div>
-            <label for="email" class="block text-sm text-gray-700">Email Address</label>
-            <input type="email" id="email" name="email" required
-                   class="w-full px-4 py-2 mt-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400">
-          </div>
-          <!-- Password Field -->
-          <div>
-            <label for="password" class="block text-sm text-gray-700">Password</label>
-            <input type="password" id="password" name="password" required
-                   class="w-full px-4 py-2 mt-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400">
-          </div>
-          <!-- Confirm Password Field -->
-          <div>
-            <label for="confirm-password" class="block text-sm text-gray-700">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm-password" required
-                   class="w-full px-4 py-2 mt-2 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-red-400">
-          </div>
-          <!-- Submit Button -->
-          <div>
-            <button type="submit"
-                    class="w-full px-4 py-2 bg-red-500 text-white font-semibold rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-offset-2">
-              Register
-            </button>
-          </div>
-        </form>
+      <!-- Password -->
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <input id="password" type="password" placeholder="Password" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" formControlName="password">
+        <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid">
+          <small class="text-red-500" *ngIf="signupForm.get('password')?.hasError('required')">Password is required</small>
+        </div>
+      </div>
 
-        <!-- Footer Links -->
-        <p class="text-center text-gray-600 mt-6">Already have an account? <a href="#" class="text-red-500 hover:underline">Login</a></p>
+      <!-- Confirm Password -->
+      <div>
+        <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+        <input id="confirmPassword" type="password" placeholder="Confirm Password" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" formControlName="confirmPassword">
+        <div *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.invalid">
+          <small class="text-red-500" *ngIf="signupForm.get('confirmPassword')?.hasError('required')">Confirmation is required</small>
+          <small class="text-red-500" *ngIf="signupForm.hasError('mismatch')">Passwords do not match</small>
+        </div>
+      </div>
+
+      <!-- Role -->
+      <div>
+        <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+        <select id="role" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" formControlName="role">
+          <option value="">Select Role</option>
+          <option *ngFor="let role of roles" [value]="role.value">{{ role.label }}</option>
+        </select>
+        <div *ngIf="signupForm.get('role')?.touched && signupForm.get('role')?.invalid">
+          <small class="text-red-500" *ngIf="signupForm.get('role')?.hasError('required')">Role is required</small>
+        </div>
       </div>
     </div>
+
+
+    <!-- Buttons -->
+    <div class="mt-6 flex space-x-4">
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" [disabled]="signupForm.invalid">Send OTP</button>
+    </div>
+  </form>
+
+  <!-- OTP Form -->
+  <div *ngIf="otpSent" class="mt-8">
+    <h2 class="text-2xl font-semibold mb-4">Enter OTP</h2>
+    <form [formGroup]="otpForm" (ngSubmit)="onSubmitOtp()">
+      <div>
+        <label for="otp" class="block text-sm font-medium text-gray-700">OTP</label>
+        <input id="otp" type="text" placeholder="OTP" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" formControlName="otp">
+        <div *ngIf="otpForm.get('otp')?.touched && otpForm.get('otp')?.invalid">
+          <small class="text-red-500" *ngIf="otpForm.get('otp')?.hasError('required')">OTP is required</small>
+        </div>
+      </div>
+
+      <div class="mt-6 flex space-x-4">
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700" [disabled]="otpForm.invalid">Verify OTP</button>
+      </div>
+    </form>
   </div>
-</body>
+
+  <div *ngIf="loading" class="mt-6">
+    <p>Loading...</p>
+  </div>
+</div>
