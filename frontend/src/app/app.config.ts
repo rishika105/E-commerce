@@ -4,14 +4,20 @@ import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { rootReducer } from './store';  // Import your root reducer
+import { rootReducer } from './actions/store';  // Import your root reducer
+import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(withFetch()),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideStore(rootReducer),  // Provide the rootReducer here
+    provideStore(rootReducer),
+    provideAnimations(),
+    provideToastr(), // Provide the rootReducer here
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+
   ]
 };

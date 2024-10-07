@@ -5,8 +5,11 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
-
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guards/auth.guard';
+import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
+import { SellerDashboardComponent } from './dashboard/seller-dashboard/seller-dashboard.component';
+import { UserDashboardComponent } from './dashboard/user-dashboard/user-dashboard.component';
+import { RoleGuard } from './guards/role.guard';
 
 
 export const routes: Routes = [
@@ -32,22 +35,41 @@ export const routes: Routes = [
   },
 
 
-// //private routes only can access
-//   {
-//     path: 'product',
-//     canActivate: [AuthGuard],
-//     component: ProductDetailsComponent
-//   },
+  // //private routes only can access
+  //   {
+  //     path: 'product',
+  //     canActivate: [AuthGuard],
+  //     component: ProductDetailsComponent
+  //   },
 
-     // Default route that redirects to 'home'
-     {
-      path: "",
-      redirectTo: "home",
-      pathMatch: "full"
-    },
-    // Wildcard route for 404 error page
-    {
-      path: "**",
-      component: ErrorComponent
-    },
+  {
+    path: 'admin-dashboard',
+    component: AdminDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['ADMIN'] } // Only ADMIN can access this route
+  },
+  {
+    path: 'seller-dashboard',
+    component: SellerDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['SELLER'] } // Only SELLER can access this route
+  },
+  {
+    path: 'user-dashboard',
+    component: UserDashboardComponent,
+    canActivate: [AuthGuard, RoleGuard],
+    data: { roles: ['USER'] } // USER can access this route
+  },
+
+  // Default route that redirects to 'home'
+  {
+    path: "",
+    redirectTo: "home",
+    pathMatch: "full"
+  },
+  // Wildcard route for 404 error page
+  {
+    path: "**",
+    component: ErrorComponent
+  },
 ];
