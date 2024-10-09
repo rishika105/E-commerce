@@ -6,6 +6,11 @@ import { environment } from '../../../environment';
 @Injectable({
   providedIn: 'root',
 })
+
+//**********************************************************************/
+//*******************API INTEGRATION TO BACKEND*************************/
+//**********************************************************************/
+
 export class AuthService {
   private baseUrl = environment.apiUrl;  // Define your API URL in environments file
 
@@ -24,5 +29,15 @@ export class AuthService {
   // Step 3: Login User and get JWT Token
   login(email: string, password: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/login`, { email, password });
+  }
+
+  //Request password reset (send reset link via email)
+  requestPasswordReset(email: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/reset-password-request`, { email });
+  }
+
+  // Reset password with token
+  resetPassword(token: string, password: string, confirmPassword: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/reset-password`, { token, password, confirmPassword });
   }
 }

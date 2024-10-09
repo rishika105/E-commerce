@@ -6,6 +6,11 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  font-family: sans-serif;
+}
+
+
 
 .spinner-container {
   display: none; /* Hide spinner initially */

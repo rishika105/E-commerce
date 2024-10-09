@@ -3,9 +3,6 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { FooterComponent } from './footer/footer.component';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroCamera, heroCheckBadge, heroComputerDesktop, heroCurrencyDollar, heroCurrencyRupee, heroDevicePhoneMobile, heroDeviceTablet, heroEnvelope, heroHome, heroPhone, heroShoppingBag, heroSwatch, heroTruck, heroUsers } from '@ng-icons/heroicons/outline';
-import { CommonModule } from '@angular/common';
-import {MatCardModule} from "@angular/material/card"
-
 
 @Component({
   selector: 'app-root',

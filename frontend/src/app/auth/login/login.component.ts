@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../services/auth.service';
-import { setToken, setLoading } from '../../actions/auth.action';
+import { setToken, setLoading, setRole } from '../../actions/auth.action'; // Added setRole action
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -52,9 +52,9 @@ export class LoginComponent {
         catchError((error) => {
           // Handle unauthorized (401) error
           if (error.status === 401) {
-            this.toastr.error('Invalid credentials, please try again!', 'Login Failed');
+            this.toastr.error('Invalid credentials');
           } else {
-            this.toastr.error('Something went wrong, please try again later.', 'Login Error');
+            this.toastr.error('Something went wrong');
           }
           this.store.dispatch(setLoading({ loading: false })); // Stop loading state
           return of(null); // Return empty observable to handle the error case
@@ -63,9 +63,12 @@ export class LoginComponent {
         if (response && response.token) {
           // Token received, store it in the app's state
           this.store.dispatch(setToken({ token: response.token }));
-          this.store.dispatch(setLoading({ loading: false }));
 
-          this.toastr.success('Logged in successfully!', 'Login Success');
+          // Store user role in the app's state
+          this.store.dispatch(setRole({ role: response.role }));
+
+          this.store.dispatch(setLoading({ loading: false }));
+          this.toastr.success('Logged in successfully!');
 
           // Navigate based on user role
           const userRole = response.role; // Assuming role is part of the login response
@@ -73,8 +76,8 @@ export class LoginComponent {
             this.router.navigate(['/seller-dashboard']); // Navigate to seller dashboard
           } else if (userRole === 'USER') {
             this.router.navigate(['/user-dashboard']); // Navigate to user dashboard
-          } else if(userRole == 'ADMIN'){
-            this.router.navigate(['/admin-dashboard']); // admin dashboard
+          } else if (userRole === 'ADMIN') {
+            this.router.navigate(['/admin-dashboard']); // Navigate to admin dashboard
           }
         }
       });

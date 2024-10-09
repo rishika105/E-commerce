@@ -1,20 +1,17 @@
-<div class="w-full h-full bg-gray-100">
-  <h2 class="text-2xl font-bold text-gray-800 flex justify-center items-center mx-auto mt-[100px]">Login</h2>
+<div class="flex items-center justify-center h-screen bg-gray-100">
+  <!-- Container for both the image and form -->
+  <div class="flex max-w-4xl w-full bg-white rounded-lg shadow-lg overflow-hidden mb-10">
 
-<div class="flex min-h-screen items-center justify-center bg-gray-100">
-
-  <div class="max-w-4xl w-full bg-white rounded-lg shadow-md overflow-hidden flex h-[600px] mb-[50px]">
-
-
-    <!-- Form section -->
+    <!-- Form Section -->
     <div class="w-1/2 p-8">
-
+      <p class="text-4xl font-medium text-gray-800 text-center mb-6">Login</p>
 
       <form [formGroup]="loginForm" (ngSubmit)="onSubmitLogin()">
         <!-- Email -->
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-          <input id="email" type="email" formControlName="email" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+          <input id="email" type="email" formControlName="email"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
           <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="mt-2 text-sm text-red-600">
             <small *ngIf="loginForm.get('email')?.hasError('required')">Email is required</small>
             <small *ngIf="loginForm.get('email')?.hasError('email')">Invalid email</small>
@@ -24,7 +21,8 @@
         <!-- Password -->
         <div class="mb-4">
           <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-          <input id="password" type="password" formControlName="password" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
+          <input id="password" type="password" formControlName="password"
+            class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" />
           <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="mt-2 text-sm text-red-600">
             <small *ngIf="loginForm.get('password')?.hasError('required')">Password is required</small>
           </div>
@@ -35,30 +33,15 @@
           <button type="submit" class="w-full px-4 py-2 bg-red-500 text-white rounded-md shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50" [disabled]="loginForm.invalid">
             Login
           </button>
-
-          <a router></a>
-
-
+          <a routerLink="/forgot-password" class="text-red-500 text-md block text-center mt-4 ml-[240px]">Forgot Password?</a>
         </div>
       </form>
 
 
-      <!-- Error message -->
-      <div *ngIf="loginError" class="mt-4 text-red-600">
-        <p>Login failed. Please try again.</p>
-      </div>
     </div>
-      <!-- Image section -->
-      <div class="w-1/2 bg-cover bg-center" style="background-image: url('path-to-your-image.jpg');">
-        <img src="../../../assets/images/login.png"/>
-      </div>
-
-
-      <!-- Loading state -->
-      <div *ngIf="loading" class="mt-6 loader">
-        <p>Loading...</p>
+       <!-- Image Section -->
+       <div class="w-1/2">
+        <img src="../../../assets/images/login.png" alt="Login Background" class="object-cover w-full h-full">
       </div>
   </div>
-</div>
-
 </div>

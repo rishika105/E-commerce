@@ -10,8 +10,11 @@ import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashb
 import { SellerDashboardComponent } from './dashboard/seller-dashboard/seller-dashboard.component';
 import { UserDashboardComponent } from './dashboard/user-dashboard/user-dashboard.component';
 import { RoleGuard } from './guards/role.guard';
+import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 
 
+//open routes
 export const routes: Routes = [
   {
     path: "login",
@@ -33,15 +36,15 @@ export const routes: Routes = [
     path: "home",
     component: HomeComponent
   },
+  {
+    path: "forgot-password",
+    component: ForgotPasswordComponent
+  },
+  { path: "reset-password",
+    component: ResetPasswordComponent
+  },
 
-
-  // //private routes only can access
-  //   {
-  //     path: 'product',
-  //     canActivate: [AuthGuard],
-  //     component: ProductDetailsComponent
-  //   },
-
+  //private routes only can access
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
