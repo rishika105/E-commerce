@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, HostListener } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
@@ -22,7 +23,8 @@ export class NavbarComponent {
 
   constructor(
     private store: Store<{ auth: any }>, // Inject the store to access the auth state
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     // Subscribe to the auth state to check if user is logged in
     this.store.select('auth').subscribe(authState => {
@@ -60,23 +62,26 @@ export class NavbarComponent {
     this.router.navigate(['/user-dashboard'])
   }
 
-    // Logout method
-    logout() {
-      this.showProfileMenu = false;
 
+     // Show the logout confirmation modal
+  logout() {
+    this.showProfileMenu = false;
+    this.showLogoutModal = true; // Show the confirmation modal for logout
+  }
 
-      // Dispatch clearToken to log out the user
-      this.store.dispatch(clearToken());
+  // Cancel the logout and hide the modal
+  cancelLogout() {
+    this.showLogoutModal = false;
+  }
 
-      // Optionally navigate to the login page after logout
-      this.router.navigate(['/login']);
-    }
-
-    confirmLogout() {
-      this.showLogoutModal = false;
-      this.store.dispatch(clearToken()); // Log out the user
-      this.router.navigate(['/login']); // Navigate to login page
-    }
+  // Confirm the logout and proceed
+  confirmLogout() {
+    this.showProfileMenu = false;
+    this.showLogoutModal = false;
+    this.store.dispatch(clearToken()); // Log out the user
+    this.router.navigate(['/login']); // Navigate to login page
+    this.toastr.success("Logged Out Successfully!")
+  }
 
 
   // HostListener to detect click outside the modal

@@ -5,7 +5,7 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroCamera, heroCheckBadge, heroComputerDesktop, heroCurrencyDollar,
   heroCurrencyRupee, heroDevicePhoneMobile, heroDeviceTablet, heroEnvelope,
   heroHome, heroPhone, heroShoppingBag, heroSwatch, heroTruck, heroUsers,
-  heroUserCircle, heroHeart, heroShoppingCart, heroMagnifyingGlass } from '@ng-icons/heroicons/outline';
+  heroUserCircle, heroHeart, heroShoppingCart, heroMagnifyingGlass} from '@ng-icons/heroicons/outline';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './common/navbar/navbar.component';
 
