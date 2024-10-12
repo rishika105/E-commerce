@@ -1,0 +1,40 @@
+<h2 class="text-2xl font-bold text-center mb-6">Your Cart</h2>
+
+<div *ngIf="cart.length > 0" class="overflow-x-auto">
+  <table class="cart-table min-w-full table-auto border-collapse border border-gray-300">
+    <thead>
+      <tr class="bg-gray-100 text-left">
+        <th class="border border-gray-300 px-4 py-2">Product</th>
+        <th class="border border-gray-300 px-4 py-2">Price</th>
+        <th class="border border-gray-300 px-4 py-2">Quantity</th>
+        <th class="border border-gray-300 px-4 py-2">Subtotal</th>
+        <th class="border border-gray-300 px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cart; let i = index" class="even:bg-gray-50">
+        <td class="flex items-center border border-gray-300 px-4 py-2">
+          <img [src]="'./assets/images/' + item.name + '.jpeg'" alt="{{item.name}}" class="product-image w-12 h-12 object-contain mr-4" />
+          <h3 class="text-lg font-semibold">{{item.name}}</h3>
+        </td>
+        <td class="border border-gray-300 px-4 py-2">{{item.price | currency}}</td>
+        <td class="border border-gray-300 px-4 py-2">
+          <input type="number" [(ngModel)]="item.quantity" (change)="updateSubtotal(i)" min="1" class="w-16 px-2 py-1 border border-gray-300 rounded" />
+        </td>
+        <td class="border border-gray-300 px-4 py-2">{{item.price * item.quantity | currency}}</td>
+        <td class="border border-gray-300 px-4 py-2">
+          <button (click)="removeFromCart(i)" class="btn-remove bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">Remove</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="cart-footer text-right mt-6">
+    <p class="text-xl font-bold mb-4">Total: {{getTotal() | currency}}</p>
+    <button class="btn-checkout bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-300">Checkout</button>
+  </div>
+</div>
+
+<div *ngIf="cart.length === 0" class="text-center text-gray-500">
+  <p>Your cart is empty.</p>
+</div>
