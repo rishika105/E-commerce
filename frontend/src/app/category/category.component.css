@@ -1,0 +1,72 @@
+.flex-container {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.flex-container > div {
+  border: 1px solid #ccc;
+  width: 170px;
+  height: 145px;
+  margin: 10px 0;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.flex-container > div:hover,
+.flex-container > div.active {
+  background: #db4444;
+  color: #fff;
+}
+
+.d-flex-column {
+  display: flex-column;
+}
+.d-flex {
+  display: flex;
+}
+.align-items-center {
+  align-items: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.common-heading {
+  font-size: 20px;
+  margin: 10px 0;
+  font-weight: bold;
+}
+.main-heading {
+  font-size: 14px;
+  color: #db4444;
+  margin-bottom: 10px;
+}
+.main-heading div {
+  width: 15px;
+  background: #db4444;
+  margin-right: 15px;
+  height: 35px;
+  border-radius: 4px;
+}
+.category-name {
+  margin-top: 20px;
+}
+.content-wrapper {
+  width: 75%;
+  margin: 0 auto;
+}
+.slide-category img {
+  margin: 0 5px;
+  max-width: 70%;
+  opacity: 0.7;
+  cursor: pointer;
+}
+.slide-category img:hover {
+  opacity: 1;
+}
