@@ -11,26 +11,18 @@ import { RouterLink, RouterOutlet } from '@angular/router'; // Import RouterLink
   templateUrl: './category.component.html',
   providers: [CartService]  // Provide the service locally for this component
 })
+
 export class CategoryComponent {
   products = [
-    {
-      name: 'Gaming Mouse',
-      price: 49.99,
-    },
-    {
-      name: 'Mechanical Keyboard',
-      price: 89.99,
-    },
-    {
-      name: 'Gaming Headset',
-      price: 59.99,
-    },
+    { name: 'Gaming Mouse', price: 49.99 },
+    { name: 'Mechanical Keyboard', price: 89.99 },
+    { name: 'Gaming Headset', price: 59.99 },
   ];
 
   constructor(private cartService: CartService) { }
 
   addToCart(product: any) {
-    this.cartService.addToCart(product); // Add product to cart
-    alert(`${product.name} has been added to the cart!`); // Notify user
+    this.cartService.addToCart(product);
+    alert(`${product.name} has been added to the cart!`);
   }
 }

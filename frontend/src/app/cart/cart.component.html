@@ -1,40 +1,57 @@
-<h2 class="text-2xl font-bold text-center mb-6">Your Cart</h2>
-
-<div *ngIf="cart.length > 0" class="overflow-x-auto">
-  <table class="cart-table min-w-full table-auto border-collapse border border-gray-300">
-    <thead>
-      <tr class="bg-gray-100 text-left">
-        <th class="border border-gray-300 px-4 py-2">Product</th>
-        <th class="border border-gray-300 px-4 py-2">Price</th>
-        <th class="border border-gray-300 px-4 py-2">Quantity</th>
-        <th class="border border-gray-300 px-4 py-2">Subtotal</th>
-        <th class="border border-gray-300 px-4 py-2">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of cart; let i = index" class="even:bg-gray-50">
-        <td class="flex items-center border border-gray-300 px-4 py-2">
-          <img [src]="'./assets/images/' + item.name + '.jpeg'" alt="{{item.name}}" class="product-image w-12 h-12 object-contain mr-4" />
-          <h3 class="text-lg font-semibold">{{item.name}}</h3>
-        </td>
-        <td class="border border-gray-300 px-4 py-2">{{item.price | currency}}</td>
-        <td class="border border-gray-300 px-4 py-2">
-          <input type="number" [(ngModel)]="item.quantity" (change)="updateSubtotal(i)" min="1" class="w-16 px-2 py-1 border border-gray-300 rounded" />
-        </td>
-        <td class="border border-gray-300 px-4 py-2">{{item.price * item.quantity | currency}}</td>
-        <td class="border border-gray-300 px-4 py-2">
-          <button (click)="removeFromCart(i)" class="btn-remove bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300">Remove</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="cart-footer text-right mt-6">
-    <p class="text-xl font-bold mb-4">Total: {{getTotal() | currency}}</p>
-    <button class="btn-checkout bg-green-500 text-white px-6 py-2 rounded hover:bg-green-600 transition duration-300">Checkout</button>
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Shopping Cart</h1>
+    <div class="flex flex-col md:flex-row gap-4">
+      <div class="w-full md:w-2/3">
+        <table class="w-full border-collapse rounded-lg overflow-hidden">
+          <thead class="bg-gray-200 text-gray-600">
+            <tr>
+              <th class="py-3 px-4 text-left">Product</th>
+              <th class="py-3 px-4 text-right">Price</th>
+              <th class="py-3 px-4 text-right">Quantity</th>
+              <th class="py-3 px-4 text-right">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of cart; let i = index">
+              <td class="py-3 px-4">
+                <div class="flex items-center">
+                  <img src="./assets/images/{{item.name}}.jpeg" alt="{{item.name}}" class="w-12 h-12 rounded-md mr-4">
+                  <div>
+                    <h2 class="font-medium text-gray-800">{{item.name}}</h2>
+                  </div>
+                </div>
+              </td>
+              <td class="py-3 px-4 text-right">{{item.price | currency}}</td>
+              <td class="py-3 px-4 text-right">
+                <div class="flex justify-end items-center">
+                  <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateSubtotal(i)">-</button>
+                  <input type="number" [(ngModel)]="item.quantity" class="w-12 text-center py-2 border border-gray-300 rounded">
+                  <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateSubtotal(i)">+</button>
+                </div>
+              </td>
+              <td class="py-3 px-4 text-right">{{item.price * item.quantity | currency}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="w-full md:w-1/3">
+        <div class="bg-white p-4 rounded-lg shadow-md">
+          <h2 class="font-bold text-gray-800 mb-2">Order Summary</h2>
+          <div class="flex justify-between mb-2">
+            <p class="text-gray-600">Subtotal:</p>
+            <p class="text-gray-800">{{getTotal() | currency}}</p>
+          </div>
+          <div class="flex justify-between mb-2">
+            <p class="text-gray-600">Tax (10%):</p>
+            <p class="text-gray-800">{{getTax() | currency}}</p>
+          </div>
+          <div class="flex justify-between mb-4">
+            <p class="text-gray-600">Total:</p>
+            <p class="text-gray-800">{{getGrandTotal() | currency}}</p>
+          </div>
+          <button class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded w-full">Checkout</button>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-
-<div *ngIf="cart.length === 0" class="text-center text-gray-500">
-  <p>Your cart is empty.</p>
-</div>
+  
