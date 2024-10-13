@@ -3,12 +3,13 @@ import { Component, OnInit } from '@angular/core'; // Import necessary Angular c
 import { CartService } from './cart.service'; // Import CartService
 import { FormsModule } from '@angular/forms'; // Import FormsModule for template-driven forms
 import { NgIconComponent } from '@ng-icons/core'; // Import NgIconComponent for icons
-import { RouterLink, RouterOutlet } from '@angular/router'; // Import RouterLink and RouterOutlet for routing
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { CheckoutComponent } from "../checkout/checkout.component"; // Import RouterLink and RouterOutlet for routing
 
 @Component({
   selector: 'app-cart',
   standalone: true, // Declare this component as a standalone component
-  imports: [CommonModule, FormsModule, NgIconComponent, RouterLink, RouterOutlet], // Include necessary imports
+  imports: [CommonModule, FormsModule, NgIconComponent, RouterLink, RouterOutlet, CheckoutComponent], // Include necessary imports
   templateUrl: './cart.component.html', // Define the template URL
 })
 
