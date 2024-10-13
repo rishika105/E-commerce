@@ -1,70 +1,94 @@
-<div class="h-full w-64 bg-gray-100 text-gray-800">
+<div class="h-[570px] mt-[30px] ml-[30px] mb-[20px] w-64 bg-white p-6 rounded shadow-md relative text-gray-800">
   <!-- User Sidebar -->
-  @if (userRole == "USER") {
-    <div class="w-64 bg-gray-100 h-screen p-4">
-      <!-- My Orders -->
-      <p class="text-gray-800 mb-2">My Orders</p>
+  <div *ngIf="userRole === 'USER'" class="w-64 h-screen p-4">
+    <!-- My Orders -->
+    <p class="text-gray-800 mb-2">My Orders</p>
 
-      <!-- Account Settings -->
-      <p class="text-gray-600 mb-1">Account Settings</p>
+    <!-- Account Settings -->
+    <p class="text-gray-600 mb-1">Account Settings</p>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/user-dashboard/profile')}"
+          [routerLink]="['/user-dashboard/profile']">Profile Information</li>
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/user-dashboard/address')}"
+          [routerLink]="['/user-dashboard/address']">Manage Address</li>
+      <li class="text-gray-700 mb-1 cursor-pointer">Payments</li>
       <ul class="pl-4">
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'profile'}">Profile Information</li>
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'address'}">Manage Address</li>
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'payments'}">Payments</li>
-        <ul class="pl-4">
-          <li class="text-gray-600 mb-1" [ngClass]="{'text-red-500': currentPage === 'savedUpi'}">Saved UPI</li>
-          <li class="text-gray-600 mb-1" [ngClass]="{'text-red-500': currentPage === 'savedCards'}">Saved Cards</li>
-        </ul>
+        <li class="text-gray-600 mb-1 cursor-pointer"
+            [ngClass]="{'text-red-500': isActive('/savedUPI')}"
+            [routerLink]="['/savedUPI']">Saved UPI</li>
+        <li class="text-gray-600 mb-1 cursor-pointer"
+            [ngClass]="{'text-red-500': isActive('/savedCard')}"
+            [routerLink]="['/savedCard']">Saved Cards</li>
       </ul>
+    </ul>
 
-      <!-- My Stuff -->
-      <p class="text-gray-800 mb-2">My Stuff</p>
-      <ul class="pl-4">
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'reviews'}">My Reviews and Ratings</li>
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'wishlist'}">Wishlist</li>
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'notifications'}">All Notifications</li>
-      </ul>
+    <!-- My Stuff -->
+    <p class="text-gray-800 mb-2">My Stuff</p>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/reviewRatings')}"
+          [routerLink]="['/reviewRatings']">My Reviews and Ratings</li>
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/wishlist')}"
+          [routerLink]="['/wishlist']">Wishlist</li>
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/notifications')}"
+          [routerLink]="['/notifications']">All Notifications</li>
+    </ul>
 
-      <!-- Logout -->
-      <p class="text-gray-800 mb-2" [ngClass]="{'text-red-500': currentPage === 'logout'}">Logout</p>
-    </div>
-  }
+    <!-- Logout -->
+    <p class="text-gray-800 mb-2 cursor-pointer" [ngClass]="{'text-red-500': isActive('/logout')}">Logout</p>
+  </div>
+
   <!-- Seller Sidebar -->
-  @else if(userRole == "SELLER") {
-    <div class="w-64 bg-gray-100 h-screen p-4">
-      <!-- Dashboard -->
-      <p class="text-gray-800 mb-2" [ngClass]="{'text-red-500': currentPage === 'dashboard'}">Dashboard</p>
+  <div *ngIf="userRole === 'SELLER'" class="w-64 bg-gray-100 h-screen p-4">
+    <!-- Dashboard -->
+    <p class="text-gray-800 mb-2" [ngClass]="{'text-red-500': isActive('/seller-dashboard')}">Dashboard</p>
 
-      <!-- Products -->
-      <p class="text-gray-600 mb-1">Products</p>
-      <ul class="pl-4">
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'addProduct'}">Add Product</li>
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'manageProducts'}">Manage Products</li>
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'stockManagement'}">Stock Management</li>
-      </ul>
+    <!-- Products -->
+    <p class="text-gray-600 mb-1">Products</p>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/addProduct')}"
+          [routerLink]="['/addProduct']">Add Product</li>
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/manageProducts')}"
+          [routerLink]="['/manageProducts']">Manage Products</li>
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/stockManagement')}"
+          [routerLink]="['/stockManagement']">Stock Management</li>
+    </ul>
 
-      <!-- Orders -->
-      <p class="text-gray-800 mb-2">Orders</p>
-      <ul class="pl-4">
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'viewOrders'}">View Orders</li>
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'returns'}">Manage Returns</li>
-      </ul>
+    <!-- Orders -->
+    <p class="text-gray-800 mb-2">Orders</p>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/viewOrders')}"
+          [routerLink]="['/viewOrders']">View Orders</li>
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/returns')}"
+          [routerLink]="['/returns']">Manage Returns</li>
+    </ul>
 
-      <!-- Reports -->
-      <p class="text-gray-800 mb-2">Reports</p>
-      <ul class="pl-4">
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'salesReports'}">Sales Reports</li>
-      </ul>
+    <!-- Reports -->
+    <p class="text-gray-800 mb-2">Reports</p>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/salesReports')}"
+          [routerLink]="['/salesReports']">Sales Reports</li>
+    </ul>
 
-      <!-- Profile -->
-      <p class="text-gray-600 mb-1">Profile</p>
-      <ul class="pl-4">
-        <li class="text-gray-700 mb-1" [ngClass]="{'text-red-500': currentPage === 'sellerProfile'}">Seller Profile</li>
-      </ul>
+    <!-- Profile -->
+    <p class="text-gray-600 mb-1">Profile</p>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/sellerProfile')}"
+          [routerLink]="['/sellerProfile']">Seller Profile</li>
+    </ul>
 
-      <!-- Logout -->
-      <p class="text-gray-800 mb-2" [ngClass]="{'text-red-500': currentPage === 'logout'}">Logout</p>
-    </div>
-
-  }
+    <!-- Logout -->
+    <p class="text-gray-800 mb-2 cursor-pointer" [ngClass]="{'text-red-500': isActive('/logout')}">Logout</p>
+  </div>
 </div>

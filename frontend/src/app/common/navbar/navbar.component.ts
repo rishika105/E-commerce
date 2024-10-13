@@ -62,7 +62,6 @@ export class NavbarComponent {
     this.router.navigate(['/user-dashboard'])
   }
 
-
      // Show the logout confirmation modal
   logout() {
     this.showProfileMenu = false;
@@ -82,7 +81,6 @@ export class NavbarComponent {
     this.router.navigate(['/login']); // Navigate to login page
     this.toastr.success("Logged Out Successfully!")
   }
-
 
   // HostListener to detect click outside the modal
   @HostListener('document:click', ['$event'])

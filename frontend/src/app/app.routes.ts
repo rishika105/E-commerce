@@ -1,4 +1,6 @@
-import { Routes } from '@angular/router';
+import { ProfileComponent } from './dashboard/profile/profile.component';
+import { AddressManagerComponent } from './dashboard/address/address.component';
+import { Routes, CanActivate } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AboutComponent } from './about/about.component';
@@ -57,11 +59,18 @@ export const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { roles: ['SELLER'] } // Only SELLER can access this route
   },
+  //NESTED ROUTING
   {
     path: 'user-dashboard',
-    component: UserDashboardComponent,
+    component: UserDashboardComponent, // This contains the sidebar
+    children: [
+      {path: "", redirectTo: "profile", pathMatch: "full"},
+      { path: 'profile', component: ProfileComponent },
+      { path: 'address', component: AddressManagerComponent},
+      // Add more routes here for other dashboard pages
+    ],
     canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['USER'] } // USER can access this route
+    data: {roles: ['USER']}
   },
 
   // Default route that redirects to 'home'
