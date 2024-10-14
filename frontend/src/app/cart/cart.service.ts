@@ -1,70 +1,62 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private cart: any[] = [];
+  private apiUrl = '/api/cart'; // Define the base URL for the cart API
+  private userId = 1; // Assuming a static user ID for demonstration purposes
 
-  constructor() {
-    this.loadCartFromLocalStorage(); // Load cart from localStorage on service initialization
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  // Get all cart items from the backend API
+  getCartItems(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/user/${this.userId}`);
   }
 
-  // Load cart from localStorage
-  private loadCartFromLocalStorage() {
-    const storedCart = localStorage.getItem('cart');
-    if (storedCart) {
-      this.cart = JSON.parse(storedCart);
-    }
+  // Add an item to the cart via API
+  addToCart(productId: number, quantity: number = 1): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/add`, {
+      userId: this.userId,
+      productId: productId,
+      quantity: quantity,
+    });
   }
 
-  // Save cart to localStorage
-  private saveCartToLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(this.cart));
+  // Update item quantity via API
+  updateItemQuantity(cartId: number, newQuantity: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/update`, { // Changed to '/update'
+      userId: this.userId,
+      cartId: cartId,
+      quantity: newQuantity,
+    });
   }
 
-  getCartItems() {
-    return this.cart;
+  // Remove an item from the cart via API
+  removeFromCart(cartId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/remove/${cartId}`);
   }
 
-  addToCart(item: any) {
-    const existingItemIndex = this.cart.findIndex(
-      (cartItem) => cartItem.name === item.name
-    );
-    if (existingItemIndex !== -1) {
-      this.cart[existingItemIndex].quantity += 1;
-    } else {
-      this.cart.push({ ...item, quantity: 1 });
-    }
-    this.saveCartToLocalStorage(); // Save updated cart to localStorage
-  }
-
-  updateItemQuantity(index: number, newQuantity: number) {
-    if (newQuantity > 0 && index >= 0 && index < this.cart.length) {
-      this.cart[index].quantity = newQuantity;
-      this.saveCartToLocalStorage(); // Save updated cart to localStorage
-    }
-  }
-
-  removeFromCart(index: number) {
-    if (index >= 0 && index < this.cart.length) {
-      this.cart.splice(index, 1);
-      this.saveCartToLocalStorage(); // Save updated cart to localStorage
-    }
-  }
-
-  getTotalPrice() {
-    return this.cart.reduce(
-      (acc, item) => acc + item.price * item.quantity,
+  // Calculate the total price of the items in the cart
+  getTotalPrice(cartItems: any[]): number {
+    return cartItems.reduce(
+      (acc, item) => acc + (item.product.price * item.quantity), // Calculate total price
       0
     );
   }
 
-  getTax() {
-    return this.getTotalPrice() * 0.1; // 10% tax
+  // Calculate the tax based on the total price
+  getTax(totalPrice: number): number {
+    return totalPrice * 0.1; // Assuming a 10% tax rate
   }
 
-  getGrandTotal() {
-    return this.getTotalPrice() + this.getTax();
+  // Calculate the grand total (total price + tax)
+  getGrandTotal(totalPrice: number, tax: number): number {
+    return totalPrice + tax; // Return the sum of total price and tax
   }
 }

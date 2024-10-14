@@ -13,6 +13,8 @@ import { UserDashboardComponent } from './dashboard/user-dashboard/user-dashboar
 import { RoleGuard } from './guards/role.guard';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+
 
 // Open routes
 export const routes: Routes = [
@@ -87,6 +89,9 @@ export const routes: Routes = [
     path: 'category',
     loadComponent: () => import('./category/category.component').then(m => m.CategoryComponent),
   },
+  { path: 'checkout',
+    component: CheckoutComponent 
+  }
 ];
 
 @NgModule({
