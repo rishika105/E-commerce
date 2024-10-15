@@ -57,6 +57,10 @@ export const routes: Routes = [
     path: 'seller-dashboard',
     component: SellerDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
+    children: [
+      {path: "", redirectTo: "profile", pathMatch: "full"},
+      { path: 'profile', component: ProfileComponent },
+    ],
     data: { roles: ['SELLER'] } // Only SELLER can access this route
   },
   //NESTED ROUTING

@@ -1,3 +1,4 @@
+import { ConfirmationModalComponent } from './../../common/confirmation-modal/confirmation-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { map } from 'rxjs/operators';
@@ -6,20 +7,24 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import { NavigationEnd } from '@angular/router';
+import { clearToken } from '../../actions/auth.action';
 
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, ConfirmationModalComponent],
   templateUrl: './sidebar.component.html',
   styles: ``
 })
+
 export class SidebarComponent {
   isLoggedIn: boolean = false;
   userRole: string = 'USER'; // default role is USER
   currentPage: string = '/user-dashboard/profile';  // default route for USER
   userDefaultPage: string = '/user-dashboard/profile';
-  sellerDefaultPage: string = '/sellerProfile';
+  sellerDefaultPage: string = '/profile';
+  showLogoutModal = false;
+
 
   constructor(
     private store: Store<{ auth: any }>, // Inject the store to access the auth state
@@ -57,4 +62,22 @@ export class SidebarComponent {
   isActive(route: string): boolean {
     return this.currentPage === route; // Compare the route with currentPage
   }
+
+      // Show the logout confirmation modal
+      logout() {
+        this.showLogoutModal = true; // Show the confirmation modal for logout
+      }
+
+      // Cancel the logout and hide the modal
+      cancelLogout() {
+        this.showLogoutModal = false;
+      }
+
+      // Confirm the logout and proceed
+      confirmLogout() {
+        this.showLogoutModal = false;
+        this.store.dispatch(clearToken()); // Log out the user
+        this.router.navigate(['/login']); // Navigate to login page
+        this.toastr.success("Logged Out Successfully!")
+      }
 }

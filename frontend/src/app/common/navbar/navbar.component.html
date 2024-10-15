@@ -70,7 +70,7 @@
     </div>
 
     <!-- Seller Navbar (Logged In as Seller) -->
-    <div *ngIf="isLoggedIn && userRole == 'SELLER'">
+    <div class="hidden md:flex space-x-10 mt-2" *ngIf="isLoggedIn && userRole == 'SELLER'">
       <!-- Search Bar -->
       <form (submit)="onSearch(searchInput.value)" class="flex items-center bg-gray-100 rounded-md gap-2 mr-[200px] mt-[-8px] h-[40px]">
         <ng-icon name="heroMagnifyingGlass" class="text-gray-500"></ng-icon>
@@ -82,9 +82,24 @@
         />
       </form>
 
-      <a href="#" class="text-black hover:text-red-500">Seller Dashboard</a>
-      <button class="bg-red-500 p-6" (click)="logout()">Logout</button>
-    </div>
+      <a href="#" class="text-black hover:text-red-500" [routerLink]="['/about']">About Us</a>
+      <a href="#" class="text-black hover:text-red-500" [routerLink]="['/contact']">Contact Us</a>
+      <ng-icon name="heroUserGroup" class="cursor-pointer" [style.fontSize.px]="22"></ng-icon>
+      <ng-icon name="heroTruck" class="cursor-pointer" [style.fontSize.px]="22"></ng-icon>
+           <!-- Profile Icon -->
+           <div class="relative">
+            <ng-icon name="heroUserCircle" class="text-gray-700 cursor-pointer" [style.fontSize.px]="24" (click)="toggleProfileMenu()"></ng-icon>
+
+           <!-- Dropdown Modal (shown based on boolean flag) -->
+            <div *ngIf="showProfileMenu" class="absolute right-0 mt-2 w-48 bg-gray-200 rounded-lg shadow-lg z-50">
+              <ul>
+                <li (click)="goToDashboard()" class="px-4 py-2 cursor-pointer">Dashboard</li>
+                <li (click)="logout()" class="px-4 py-2 cursor-pointer">Logout</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
 
     <!-- Mobile Menu Button -->
     <div class="md:hidden">

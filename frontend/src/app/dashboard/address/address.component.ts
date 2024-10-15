@@ -1,7 +1,9 @@
+import { ConfirmationModalComponent } from './../../common/confirmation-modal/confirmation-modal.component';
 import { NgIconComponent } from '@ng-icons/core';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectorRef } from '@angular/core';
 
 interface Address {
   name: string;
@@ -15,12 +17,24 @@ interface Address {
 @Component({
   selector: 'app-address',
   templateUrl: './address.component.html',
-  styles: ``,
+  styles: [],
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, FormsModule, NgIconComponent]
+  imports: [ReactiveFormsModule, CommonModule, FormsModule, NgIconComponent,ConfirmationModalComponent]
 })
 
 export class AddressManagerComponent {
+
+  ngOnInit() {
+    const storedAddresses = localStorage.getItem('addresses');
+    if (storedAddresses) {
+      this.addresses = JSON.parse(storedAddresses);
+    }
+  }
+
+
+constructor(private cdr: ChangeDetectorRef) {}
+
+
   addresses: Address[] = []; // Initialize as an empty array
 
   showForm = false;
@@ -34,6 +48,7 @@ export class AddressManagerComponent {
     zip: '',
     phone: ''
   };
+  showConfirmDeleteModal = false;
 
   // Toggle form visibility for adding a new address
   toggleForm() {
@@ -56,27 +71,42 @@ export class AddressManagerComponent {
   // Submit address (Add or Edit logic)
   submitAddress() {
     if (this.currentAddress) {
-      // Edit existing address
       const index = this.addresses.indexOf(this.currentAddress);
       if (index !== -1) {
         this.addresses[index] = { ...this.newAddress };
       }
     } else {
-      // Add new address
       this.addresses.push({ ...this.newAddress });
     }
+  // Save updated addresses to local storage
+  localStorage.setItem('addresses', JSON.stringify(this.addresses));
+
     this.clearForm();
     this.showForm = false;
-    this.currentAddress = null; // Reset the form state
-    this.showModal = false; // Close modal after action
+    this.currentAddress = null;
+    this.showModal = false;
+
+   // Manually trigger change detection if needed
+   this.cdr.detectChanges();
+  }
+
+  delAddress(){
+    this.showConfirmDeleteModal = true;
+  }
+
+  cancelDelete(){
+    this.showConfirmDeleteModal = false;
   }
 
   // Delete selected address
   deleteAddress(address: Address | null) {
+    this.showConfirmDeleteModal = false;
     if (address) {
       this.addresses = this.addresses.filter(a => a !== address);
     }
     this.closeModal(); // Close modal after deleting
+    localStorage.removeItem('addresses');
+
   }
 
   // Open modal and load current address to edit
@@ -99,4 +129,14 @@ export class AddressManagerComponent {
     this.showForm = true; // Show form for editing
     this.showModal = false; // Close modal
   }
+
+    // HostListener to detect click outside the modal
+    @HostListener('document:click', ['$event'])
+    handleClickOutside(event: MouseEvent) {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.relative')) { // Adjust based on your container
+        this.showModal = false;
+      }
+    }
+
 }
