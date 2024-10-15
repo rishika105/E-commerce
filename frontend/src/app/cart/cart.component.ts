@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core'; // Import necessary Angular c
 import { CartService } from './cart.service'; // Import CartService
 import { FormsModule } from '@angular/forms'; // Import FormsModule for template-driven forms
 import { NgIconComponent } from '@ng-icons/core'; // Import NgIconComponent for icons
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { CheckoutComponent } from "../checkout/checkout.component"; // Import RouterLink and RouterOutlet for routing
 
 @Component({
@@ -14,67 +14,37 @@ import { CheckoutComponent } from "../checkout/checkout.component"; // Import Ro
 })
 
 export class CartComponent implements OnInit {
-getGrandTotal: any;
-getTax(): string|number {
-throw new Error('Method not implemented.');
-}
-getTotal(): string|number {
-throw new Error('Method not implemented.');
-}
+  router: any;
+  goToCheckout() {
+    this.router.navigate(['/checkout']);  // Navigates to the checkout route
+  }
   cart: any[] = [];
-  totalPrice: number = 0;
-  grandTotal: number = 0;
-  tax: number = 0;
 
-  constructor(
-    private cartService: CartService, 
-    private router: Router
-  ) {}
+  constructor(private cartService: CartService) { }
 
   ngOnInit() {
-    this.loadCartItems();
+    this.cart = this.cartService.getCartItems();
   }
 
-  // Load cart items from the backend API
-  loadCartItems() {
-    this.cartService.getCartItems().subscribe(
-      (items) => {
-        this.cart = items; // Assign the loaded items to the cart
-        this.calculateTotals(); // Calculate totals after loading items
-      },
-      (error) => {
-        console.error('Error loading cart items', error);
-      }
-    );
-  }
-
-  // Update subtotal (quantity) for a cart item
   updateSubtotal(index: number) {
     const item = this.cart[index];
-    if (item.quantity > 0) {
-      this.cartService.updateItemQuantity(item.cartId, item.quantity).subscribe(() => {
-        this.loadCartItems();  // Reload cart after updating
-      });
-    }
+    this.cartService.updateItemQuantity(index, item.quantity);
   }
 
-  // Remove an item from the cart
+  getTotal() {
+    return this.cartService.getTotalPrice();
+  }
+
+  getTax() {
+    return this.cartService.getTax();
+  }
+
+  getGrandTotal() {
+    return this.cartService.getGrandTotal();
+  }
+
   removeFromCart(index: number) {
-    const cartItemId = this.cart[index].cartId;
-    this.cartService.removeFromCart(cartItemId).subscribe(() => {
-      this.loadCartItems();  // Reload cart after removing
-    });
-  }
-
-  // Calculate the totals
-  calculateTotals(): void {
-    this.totalPrice = this.cartService.getTotalPrice(this.cart); // Pass the cart to get the total price
-    this.tax = this.cartService.getTax(this.totalPrice); // Pass totalPrice to get the tax
-    this.grandTotal = this.cartService.getGrandTotal(this.totalPrice, this.tax); // Pass totalPrice and tax to get the grand total
-  }
-
-  // Navigate to the checkout page
-  goToCheckout() {
-    this.router.navigate(['/checkout']);
+    this.cartService.removeFromCart(index);
+    this.cart = this.cartService.getCartItems();
   }
 }
