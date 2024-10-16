@@ -1,77 +1,48 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
+import { Observable } from 'rxjs'; // Import Observable to handle HTTP responses
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private cart: any[] = [];
+  private apiUrl = 'http://localhost:8080/api/cart'; // Base URL of your Spring Boot backend
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-    if (isPlatformBrowser(this.platformId)) {
-      this.loadCartFromLocalStorage(); // Load cart from localStorage on service initialization
-    }
+  constructor(private http: HttpClient) {}
+
+  // 1. Get all cart items for a specific user
+  getCartItems(userId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/user/${userId}`);
   }
 
-  // Load cart from localStorage
-  private loadCartFromLocalStorage() {
-    if (isPlatformBrowser(this.platformId)) {
-      const storedCart = localStorage.getItem('cart');
-      if (storedCart) {
-        this.cart = JSON.parse(storedCart);
-      }
-    }
+  // 2. Add item to the cart
+  addToCart(userId: number, productId: number, quantity: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/add`, { userId, productId, quantity });
   }
 
-  // Save cart to localStorage
-  private saveCartToLocalStorage() {
-    if (isPlatformBrowser(this.platformId)) {
-      localStorage.setItem('cart', JSON.stringify(this.cart));
-    }
+  // 3. Update item quantity in the cart
+  updateItemQuantity(cartId: number, quantity: number): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update`, { cartId, quantity });
   }
 
-  getCartItems() {
-    return this.cart;
+  // 4. Remove an item from the cart
+  removeFromCart(cartId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/remove/${cartId}`);
   }
 
-  addToCart(item: any) {
-    const existingItemIndex = this.cart.findIndex(
-      (cartItem) => cartItem.name === item.name
-    );
-    if (existingItemIndex !== -1) {
-      this.cart[existingItemIndex].quantity += 1;
-    } else {
-      this.cart.push({ ...item, quantity: 1 });
-    }
-    this.saveCartToLocalStorage(); // Save updated cart to localStorage
+  // 5. Get total price of the cart for a specific user (from backend)
+  getTotalPrice(userId: number): Observable<number> {
+    return this.http.get<number>(`${this.apiUrl}/total/${userId}`);
   }
 
-  updateItemQuantity(index: number, newQuantity: number) {
-    if (newQuantity > 0 && index >= 0 && index < this.cart.length) {
-      this.cart[index].quantity = newQuantity;
-      this.saveCartToLocalStorage(); // Save updated cart to localStorage
-    }
+  // 6. Calculate total price on the frontend (if needed)
+  calculateTotalPrice(cartItems: any[]): number {
+    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
-  removeFromCart(index: number) {
-    if (index >= 0 && index < this.cart.length) {
-      this.cart.splice(index, 1);
-      this.saveCartToLocalStorage(); // Save updated cart to localStorage
-    }
-  }
-
-  getTotalPrice() {
-    return this.cart.reduce(
-      (acc, item) => acc + item.price * item.quantity,
-      0
-    );
-  }
-
-  getTax() {
-    return this.getTotalPrice() * 0.1; // 10% tax
-  }
-
-  getGrandTotal() {
-    return this.getTotalPrice() + this.getTax();
+  // 7. Calculate grand total (with optional tax or additional costs)
+  calculateGrandTotal(cartItems: any[], tax: number = 0.1): number {
+    const total = this.calculateTotalPrice(cartItems);
+    return total + total * tax; // Adding tax or additional costs
   }
 }

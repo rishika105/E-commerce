@@ -1,5 +1,17 @@
 <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-6 text-gray-800">Shopping Cart</h1>
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">Shopping Cart</h1>
+  
+  <!-- Loading indicator -->
+  <div *ngIf="loading" class="text-center text-gray-600">
+    <p>Loading cart items...</p>
+  </div>
+
+  <!-- Error message -->
+  <div *ngIf="errorMessage" class="text-red-600 mb-4">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!loading && !errorMessage">
     <div class="flex flex-col md:flex-row gap-4">
       <div class="w-full md:w-2/3">
         <table class="w-full border-collapse rounded-lg overflow-hidden">
@@ -24,9 +36,9 @@
               <td class="py-3 px-4 text-right">{{item.price | currency}}</td>
               <td class="py-3 px-4 text-right">
                 <div class="flex justify-end items-center">
-                  <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateSubtotal(i)">-</button>
-                  <input type="number" [(ngModel)]="item.quantity" class="w-12 text-center py-2 border border-gray-300 rounded">
-                  <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateSubtotal(i)">+</button>
+                  <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="decrementQuantity(i)">-</button>
+                  <input type="number" [(ngModel)]="item.quantity" class="w-12 text-center py-2 border border-gray-300 rounded" [min]="1">
+                  <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="incrementQuantity(i)">+</button>
                 </div>
               </td>
               <td class="py-3 px-4 text-right">{{item.price * item.quantity | currency}}</td>
@@ -51,13 +63,10 @@
           </div>
           <button (click)="goToCheckout()"
           class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded w-full">
-    Checkout
-  </button>
-  
-        
+            Checkout
+          </button>
         </div>
       </div>
     </div>
   </div>
-  <app-checkout></app-checkout>
-  
+</div>
