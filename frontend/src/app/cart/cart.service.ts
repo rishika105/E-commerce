@@ -1,48 +1,87 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'; // Import HttpClient for API calls
-import { Observable } from 'rxjs'; // Import Observable to handle HTTP responses
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private apiUrl = 'http://localhost:8080/api/cart'; // Base URL of your Spring Boot backend
+  private cart: any[] = [];
 
-  constructor(private http: HttpClient) {}
-
-  // 1. Get all cart items for a specific user
-  getCartItems(userId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/user/${userId}`);
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadCartFromLocalStorage(); // Load cart from localStorage on service initialization
+    }
   }
 
-  // 2. Add item to the cart
-  addToCart(userId: number, productId: number, quantity: number): Observable<any> {
-    return this.http.post(`${this.apiUrl}/add`, { userId, productId, quantity });
+  // Load cart from localStorage
+  private loadCartFromLocalStorage() {
+    if (isPlatformBrowser(this.platformId)) {
+      const storedCart = localStorage.getItem('cart');
+      if (storedCart) {
+        this.cart = JSON.parse(storedCart);
+      }
+    }
   }
 
-  // 3. Update item quantity in the cart
-  updateItemQuantity(cartId: number, quantity: number): Observable<any> {
-    return this.http.put(`${this.apiUrl}/update`, { cartId, quantity });
+  // Save cart to localStorage
+  saveCartToLocalStorage() {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('cart', JSON.stringify(this.cart));
+    }
   }
 
-  // 4. Remove an item from the cart
-  removeFromCart(cartId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/remove/${cartId}`);
+  // Get all cart items
+  getCartItems() {
+    return this.cart;
   }
 
-  // 5. Get total price of the cart for a specific user (from backend)
-  getTotalPrice(userId: number): Observable<number> {
-    return this.http.get<number>(`${this.apiUrl}/total/${userId}`);
+  // Add an item to the cart
+  addToCart(item: any) {
+    const existingItemIndex = this.cart.findIndex(
+      (cartItem) => cartItem.name === item.name
+    );
+    if (existingItemIndex !== -1) {
+      this.cart[existingItemIndex].quantity += 1;
+    } else {
+      this.cart.push({ ...item, quantity: 1 });
+    }
+    this.saveCartToLocalStorage(); // Save updated cart to localStorage
   }
 
-  // 6. Calculate total price on the frontend (if needed)
-  calculateTotalPrice(cartItems: any[]): number {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+  // Update item quantity in the cart
+  updateItemQuantity(index: number, newQuantity: number) {
+    if (newQuantity > 0 && index >= 0 && index < this.cart.length) {
+      this.cart[index].quantity = newQuantity;
+      this.saveCartToLocalStorage(); // Save updated cart to localStorage
+    }
   }
 
-  // 7. Calculate grand total (with optional tax or additional costs)
-  calculateGrandTotal(cartItems: any[], tax: number = 0.1): number {
-    const total = this.calculateTotalPrice(cartItems);
-    return total + total * tax; // Adding tax or additional costs
+  // Remove item from the cart
+  removeFromCart(index: number) {
+    if (index >= 0 && index < this.cart.length) {
+      this.cart.splice(index, 1);
+      this.saveCartToLocalStorage(); // Save updated cart to localStorage
+    }
+  }
+
+  // Get the total price of the cart items
+  getTotalPrice(): number {
+    return this.cart.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
+  }
+
+  // Get the tax amount (example 10% tax rate)
+  getTax(): number {
+    const totalPrice = this.getTotalPrice();
+    return totalPrice * 0.1; // Assuming a 10% tax
+  }
+
+  // Get the grand total (total price + tax)
+  getGrandTotal(): number {
+    const totalPrice = this.getTotalPrice();
+    const tax = this.getTax();
+    return totalPrice + tax;
   }
 }

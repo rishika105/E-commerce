@@ -1,98 +1,63 @@
+import { Component, OnInit } from '@angular/core'; // Import necessary Angular core functionalities
+import { CartService } from './cart.service'; // Import CartService
+import { FormsModule } from '@angular/forms'; // Import FormsModule for template-driven forms
+import { Router, RouterLink, RouterOutlet } from '@angular/router'; // Import Router for navigation
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgIconComponent } from '@ng-icons/core';
-import { CartService } from './cart.service';
+import { CheckoutComponent } from '../checkout/checkout.component';
 
 @Component({
   selector: 'app-cart',
-  standalone: true,
-  imports: [CommonModule, FormsModule, NgIconComponent, RouterLink, RouterOutlet],
-  templateUrl: './cart.component.html',
+  templateUrl: './cart.component.html', // Define the template URL
+  standalone: true, // Declare this component as a standalone component
+  imports: [CommonModule, FormsModule, NgIconComponent, RouterLink, RouterOutlet, CheckoutComponent], // Include necessary imports
 })
-export class CartComponent implements OnInit {
-  cart: any[] = [];
-  userId: number = 1; // Example user ID
-  taxRate: number = 0.1; // 10% tax
-  loading: boolean = false; // Loading state
-  errorMessage: string = ''; // Error message
-  total: any;
 
-  constructor(private cartService: CartService, private router: Router) {}
+export class CartComponent implements OnInit {
+removeProduct(_t17: number) {
+throw new Error('Method not implemented.');
+}
+  cart: any[] = [];
+  couponCode: string = '';
+
+  constructor(private cartService: CartService, private router: Router) { }
 
   ngOnInit() {
-    this.loadCartItems();
+    this.cart = this.cartService.getCartItems();
   }
 
-  // Load cart items from API
-  loadCartItems() {
-    this.loading = true;
-    this.cartService.getCartItems(this.userId).subscribe({
-      next: (items) => {
-        this.cart = items;
-        this.calculateTotals();
-        this.loading = false; // End loading
-      },
-      error: (err) => {
-        console.error('Error loading cart items:', err);
-        this.errorMessage = 'Failed to load cart items. Please try again later.';
-        this.loading = false; // End loading
-      },
-    });
+  updateCart() {
+    this.cartService.saveCartToLocalStorage(); // Update and save cart to localStorage
   }
 
-  // Increment quantity
-  incrementQuantity(index: number) {
-    this.cart[index].quantity++;
-    this.updateSubtotal(index);
+  removeItem(id: number) {
+    this.cartService.removeFromCart(id);
+    this.cart = this.cartService.getCartItems(); // Refresh the cart
   }
 
-  // Decrement quantity
-  decrementQuantity(index: number) {
-    if (this.cart[index].quantity > 1) {
-      this.cart[index].quantity--;
-      this.updateSubtotal(index);
-    }
+  applyCoupon() {
+    // Implement coupon logic here
+    console.log('Applying coupon:', this.couponCode);
   }
 
-  // Update subtotal and recalculate totals
   updateSubtotal(index: number) {
     const item = this.cart[index];
-    this.cartService.updateItemQuantity(item.cartId, item.quantity).subscribe({
-      next: () => {
-        this.calculateTotals();
-      },
-      error: (err) => {
-        console.error('Error updating item quantity:', err);
-        this.errorMessage = 'Failed to update item quantity. Please try again.';
-      },
-    });
+    this.cartService.updateItemQuantity(index, item.quantity);
   }
 
-  // Calculate subtotal and total
-  calculateTotals() {
-    const total = this.cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
-    this.total = total;
-  }
-
-  // Get total price
   getTotal() {
-    return this.cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    return this.cartService.getTotalPrice();
   }
 
-  // Calculate tax
   getTax() {
-    return this.getTotal() * this.taxRate;
+    return this.cartService.getTax();
   }
 
-  // Get grand total (subtotal + tax)
   getGrandTotal() {
-    return this.getTotal() + this.getTax();
+    return this.cartService.getGrandTotal();
   }
 
-  // Navigate to checkout
   goToCheckout() {
-    this.router.navigate(['/checkout']);
+    this.router.navigate(['/checkout']);  // Navigates to the checkout route
   }
 }
