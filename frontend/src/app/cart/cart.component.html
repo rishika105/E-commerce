@@ -9,7 +9,7 @@
             <th class="py-3 px-4 text-right">Price</th>
             <th class="py-3 px-4 text-right">Quantity</th>
             <th class="py-3 px-4 text-right">Subtotal</th>
-            <th class="py-3 px-4 text-right">Actions</th> <!-- New Actions Column -->
+            <th class="py-3 px-4 text-right">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -25,14 +25,14 @@
             <td class="py-3 px-4 text-right">{{item.price | currency}}</td>
             <td class="py-3 px-4 text-right">
               <div class="flex justify-end items-center">
-                <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateSubtotal(i)">-</button>
-                <input type="number" [(ngModel)]="item.quantity" class="w-12 text-center py-2 border border-gray-300 rounded">
-                <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateSubtotal(i)">+</button>
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateQuantity(i, -1)">-</button>
+                <input type="number" [(ngModel)]="item.quantity" class="w-12 text-center py-2 border border-gray-300 rounded" [min]="1">
+                <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateQuantity(i, 1)">+</button>
               </div>
             </td>
             <td class="py-3 px-4 text-right">{{item.price * item.quantity | currency}}</td>
-            <td class="py-3 px-4 text-right"> <!-- Remove Button Column -->
-              <button class="bg-red-600 to-white px-4 py-2 rounded" (click)="removeProduct(i)">
+            <td class="py-3 px-4 text-right">
+              <button class="bg-red-600 text-white px-4 py-2 rounded" (click)="removeProduct(i)">
                 Remove
               </button>
             </td>
@@ -83,7 +83,7 @@
               <p class="text-gray-600">Total:</p>
               <p class="text-gray-800">{{getGrandTotal() | currency}}</p>
             </div>
-            <button class="w-full bg-red-600 text-white px-6 py-3 rounded mt-6">
+            <button class="w-full bg-red-600 text-white px-6 py-3 rounded mt-6" (click)="goToCheckout()">
               Process to checkout
             </button>
           </div>

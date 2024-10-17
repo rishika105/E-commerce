@@ -13,10 +13,9 @@ import { CheckoutComponent } from '../checkout/checkout.component';
   imports: [CommonModule, FormsModule, NgIconComponent, RouterLink, RouterOutlet, CheckoutComponent], // Include necessary imports
 })
 
+
+
 export class CartComponent implements OnInit {
-removeProduct(_t17: number) {
-throw new Error('Method not implemented.');
-}
   cart: any[] = [];
   couponCode: string = '';
 
@@ -27,30 +26,31 @@ throw new Error('Method not implemented.');
   }
 
   updateCart() {
-    this.cartService.saveCartToLocalStorage(); // Update and save cart to localStorage
+    this.cartService.saveCartToLocalStorage();
   }
 
-  removeItem(id: number) {
-    this.cartService.removeFromCart(id);
+  removeProduct(index: number) {
+    this.cartService.removeFromCart(index);
     this.cart = this.cartService.getCartItems(); // Refresh the cart
   }
 
   applyCoupon() {
-    // Implement coupon logic here
     console.log('Applying coupon:', this.couponCode);
+    // Add coupon application logic here
   }
 
-  updateSubtotal(index: number) {
+  updateQuantity(index: number, change: number) {
     const item = this.cart[index];
-    this.cartService.updateItemQuantity(index, item.quantity);
+    const newQuantity = item.quantity + change;
+
+    if (newQuantity > 0) {
+      item.quantity = newQuantity;
+      this.cartService.updateItemQuantity(index, item.quantity);
+    }
   }
 
   getTotal() {
     return this.cartService.getTotalPrice();
-  }
-
-  getTax() {
-    return this.cartService.getTax();
   }
 
   getGrandTotal() {
@@ -58,6 +58,6 @@ throw new Error('Method not implemented.');
   }
 
   goToCheckout() {
-    this.router.navigate(['/checkout']);  // Navigates to the checkout route
+    this.router.navigate(['/checkout']);
   }
 }
