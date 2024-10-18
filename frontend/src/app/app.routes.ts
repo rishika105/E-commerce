@@ -51,6 +51,10 @@ export const routes: Routes = [
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
+    children: [
+      {path: "", redirectTo: "profile", pathMatch: "full"},
+      { path: 'profile', component: ProfileComponent },
+    ],
     data: { roles: ['ADMIN'] } // Only ADMIN can access this route
   },
   {
