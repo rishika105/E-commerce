@@ -25,8 +25,17 @@ export class CartComponent implements OnInit {
     this.cart = this.cartService.getCartItems();
   }
 
+  returnToShop() {
+    this.router.navigate(['/category']); // Navigate to category page
+  }
+
   updateCart() {
-    this.cartService.saveCartToLocalStorage();
+    this.cartService.saveCartToLocalStorage(); // Save the updated cart
+    alert("Cart updated successfully!");
+
+    if (this.couponCode) {
+      this.applyCoupon(); // Optionally reapply the coupon
+    }
   }
 
   removeProduct(index: number) {
