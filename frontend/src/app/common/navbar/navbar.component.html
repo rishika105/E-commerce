@@ -1,0 +1,113 @@
+<!-- Logout Confirmation Modal -->
+<app-confirmation-modal
+  *ngIf="showLogoutModal"
+  title="Logout"
+  message="Are you sure you want to logout?"
+  confirmText="Logout"
+  (onCancel)="cancelLogout()"
+  (onConfirm)="confirmLogout()"
+></app-confirmation-modal>
+
+
+<nav class="bg-gray-50 border-b border-gray-200">
+  <div class="container mx-auto flex justify-between items-center py-4">
+    <!-- Logo -->
+    <a href="#" class="flex items-center text-red-600 text-2xl font-bold">
+      <span class="text-black">Shop</span><span class="text-red-600">Nest</span>
+    </a>
+    <!-- Public Navbar -->
+    <div class="hidden md:flex space-x-10 mt-2" *ngIf="!isLoggedIn">
+      <!-- Search Bar -->
+      <form (submit)="onSearch(searchInput.value)" class="flex items-center bg-gray-100 rounded-md gap-2 mr-[155px] mt-[-8px]">
+        <div class="flex items-center bg-gray-100 p-2 rounded-md w-[500px]">
+          <ng-icon name="heroMagnifyingGlass" class="text-gray-500"></ng-icon>
+          <input
+            type="text"
+            placeholder="Search products and more"
+            #searchInput
+            class="ml-2 placeholder-gray-700 text-gray-700 bg-gray-100 focus:outline-none w-full"
+          />
+        </div>
+      </form>
+      <a href="#" class="text-black hover:text-red-500" [routerLink]="['/about']">About Us</a>
+      <a href="#" class="text-black hover:text-red-500" [routerLink]="['/contact']">Contact Us</a>
+      <a href="#" class="text-black hover:text-red-500" [routerLink]="['/register']">Signup</a>
+      <a href="#" class="text-white mt-[-7px] pl-4 pr-4 pt-2 pb-2 rounded-md bg-red-500" [routerLink]="['/login']">Login</a>
+    </div>
+
+    <!-- User Navbar (Logged In) -->
+    <div class="hidden md:flex space-x-10 mt-2" *ngIf="isLoggedIn && userRole == 'USER'">
+      <!-- Search Bar -->
+      <form (submit)="onSearch(searchInput.value)" class="flex items-center bg-gray-100 rounded-md gap-2 mr-[180px] mt-[-5px]">
+        <div class="flex items-center bg-gray-100 p-2 rounded-md w-[500px]">
+          <ng-icon name="heroMagnifyingGlass" class="text-gray-500"></ng-icon>
+          <input
+            type="text"
+            placeholder="Search products and more"
+            #searchInput
+            class="ml-2 placeholder-gray-700 text-gray-700 bg-gray-100 focus:outline-none w-full"
+          />
+        </div>
+      </form>
+
+      <a href="#" class="text-black hover:text-red-500" [routerLink]="['/about']">About Us</a>
+      <a href="#" class="text-black hover:text-red-500" [routerLink]="['/contact']">Contact Us</a>
+      <ng-icon name="heroHeart" class="cursor-pointer" [style.fontSize.px]="22"></ng-icon>
+      <ng-icon name="heroShoppingCart" class="cursor-pointer" [style.fontSize.px]="22"></ng-icon>
+
+      <!-- Profile Icon -->
+      <div class="relative">
+        <ng-icon name="heroUserCircle" class="text-gray-700 cursor-pointer" [style.fontSize.px]="24" (click)="toggleProfileMenu()"></ng-icon>
+
+       <!-- Dropdown Modal (shown based on boolean flag) -->
+        <div *ngIf="showProfileMenu" class="absolute right-0 mt-2 w-48 bg-gray-200 rounded-lg shadow-lg z-50">
+          <ul>
+            <li (click)="goToDashboard()" class="px-4 py-2 cursor-pointer">Dashboard</li>
+            <li (click)="logout()" class="px-4 py-2 cursor-pointer">Logout</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seller Navbar (Logged In as Seller) -->
+    <div class="hidden md:flex space-x-10 mt-2" *ngIf="isLoggedIn && userRole == 'SELLER'">
+      <!-- Search Bar -->
+      <form (submit)="onSearch(searchInput.value)" class="flex items-center bg-gray-100 rounded-md gap-2 mr-[200px] mt-[-8px] h-[40px]">
+        <ng-icon name="heroMagnifyingGlass" class="text-gray-500"></ng-icon>
+        <input
+          type="text"
+          placeholder="Search products and more"
+          #searchInput
+          class="w-[400px] h-[5px] p-2 text-gray-700 placeholder-gray-600 bg-transparent border-none focus:outline-none focus:ring-0 focus:border-transparent"
+        />
+      </form>
+
+      <a href="#" class="text-black hover:text-red-500" [routerLink]="['/about']">About Us</a>
+      <a href="#" class="text-black hover:text-red-500" [routerLink]="['/contact']">Contact Us</a>
+      <ng-icon name="heroUserGroup" class="cursor-pointer" [style.fontSize.px]="22"></ng-icon>
+      <ng-icon name="heroTruck" class="cursor-pointer" [style.fontSize.px]="22"></ng-icon>
+           <!-- Profile Icon -->
+           <div class="relative">
+            <ng-icon name="heroUserCircle" class="text-gray-700 cursor-pointer" [style.fontSize.px]="24" (click)="toggleProfileMenu()"></ng-icon>
+
+           <!-- Dropdown Modal (shown based on boolean flag) -->
+            <div *ngIf="showProfileMenu" class="absolute right-0 mt-2 w-48 bg-gray-200 rounded-lg shadow-lg z-50">
+              <ul>
+                <li (click)="goToDashboard()" class="px-4 py-2 cursor-pointer">Dashboard</li>
+                <li (click)="logout()" class="px-4 py-2 cursor-pointer">Logout</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden">
+      <button class="text-gray-800 hover:text-gray-600 focus:outline-none">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>

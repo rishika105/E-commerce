@@ -1,0 +1,99 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">Shopping Cart</h1>
+
+  <!-- Full-width Shopping Cart Table -->
+  <div class="w-full">
+    <table class="w-full border-collapse rounded-lg overflow-hidden">
+      <thead class="bg-gray-200 text-gray-600">
+        <tr>
+          <th class="py-3 px-4 text-left">Product</th>
+          <th class="py-3 px-4 text-right">Price</th>
+          <th class="py-3 px-4 text-right">Quantity</th>
+          <th class="py-3 px-4 text-right">Subtotal</th>
+          <th class="py-3 px-4 text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cart; let i = index">
+          <td class="py-3 px-4">
+            <div class="flex items-center">
+              <img [src]="'./assets/images/' + item.name + '.jpeg'" alt="{{item.name}}" class="w-12 h-12 rounded-md mr-4">
+              <div>
+                <h2 class="font-medium text-gray-800">{{item.name}}</h2>
+              </div>
+            </div>
+          </td>
+          <td class="py-3 px-4 text-right">{{item.price | currency}}</td>
+          <td class="py-3 px-4 text-right">
+            <div class="flex justify-end items-center">
+              <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateQuantity(i, -1)">-</button>
+              <input type="number" [(ngModel)]="item.quantity" class="w-12 text-center py-2 border border-gray-300 rounded" [min]="1">
+              <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateQuantity(i, 1)">+</button>
+            </div>
+          </td>
+          <td class="py-3 px-4 text-right">{{item.price * item.quantity | currency}}</td>
+          <td class="py-3 px-4 text-right">
+            <button class="bg-red-600 text-white px-4 py-2 rounded" (click)="removeProduct(i)">
+              Remove
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Return to Shop and Update Cart -->
+    <div class="flex justify-between mt-8">
+      <button class="bg-black text-white px-6 py-2 rounded" (click)="returnToShop()">
+        Return To Shop
+      </button>
+      
+      <button class="bg-red-600 text-white px-6 py-2 rounded" (click)="updateCart()">
+        Update Cart
+      </button>
+    </div>
+
+    <!-- Coupon Code and Cart Total Side by Side -->
+    <div class="flex flex-col md:flex-row justify-between mt-8 w-full">
+
+      <!-- Left Side: Coupon Code and Apply Coupon (50%) -->
+      <div class="w-full md:w-1/2 flex items-center">
+        <input
+          type="text"
+          placeholder="Coupon Code"
+          [(ngModel)]="couponCode"
+          class="w-3/4 px-4 py-2 border border-gray-300 rounded-l"
+        >
+        <button
+          (click)="applyCoupon()"
+          class="w-1/4 bg-red-600 text-white px-6 py-2 rounded-r"
+        >
+          Apply Coupon
+        </button>
+      </div>
+
+      <!-- Right Side: Cart Total (50%) -->
+      <div class="w-full md:w-1/2 flex justify-end mt-6 md:mt-0">
+        <div class="bg-gray-100 p-6 rounded border w-full md:w-2/3">
+          <h2 class="text-lg font-semibold mb-4">Cart Total</h2>
+          <div class="flex justify-between mb-2">
+            <p class="text-gray-600">Subtotal:</p>
+            <p class="text-gray-800">{{getTotal() | currency}}</p>
+          </div>
+          <div class="flex justify-between mb-2">
+            <p class="text-gray-600">Shipping:</p>
+            <p class="text-gray-800">Free</p>
+          </div>
+          <div class="flex justify-between mb-4">
+            <p class="text-gray-600">Total:</p>
+            <p class="text-gray-800">{{getGrandTotal() | currency}}</p>
+          </div>
+          <button class="w-full bg-red-600 text-white px-6 py-3 rounded mt-6" (click)="goToCheckout()">
+            Process to checkout
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<app-checkout></app-checkout>

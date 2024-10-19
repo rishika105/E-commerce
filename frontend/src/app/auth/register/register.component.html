@@ -1,0 +1,124 @@
+<div class="bg-gray-100"><!-- Background Container -->
+
+  <div class="h-screen flex items-center justify-center bg-gradient-to-r from-gray-100 to-gray-100">
+
+    <!-- Form Container with Shadow -->
+    <div class="signup-container w-[800px] bg-white p-6 rounded-lg shadow-lg flex items-center justify-center gap-6 "
+      *ngIf="!loading">
+
+
+      <!-- Left-side Image -->
+      <div class="hidden md:block" *ngIf="!loading">
+        <img class="h-[450px] w-[560px]" src="../../../assets/images/register.svg" alt="Register Image">
+      </div>
+
+      <!-- Form Section -->
+      <div class="w-full">
+        <p class="text-4xl font-medium  flex justify-center mx-auto items-center">Sign Up</p>
+
+        <!-- Form starts here -->
+        <form [formGroup]="signupForm" (ngSubmit)="onSubmitSignup()" *ngIf="!otpSent && !loading" class="space-y-4">
+
+          <!-- Name -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+            <input id="name" type="text" placeholder="Name"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+              formControlName="name">
+            <div *ngIf="signupForm.get('name')?.touched && signupForm.get('name')?.invalid">
+              <small class="text-red-500" *ngIf="signupForm.get('name')?.hasError('required')">Name is required</small>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+            <input id="email" type="email" placeholder="Email"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+              formControlName="email">
+            <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid">
+              <small class="text-red-500" *ngIf="signupForm.get('email')?.hasError('required')">Email is required</small>
+              <small class="text-red-500" *ngIf="signupForm.get('email')?.hasError('email')">Invalid email</small>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            <input id="password" type="password" placeholder="Password"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+              formControlName="password">
+            <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid">
+              <small class="text-red-500" *ngIf="signupForm.get('password')?.hasError('required')">Password is
+                required</small>
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div>
+            <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+            <input id="confirmPassword" type="password" placeholder="Confirm Password"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+              formControlName="confirmPassword">
+            <div *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.invalid">
+              <small class="text-red-500" *ngIf="signupForm.get('confirmPassword')?.hasError('required')">Confirmation is
+                required</small>
+            </div>
+            <div *ngIf="signupForm.get('confirmPassword')?.touched && signupForm.hasError('mismatch')">
+              <small class="text-red-500">Passwords do not match</small>
+            </div>
+          </div>
+
+          <!-- Role -->
+          <div>
+            <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+            <select id="role"
+              class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+              formControlName="role">
+              <option value="">Select Role</option>
+              <option *ngFor="let role of roles" [value]="role.value">{{ role.label }}</option>
+            </select>
+            <div *ngIf="signupForm.get('role')?.touched && signupForm.get('role')?.invalid">
+              <small class="text-red-500" *ngIf="signupForm.get('role')?.hasError('required')">Role is required</small>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="text-center">
+            <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600"
+              [disabled]="signupForm.invalid">Send OTP</button>
+          </div>
+        </form>
+
+        <!-- OTP Section (when sent) -->
+        <div *ngIf="otpSent" class="mt-8">
+          <p class="text-2xl font-medium mb-4 text-center">Enter OTP</p>
+          <form [formGroup]="otpForm" (ngSubmit)="onSubmitOtp()">
+            <div>
+              <label for="otp" class="block text-sm font-medium text-gray-700">OTP</label>
+              <input id="otp" type="text" placeholder="OTP"
+                class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500"
+                formControlName="otp">
+              <div *ngIf="otpForm.get('otp')?.touched && otpForm.get('otp')?.invalid">
+                <small class="text-red-500" *ngIf="otpForm.get('otp')?.hasError('required')">OTP is required</small>
+              </div>
+            </div>
+
+            <div class="mt-4 text-center">
+              <button type="submit" class="w-full bg-red-500 text-white py-2 rounded-md hover:bg-red-600"
+                [disabled]="otpForm.invalid">Verify OTP</button>
+            </div>
+
+            <div>
+              <button (click)="onSubmitSignup()" class="text-md text-red-500">Resend Code</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Loading -->
+    <div *ngIf="loading" class="mt-6 loader">
+      <p>Loading...</p>
+    </div>
+  </div>
+  </div>
