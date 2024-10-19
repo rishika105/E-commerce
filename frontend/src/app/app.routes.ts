@@ -14,58 +14,72 @@ import { UserDashboardComponent } from './dashboard/user-dashboard/user-dashboar
 import { RoleGuard } from './guards/role.guard';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { SellerComponent } from './seller/seller.component';
 
-
-//open routes
+// open routes
 export const routes: Routes = [
   {
-    path: "login",
-    component: LoginComponent
+    path: 'login',
+    component: LoginComponent,
   },
   {
-    path: "register",
-    component: RegisterComponent
+    path: 'register',
+    component: RegisterComponent,
   },
   {
-    path: "about",
-    component: AboutComponent
+    path: 'about',
+    component: AboutComponent,
   },
   {
-    path: "contact",
-    component: ContactComponent
+    path: 'contact',
+    component: ContactComponent,
   },
   {
-    path: "home",
-    component: HomeComponent
+    path: 'home',
+    component: HomeComponent,
   },
   {
-    path: "forgot-password",
-    component: ForgotPasswordComponent
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
   },
-  { path: "reset-password",
-    component: ResetPasswordComponent
+  { path: 'reset-password', component: ResetPasswordComponent },
+
+  // New route for Seller Form
+  {
+    path: 'seller-form',
+    component: SellerComponent,
+    canActivate: [AuthGuard, RoleGuard], // Optional
+    data: { roles: ['SELLER'] }, // Optional, only sellers can access
   },
 
-  //private routes only can access
+  // private routes
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
+<<<<<<< HEAD
+    data: { roles: ['ADMIN'] },
+=======
     children: [
       {path: "", redirectTo: "profile", pathMatch: "full"},
       { path: 'profile', component: ProfileComponent },
     ],
     data: { roles: ['ADMIN'] } // Only ADMIN can access this route
+>>>>>>> 8b23ece604cdc20916f348043ceca6251c91986e
   },
   {
     path: 'seller-dashboard',
     component: SellerDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
+<<<<<<< HEAD
+    data: { roles: ['SELLER'] },
+=======
     children: [
       {path: "", redirectTo: "profile", pathMatch: "full"},
       { path: 'profile', component: ProfileComponent },
     ],
     data: { roles: ['SELLER'] } // Only SELLER can access this route
+>>>>>>> 8b23ece604cdc20916f348043ceca6251c91986e
   },
   //NESTED ROUTING
   {
@@ -78,18 +92,23 @@ export const routes: Routes = [
       // Add more routes here for other dashboard pages
     ],
     canActivate: [AuthGuard, RoleGuard],
+<<<<<<< HEAD
+    data: { roles: ['USER'] },
+=======
     data: {roles: ['USER']}
+>>>>>>> 8b23ece604cdc20916f348043ceca6251c91986e
   },
 
-  // Default route that redirects to 'home'
+  // Default route
   {
-    path: "",
-    redirectTo: "home",
-    pathMatch: "full"
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
+
   // Wildcard route for 404 error page
   {
-    path: "**",
-    component: ErrorComponent
+    path: '**',
+    component: ErrorComponent,
   },
 ];
