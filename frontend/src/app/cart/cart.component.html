@@ -17,7 +17,7 @@
         <tr *ngFor="let item of cart; let i = index">
           <td class="py-3 px-4">
             <div class="flex items-center">
-              <img [src]="'./assets/images/' + item.name + '.jpeg'" alt="{{item.name}}" class="w-12 h-12 rounded-md mr-4">
+              <img [src]="'./assets/images/' + item.name + '.jpeg'" [alt]="item.name" class="w-12 h-12 rounded-md mr-4">
               <div>
                 <h2 class="font-medium text-gray-800">{{item.name}}</h2>
               </div>
@@ -27,7 +27,7 @@
           <td class="py-3 px-4 text-right">
             <div class="flex justify-end items-center">
               <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateQuantity(i, -1)">-</button>
-              <input type="number" [(ngModel)]="item.quantity" class="w-12 text-center py-2 border border-gray-300 rounded" [min]="1">
+              <input type="number" [(ngModel)]="item.quantity" [ngModelOptions]="{standalone: true}" class="w-12 text-center py-2 border border-gray-300 rounded" min="1">
               <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateQuantity(i, 1)">+</button>
             </div>
           </td>
@@ -54,13 +54,12 @@
 
     <!-- Coupon Code and Cart Total Side by Side -->
     <div class="flex flex-col md:flex-row justify-between mt-8 w-full">
-
-      <!-- Left Side: Coupon Code and Apply Coupon (50%) -->
       <div class="w-full md:w-1/2 flex items-center">
         <input
           type="text"
           placeholder="Coupon Code"
           [(ngModel)]="couponCode"
+          [ngModelOptions]="{standalone: true}"
           class="w-3/4 px-4 py-2 border border-gray-300 rounded-l"
         >
         <button
@@ -88,12 +87,10 @@
             <p class="text-gray-800">{{getGrandTotal() | currency}}</p>
           </div>
           <button class="w-full bg-red-600 text-white px-6 py-3 rounded mt-6" (click)="goToCheckout()">
-            Process to checkout
+            Proceed to checkout
           </button>
         </div>
       </div>
-
     </div>
   </div>
 </div>
-<app-checkout></app-checkout>

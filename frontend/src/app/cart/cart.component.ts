@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core'; // Import necessary Angular core functionalities
-import { CartService } from './cart.service'; // Import CartService
-import { FormsModule } from '@angular/forms'; // Import FormsModule for template-driven forms
-import { Router, RouterLink, RouterOutlet } from '@angular/router'; // Import Router for navigation
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgIconComponent } from '@ng-icons/core';
 import { CheckoutComponent } from '../checkout/checkout.component';
+import { CartService } from './cart.service';
 
 @Component({
   selector: 'app-cart',
-  templateUrl: './cart.component.html', // Define the template URL
-  standalone: true, // Declare this component as a standalone component
-  imports: [CommonModule, FormsModule, NgIconComponent, RouterLink, RouterOutlet, CheckoutComponent], // Include necessary imports
+  templateUrl: './cart.component.html',
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    NgIconComponent,
+    RouterLink,
+    RouterOutlet,
+    CheckoutComponent
+  ],
 })
-
-
-
 export class CartComponent implements OnInit {
   cart: any[] = [];
   couponCode: string = '';
@@ -26,26 +30,26 @@ export class CartComponent implements OnInit {
   }
 
   returnToShop() {
-    this.router.navigate(['/category']); // Navigate to category page
+    this.router.navigate(['/category']);
   }
 
   updateCart() {
-    this.cartService.saveCartToLocalStorage(); // Save the updated cart
+    this.cartService.saveCartToLocalStorage();
     alert("Cart updated successfully!");
 
     if (this.couponCode) {
-      this.applyCoupon(); // Optionally reapply the coupon
+      this.applyCoupon();
     }
   }
 
   removeProduct(index: number) {
     this.cartService.removeFromCart(index);
-    this.cart = this.cartService.getCartItems(); // Refresh the cart
+    this.cart = this.cartService.getCartItems();
   }
 
   applyCoupon() {
     console.log('Applying coupon:', this.couponCode);
-    // Add coupon application logic here
+    // Implement coupon logic here
   }
 
   updateQuantity(index: number, change: number) {
@@ -54,7 +58,7 @@ export class CartComponent implements OnInit {
 
     if (newQuantity > 0) {
       item.quantity = newQuantity;
-      this.cartService.updateItemQuantity(index, item.quantity);
+      this.cartService.updateItemQuantity(index, newQuantity);
     }
   }
 
