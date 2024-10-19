@@ -1,0 +1,71 @@
+<div
+  class="seller-form-container p-6 max-w-lg mx-auto bg-white rounded-lg shadow-md"
+>
+  <form
+    #sellerForm="ngForm"
+    (ngSubmit)="onSubmit(sellerForm)"
+    class="space-y-4"
+  >
+    <!-- Hidden field for Product ID (auto-generated) -->
+    <input type="hidden" name="productId" [value]="productId" ngModel />
+
+    <!-- Product Name -->
+    <div class="form-group">
+      <label for="productName" class="block text-sm font-medium text-gray-700"
+        >Product Name</label
+      >
+      <input
+        type="text"
+        id="productName"
+        name="productName"
+        ngModel
+        required
+        placeholder="Enter product name"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-600 focus:border-red-600 sm:text-sm"
+      />
+    </div>
+
+    <!-- Product Price -->
+    <div class="form-group">
+      <label for="productPrice" class="block text-sm font-medium text-gray-700"
+        >Product Price</label
+      >
+      <input
+        type="number"
+        id="productPrice"
+        name="productPrice"
+        ngModel
+        required
+        placeholder="Enter product price"
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-red-600 focus:border-red-600 sm:text-sm"
+      />
+    </div>
+
+    <!-- Product Image -->
+    <div class="form-group">
+      <label for="productImage" class="block text-sm font-medium text-gray-700"
+        >Product Image</label
+      >
+      <input
+        type="file"
+        id="productImage"
+        name="productImage"
+        (change)="onFileSelected($event)"
+        accept="image/*"
+        required
+        class="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-red-50 file:text-red-600 hover:file:bg-red-100"
+      />
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group">
+      <button
+        type="submit"
+        [disabled]="!sellerForm.valid"
+        class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

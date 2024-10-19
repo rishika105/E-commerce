@@ -12,67 +12,74 @@ import { UserDashboardComponent } from './dashboard/user-dashboard/user-dashboar
 import { RoleGuard } from './guards/role.guard';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { SellerComponent } from './seller/seller.component';
 
-
-//open routes
+// open routes
 export const routes: Routes = [
   {
-    path: "login",
-    component: LoginComponent
+    path: 'login',
+    component: LoginComponent,
   },
   {
-    path: "register",
-    component: RegisterComponent
+    path: 'register',
+    component: RegisterComponent,
   },
   {
-    path: "about",
-    component: AboutComponent
+    path: 'about',
+    component: AboutComponent,
   },
   {
-    path: "contact",
-    component: ContactComponent
+    path: 'contact',
+    component: ContactComponent,
   },
   {
-    path: "home",
-    component: HomeComponent
+    path: 'home',
+    component: HomeComponent,
   },
   {
-    path: "forgot-password",
-    component: ForgotPasswordComponent
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
   },
-  { path: "reset-password",
-    component: ResetPasswordComponent
+  { path: 'reset-password', component: ResetPasswordComponent },
+
+  // New route for Seller Form
+  {
+    path: 'seller-form',
+    component: SellerComponent,
+    canActivate: [AuthGuard, RoleGuard], // Optional
+    data: { roles: ['SELLER'] }, // Optional, only sellers can access
   },
 
-  //private routes only can access
+  // private routes
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['ADMIN'] } // Only ADMIN can access this route
+    data: { roles: ['ADMIN'] },
   },
   {
     path: 'seller-dashboard',
     component: SellerDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['SELLER'] } // Only SELLER can access this route
+    data: { roles: ['SELLER'] },
   },
   {
     path: 'user-dashboard',
     component: UserDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
-    data: { roles: ['USER'] } // USER can access this route
+    data: { roles: ['USER'] },
   },
 
-  // Default route that redirects to 'home'
+  // Default route
   {
-    path: "",
-    redirectTo: "home",
-    pathMatch: "full"
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
+
   // Wildcard route for 404 error page
   {
-    path: "**",
-    component: ErrorComponent
+    path: '**',
+    component: ErrorComponent,
   },
 ];

@@ -1,0 +1,107 @@
+<div class="content-wrapper w-3/4 mx-auto">
+  <div class="flex items-center text-sm text-red-600 mb-2">
+    <div class="w-[15px] bg-red-600 mr-4 h-[35px] rounded-md"></div>
+    <span>Categories</span>
+  </div>
+  <div class="flex justify-between">
+    <div class="text-lg my-2 font-bold">Browse By Category</div>
+    <div class="flex">
+      <div class="cursor-pointer">
+        <img
+          src="img/Fill-With-Left-Arrow.png"
+          class="mx-1 max-w-[70%] opacity-70 cursor-pointer hover:opacity-100"
+        />
+      </div>
+      <div class="cursor-pointer">
+        <img
+          src="img/Fill-with-Right-Arrow.png"
+          class="mx-1 max-w-[70%] opacity-70 cursor-pointer hover:opacity-100"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-nowrap justify-between">
+    <div
+      class="border border-gray-300 w-[170px] h-[145px] my-2 text-center text-sm font-medium flex items-center justify-center cursor-pointer rounded-md hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white"
+      (click)="onCategoryClick('Phones')"
+    >
+      <div class="flex flex-col items-center">
+        <img src="img/Category-CellPhone.png" alt="Phones" class="w-24 mb-2" />
+        <div class="mt-5">Phones</div>
+      </div>
+    </div>
+    <div
+      class="border border-gray-300 w-[170px] h-[145px] my-2 text-center text-sm font-medium flex items-center justify-center cursor-pointer rounded-md hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white"
+      (click)="onCategoryClick('Computers')"
+    >
+      <div class="flex flex-col items-center">
+        <img
+          src="img/Category-Computer.png"
+          alt="Computers"
+          class="w-24 mb-2"
+        />
+        <div class="mt-5">Computers</div>
+      </div>
+    </div>
+    <div
+      class="border border-gray-300 w-[170px] h-[145px] my-2 text-center text-sm font-medium flex items-center justify-center cursor-pointer rounded-md hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white"
+      (click)="onCategoryClick('SmartWatch')"
+    >
+      <div class="flex flex-col items-center">
+        <img
+          src="img/Category-SmartWatch.png"
+          alt="SmartWatch"
+          class="w-24 mb-2"
+        />
+        <div class="mt-5">SmartWatch</div>
+      </div>
+    </div>
+    <div
+      class="border border-gray-300 w-[170px] h-[145px] my-2 text-center text-sm font-medium flex items-center justify-center cursor-pointer rounded-md hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white"
+      (click)="onCategoryClick('Camera')"
+    >
+      <div class="flex flex-col items-center">
+        <img src="img/Category-Camera.png" alt="Camera" class="w-24 mb-2" />
+        <div class="mt-5">Camera</div>
+      </div>
+    </div>
+    <div
+      class="border border-gray-300 w-[170px] h-[145px] my-2 text-center text-sm font-medium flex items-center justify-center cursor-pointer rounded-md hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white"
+      (click)="onCategoryClick('HeadPhones')"
+    >
+      <div class="flex flex-col items-center">
+        <img
+          src="img/Category-Headphone.png"
+          alt="Headphones"
+          class="w-24 mb-2"
+        />
+        <div class="mt-5">HeadPhones</div>
+      </div>
+    </div>
+    <div
+      class="border border-gray-300 w-[170px] h-[145px] my-2 text-center text-sm font-medium flex items-center justify-center cursor-pointer rounded-md hover:bg-red-600 hover:text-white active:bg-red-600 active:text-white"
+      (click)="onCategoryClick('Gaming')"
+    >
+      <div class="flex flex-col items-center">
+        <img src="img/Category-Gamepad.png" alt="Gaming" class="w-24 mb-2" />
+        <div class="mt-5">Gaming</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Displaying Products in the Selected Category -->
+  <div *ngIf="filteredProducts.length > 0" class="mt-4">
+    <h2 class="text-lg font-bold">Products in {{ selectedCategory }}</h2>
+    <div class="flex flex-wrap justify-between">
+      <div
+        *ngFor="let product of filteredProducts"
+        class="border border-gray-300 w-[170px] h-[145px] my-2 text-center text-sm font-medium flex items-center justify-center rounded-md"
+      >
+        {{ product.name }}
+      </div>
+    </div>
+  </div>
+  <div *ngIf="filteredProducts.length === 0 && selectedCategory" class="mt-4">
+    <p>No products available in this category.</p>
+  </div>
+</div>
