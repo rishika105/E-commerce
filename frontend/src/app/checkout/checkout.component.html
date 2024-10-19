@@ -5,13 +5,13 @@
     <div class="w-full lg:w-2/3 bg-white p-6 rounded-lg shadow-md">
       <form>
         <div class="grid grid-cols-1 gap-6">
-          <input type="text" [(ngModel)]="billingDetails.firstName" placeholder="First Name" class="border border-gray-300 p-3 rounded" required>
-          <input type="text" [(ngModel)]="billingDetails.company" placeholder="Company Name (optional)" class="border border-gray-300 p-3 rounded">
-          <input type="text" [(ngModel)]="billingDetails.streetAddress" placeholder="Street Address" class="border border-gray-300 p-3 rounded" required>
-          <input type="text" [(ngModel)]="billingDetails.apartment" placeholder="Apartment, floor, etc. (optional)" class="border border-gray-300 p-3 rounded">
-          <input type="text" [(ngModel)]="billingDetails.city" placeholder="Town/City" class="border border-gray-300 p-3 rounded" required>
-          <input type="text" [(ngModel)]="billingDetails.phone" placeholder="Phone Number" class="border border-gray-300 p-3 rounded" required>
-          <input type="email" [(ngModel)]="billingDetails.email" placeholder="Email Address" class="border border-gray-300 p-3 rounded" required>
+          <input type="text" [(ngModel)]="billingDetails.firstName" placeholder="First Name" class="border border-gray-300 p-3 rounded" name="firstName" required >
+          <input type="text" [(ngModel)]="billingDetails.company" placeholder="Company Name (optional)" class="border border-gray-300 p-3 rounded" name="company">
+          <input type="text" [(ngModel)]="billingDetails.streetAddress" placeholder="Street Address" class="border border-gray-300 p-3 rounded" required name="streetAddress">
+          <input type="text" [(ngModel)]="billingDetails.apartment" placeholder="Apartment, floor, etc. (optional)" class="border border-gray-300 p-3 rounded" name="apartment">
+          <input type="text" [(ngModel)]="billingDetails.city" placeholder="Town/City" class="border border-gray-300 p-3 rounded" required name="city">
+          <input type="text" [(ngModel)]="billingDetails.phone" placeholder="Phone Number" class="border border-gray-300 p-3 rounded" required name="phone">
+          <input type="email" [(ngModel)]="billingDetails.email" placeholder="Email Address" class="border border-gray-300 p-3 rounded" required name="email">
         </div>
         <div class="flex items-center mt-4">
           <input type="checkbox" id="save-info" class="mr-2" [(ngModel)]="billingDetails.saveInfo">
