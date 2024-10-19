@@ -1,8 +1,8 @@
 {
-  "hash": "846d414b",
-  "configHash": "b7090a2d",
-  "lockfileHash": "d720d084",
-  "browserHash": "cd0d3bb6",
+  "hash": "486d6fa2",
+  "configHash": "bcfdbb7f",
+  "lockfileHash": "89202ae0",
+  "browserHash": "f4df1a34",
   "optimized": {
     "@angular/common": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/common.mjs",

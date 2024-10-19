@@ -14,39 +14,41 @@ import { UserDashboardComponent } from './dashboard/user-dashboard/user-dashboar
 import { RoleGuard } from './guards/role.guard';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 
-//open routes
+// Open routes
 export const routes: Routes = [
   {
-    path: "login",
-    component: LoginComponent
+    path: 'login',
+    component: LoginComponent,
   },
   {
-    path: "register",
-    component: RegisterComponent
+    path: 'register',
+    component: RegisterComponent,
   },
   {
-    path: "about",
-    component: AboutComponent
+    path: 'about',
+    component: AboutComponent,
   },
   {
-    path: "contact",
-    component: ContactComponent
+    path: 'contact',
+    component: ContactComponent,
   },
   {
-    path: "home",
-    component: HomeComponent
+    path: 'home',
+    component: HomeComponent,
   },
   {
-    path: "forgot-password",
-    component: ForgotPasswordComponent
+    path: 'forgot-password',
+    component: ForgotPasswordComponent,
   },
-  { path: "reset-password",
-    component: ResetPasswordComponent
+  {
+    path: 'reset-password',
+    component: ResetPasswordComponent,
   },
 
-  //private routes only can access
+  // Private routes (only accessible by authenticated users)
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
@@ -83,13 +85,33 @@ export const routes: Routes = [
 
   // Default route that redirects to 'home'
   {
-    path: "",
-    redirectTo: "home",
-    pathMatch: "full"
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full',
   },
+
   // Wildcard route for 404 error page
   {
-    path: "**",
-    component: ErrorComponent
+    path: '**',
+    component: ErrorComponent,
   },
+
+  // Lazy-loaded standalone components
+  {
+    path: 'cart',
+    loadComponent: () => import('./cart/cart.component').then(m => m.CartComponent),
+  },
+  {
+    path: 'category',
+    loadComponent: () => import('./category/category.component').then(m => m.CategoryComponent),
+  },
+  { path: 'checkout',
+    component: CheckoutComponent
+  }
 ];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
