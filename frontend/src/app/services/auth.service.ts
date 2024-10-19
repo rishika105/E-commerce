@@ -1,10 +1,12 @@
+import { setToken } from './../actions/auth.action';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../../environment';
+import { Observable, tap } from 'rxjs';
+import { Store } from '@ngrx/store';  // Ensure this import is correct
+import { environment } from '../../../environment'; // Your environment configuration
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 
 //**********************************************************************/
@@ -14,7 +16,10 @@ import { environment } from '../../../environment';
 export class AuthService {
   private baseUrl = environment.apiUrl;  // Define your API URL in environments file
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store  // Injecting Store to dispatch actions
+  ) {}
 
   // Step 1: Send OTP
   sendOtp(email: string): Observable<any> {
@@ -28,15 +33,25 @@ export class AuthService {
 
   // Step 3: Login User and get JWT Token
   login(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/auth/login`, { email, password });
+    return this.http.post<any>(`${this.baseUrl}/auth/login`, { email, password })
+      .pipe(
+        tap(response => {
+          if (response && response.token) {
+            // Store the token in localStorage
+            localStorage.setItem('token', response.token);
+            // Dispatch an action to update the store
+            this.store.dispatch(setToken({ token: response.token }));  // Dispatch the setToken action
+          }
+        })
+      );
   }
 
-  //Request password reset (send reset link via email)
+  // Step 4: Request password reset (send reset link via email)
   requestPasswordReset(email: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/reset-password-request`, { email });
   }
 
-  // Reset password with token
+  // Step 5: Reset password with token
   resetPassword(token: string, password: string, confirmPassword: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/auth/reset-password`, { token, password, confirmPassword });
   }
