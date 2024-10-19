@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { setLoading, setToken, clearToken, setOtpSent, setRole } from '../actions/auth.action';
+import { setLoading, setToken, clearToken, setOtpSent, setRole, logout } from '../actions/auth.action';
 
 export interface AuthState {
   token: string | null;
@@ -22,6 +22,7 @@ const initialState: AuthState = {
 
 export const authReducer = createReducer(
   initialState,
+
   // Set loading state
   on(setLoading, (state, { loading }) => ({
     ...state,
@@ -35,7 +36,7 @@ export const authReducer = createReducer(
     }
     return {
       ...state,
-      token,// Update role in state
+      token, // Update token in state
     };
   }),
 
@@ -49,7 +50,7 @@ export const authReducer = createReducer(
     };
   }),
 
-  // Clear token and role from state and localStorage
+  // Clear token and role from state and localStorage (used for logout)
   on(clearToken, (state) => {
     if (isBrowser()) {
       localStorage.removeItem('token');
@@ -59,6 +60,21 @@ export const authReducer = createReducer(
       ...state,
       token: null,
       role: null  // Clear role in state
+    };
+  }),
+
+  // Handle logout action by clearing the token, role, and resetting state
+  on(logout, (state) => {
+    if (isBrowser()) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+    }
+    return {
+      ...state,
+      token: null,
+      role: null, // Clear role in state
+      loading: false, // Reset loading state
+      otpSent: false, // Reset OTP state
     };
   }),
 

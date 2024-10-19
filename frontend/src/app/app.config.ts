@@ -18,6 +18,5 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideToastr(), // Provide the rootReducer here
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-
   ]
 };

@@ -1,4 +1,6 @@
-import { Routes } from '@angular/router';
+import { ProfileComponent } from './dashboard/profile/profile.component';
+import { AddressManagerComponent } from './dashboard/address/address.component';
+import { Routes, CanActivate } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AboutComponent } from './about/about.component';
@@ -55,19 +57,46 @@ export const routes: Routes = [
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
+<<<<<<< HEAD
     data: { roles: ['ADMIN'] },
+=======
+    children: [
+      {path: "", redirectTo: "profile", pathMatch: "full"},
+      { path: 'profile', component: ProfileComponent },
+    ],
+    data: { roles: ['ADMIN'] } // Only ADMIN can access this route
+>>>>>>> 8b23ece604cdc20916f348043ceca6251c91986e
   },
   {
     path: 'seller-dashboard',
     component: SellerDashboardComponent,
     canActivate: [AuthGuard, RoleGuard],
+<<<<<<< HEAD
     data: { roles: ['SELLER'] },
+=======
+    children: [
+      {path: "", redirectTo: "profile", pathMatch: "full"},
+      { path: 'profile', component: ProfileComponent },
+    ],
+    data: { roles: ['SELLER'] } // Only SELLER can access this route
+>>>>>>> 8b23ece604cdc20916f348043ceca6251c91986e
   },
+  //NESTED ROUTING
   {
     path: 'user-dashboard',
-    component: UserDashboardComponent,
+    component: UserDashboardComponent, // This contains the sidebar
+    children: [
+      {path: "", redirectTo: "profile", pathMatch: "full"},
+      { path: 'profile', component: ProfileComponent },
+      { path: 'address', component: AddressManagerComponent},
+      // Add more routes here for other dashboard pages
+    ],
     canActivate: [AuthGuard, RoleGuard],
+<<<<<<< HEAD
     data: { roles: ['USER'] },
+=======
+    data: {roles: ['USER']}
+>>>>>>> 8b23ece604cdc20916f348043ceca6251c91986e
   },
 
   // Default route

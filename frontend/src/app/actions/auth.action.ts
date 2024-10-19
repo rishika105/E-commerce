@@ -25,3 +25,8 @@ export const loginUser = createAction(
   '[Auth] Login User',
   props<{ email: string, password: string }>()
 );
+
+//logout
+export const logout = createAction(
+  '[Auth] Logout'
+)

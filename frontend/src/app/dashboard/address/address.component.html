@@ -1,0 +1,144 @@
+<div class="container mx-auto p-6 min-h-[570px] bg-white shadow relative m-[30px] w-[950px] ml-[20px]">
+  <div class="flex justify-between items-center mb-6">
+    <p class="text-xl font-medium">Manage Addresses</p>
+  </div>
+
+  <!-- Button to add new address -->
+  <div
+    class="bg-white p-[20px] flex gap-2 border border-gray-300 w-full cursor-pointer"
+    *ngIf="!showForm"
+    (click)="toggleForm()"
+  >
+    <ng-icon
+      class="text-red-500"
+      [style.fontSize.px]="22"
+      name="heroPlus"
+    ></ng-icon>
+    <div class="text-red-500">ADD NEW ADDRESS</div>
+  </div>
+
+  <!-- Address Form for Add/Edit -->
+  <div
+    *ngIf="showForm"
+    class="bg-gray-100 border border-gray-300 p-6 rounded shadow-md mb-6"
+  >
+    <p class="text-xl p-2">{{ currentAddress ? 'Edit Address' : 'Add New Address' }}</p>
+    <form (ngSubmit)="submitAddress()" class="space-y-4">
+      <div class="flex gap-2">
+        <div>
+          <label class="block font-medium">Name</label>
+          <input
+            type="text"
+            [(ngModel)]="newAddress.name"
+            class="w-full border p-2 rounded"
+            required
+            name="name"
+          />
+        </div>
+        <div>
+          <label class="block font-medium">Phone</label>
+          <input
+            type="text"
+            [(ngModel)]="newAddress.phone"
+            class="w-full border p-2 rounded"
+            required
+            name="phone"
+          />
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <div>
+          <label class="block font-medium">Street</label>
+          <input
+            type="text"
+            [(ngModel)]="newAddress.street"
+            class="w-full border p-2 rounded"
+            required
+            name="phone"
+          />
+        </div>
+
+        <div>
+          <label class="block font-medium">City</label>
+          <input
+            type="text"
+            [(ngModel)]="newAddress.city"
+            class="w-full border p-2 rounded"
+            required
+            name="city"
+          />
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-medium">State</label>
+        <input
+          type="text"
+          [(ngModel)]="newAddress.state"
+          class="w-full border p-2 rounded"
+          required
+          name="state"
+        />
+      </div>
+
+      <div>
+        <label class="block font-medium">Pin Code</label>
+        <input
+          type="text"
+          [(ngModel)]="newAddress.zip"
+          class="w-full border p-2 rounded placeholder:border-red-500"
+          required
+          name="zip"
+        />
+      </div>
+
+      <div class="flex gap-4">
+        <button
+          type="submit"
+          class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-500">
+          Save
+        </button>
+
+        <button
+          class="text-gray-700 bg-white p-2 border border-gray-200 rounded-md"
+          (click)="toggleForm()"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- List of Addresses -->
+  <div
+    *ngFor="let address of addresses"
+    class="bg-white p-6 flex flex-col relative gap-2 border border-gray-300 w-full cursor-pointer"
+  >
+    <div class="absolute top-2 right-2">
+      <ng-icon name="heroEllipsisVertical" (click)="openModal(address)" class="text-gray-500 hover:text-gray-700"
+      [style.fontSize.px]="23">
+      </ng-icon>
+    </div>
+    <p><strong>{{ address.name }}</strong> <span>{{ address.phone }}</span></p>
+    <p>{{ address.street }}, {{ address.city }}, {{ address.state }} - {{ address.zip }}</p>
+  </div>
+
+  <!-- Modal for Edit/Delete Address -->
+  <div *ngIf="showModal && currentAddress" class="absolute top-12 right-4 bg-white p-3 rounded shadow-md">
+    <button (click)="editAddress(currentAddress)" class="block text-gray-700 hover:text-red-500 p-2 w-full text-left">
+      Edit
+    </button>
+    <button (click)="delAddress()" class="block text-gray-700 hover:text-red-500 p-2 w-full text-left">
+      Delete
+    </button>
+    <app-confirmation-modal
+    *ngIf="showConfirmDeleteModal"
+    title="Delete Address"
+    message="Are you sure you want to delete this address?"
+    confirmText="Delete"
+    (onCancel)="cancelDelete()"
+    (onConfirm)="deleteAddress(currentAddress)">
+  </app-confirmation-modal>
+  </div>
+</div>
