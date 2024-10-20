@@ -3,63 +3,64 @@
   <div class="flex flex-col lg:flex-row gap-8">
     <!-- Billing Form -->
     <div class="w-full lg:w-2/3 bg-white p-6 rounded-lg shadow-md">
-      <form>
+      <form (ngSubmit)="placeOrder()">
         <div class="grid grid-cols-1 gap-6">
-          <input type="text" [(ngModel)]="billingDetails.firstName" placeholder="First Name" class="border border-gray-300 p-3 rounded" required>
-          <input type="text" [(ngModel)]="billingDetails.company" placeholder="Company Name (optional)" class="border border-gray-300 p-3 rounded">
-          <input type="text" [(ngModel)]="billingDetails.streetAddress" placeholder="Street Address" class="border border-gray-300 p-3 rounded" required>
-          <input type="text" [(ngModel)]="billingDetails.apartment" placeholder="Apartment, floor, etc. (optional)" class="border border-gray-300 p-3 rounded">
-          <input type="text" [(ngModel)]="billingDetails.city" placeholder="Town/City" class="border border-gray-300 p-3 rounded" required>
-          <input type="text" [(ngModel)]="billingDetails.phone" placeholder="Phone Number" class="border border-gray-300 p-3 rounded" required>
-          <input type="email" [(ngModel)]="billingDetails.email" placeholder="Email Address" class="border border-gray-300 p-3 rounded" required>
+          <input type="text" [(ngModel)]="billingDetails.fullName" name="fullName" placeholder="Full Name" class="border border-gray-300 p-3 rounded" required>
+          <input type="text" [(ngModel)]="billingDetails.company" name="company" placeholder="Company Name (optional)" class="border border-gray-300 p-3 rounded">
+          <input type="text" [(ngModel)]="billingDetails.streetAddress" name="streetAddress" placeholder="Street Address" class="border border-gray-300 p-3 rounded" required>
+          <input type="text" [(ngModel)]="billingDetails.apartment" name="apartment" placeholder="Apartment, floor, etc. (optional)" class="border border-gray-300 p-3 rounded">
+          <input type="text" [(ngModel)]="billingDetails.city" name="city" placeholder="Town/City" class="border border-gray-300 p-3 rounded" required>
+          <input type="text" [(ngModel)]="billingDetails.phone" name="phone" placeholder="Phone Number" class="border border-gray-300 p-3 rounded" required>
+          <input type="email" [(ngModel)]="billingDetails.email" name="email" placeholder="Email Address" class="border border-gray-300 p-3 rounded" required>
         </div>
-        <div class="flex items-center mt-4">
-          <input type="checkbox" id="save-info" class="mr-2" [(ngModel)]="billingDetails.saveInfo">
-          <label for="save-info" class="text-gray-600">Save this information for next time</label>
+        
+        <!-- Order Summary -->
+        <div class="mt-8">
+          <h2 class="text-xl font-bold text-gray-800 mb-4">Your Order</h2>
+          <div *ngFor="let item of cart" class="flex justify-between items-center mb-4">
+            <div class="flex items-center">
+              <span>{{item.itemName}} (x{{item.quantity}})</span>
+            </div>
+            <span>{{item.itemPrice * item.quantity | currency}}</span>
+          </div>
+          <div class="border-t border-gray-200 pt-4">
+            <div class="flex justify-between mb-2">
+              <span class="text-gray-600">Subtotal:</span>
+              <span>{{getTotal() | currency}}</span>
+            </div>
+            <div class="flex justify-between mb-2">
+              <span class="text-gray-600">Discount:</span>
+              <span>{{discount | currency}}</span>
+            </div>
+            <div class="flex justify-between font-bold mb-4">
+              <span>Total:</span>
+              <span>{{getGrandTotal() | currency}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label class="block text-gray-600 font-bold mb-2">Payment Method</label>
+          <div class="flex items-center mb-4">
+            <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="bank" class="mr-2">
+            <span>Bank</span>
+          </div>
+          <div class="flex items-center mb-4">
+            <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="cod" class="mr-2">
+            <span>Cash on Delivery</span>
+          </div>
+          <div class="flex items-center mb-4">
+            <input type="text" [(ngModel)]="couponCode" name="couponCode" placeholder="Coupon Code" class="border border-gray-300 p-2 rounded flex-grow mr-2">
+            <button type="button" class="bg-red-500 text-white px-4 py-2 rounded" (click)="applyCoupon()" [disabled]="isLoading">
+              {{ isLoading ? 'Applying...' : 'Apply Coupon' }}
+            </button>
+          </div>
+          <button type="submit" class="w-full bg-red-500 text-white font-bold py-3 rounded" [disabled]="isLoading">
+            {{ isLoading ? 'Processing...' : 'Place Order' }}
+          </button>
         </div>
       </form>
-    </div>
-
-    <!-- Order Summary -->
-    <div class="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-xl font-bold text-gray-800 mb-4">Your Order</h2>
-      <div *ngFor="let item of cart" class="flex justify-between items-center mb-4">
-        <div class="flex items-center">
-          <img [src]="'./assets/images/' + item.name + '.jpeg'" alt="{{item.name}}" class="w-16 h-16 rounded-md mr-4">
-          <span>{{item.name}}</span>
-        </div>
-        <span>{{item.price | currency}}</span>
-      </div>
-      <div class="border-t border-gray-200 pt-4">
-        <div class="flex justify-between mb-2">
-          <span class="text-gray-600">Subtotal:</span>
-          <span>{{getTotal() | currency}}</span>
-        </div>
-        <div class="flex justify-between mb-2">
-          <span class="text-gray-600">Shipping:</span>
-          <span>Free</span>
-        </div>
-        <div class="flex justify-between font-bold mb-4">
-          <span>Total:</span>
-          <span>{{getGrandTotal() | currency}}</span>
-        </div>
-      </div>
-      <div class="mt-4">
-        <label class="block text-gray-600 font-bold mb-2">Payment Method</label>
-        <div class="flex items-center mb-4">
-          <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="bank" class="mr-2">
-          <span>Bank</span>
-        </div>
-        <div class="flex items-center mb-4">
-          <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="cod" class="mr-2">
-          <span>Cash on Delivery</span>
-        </div>
-        <div class="flex items-center mb-4">
-          <input type="text" [(ngModel)]="couponCode" placeholder="Coupon Code" class="border border-gray-300 p-2 rounded flex-grow mr-2">
-          <button class="bg-red-500 text-white px-4 py-2 rounded" (click)="applyCoupon()">Apply Coupon</button>
-        </div>
-        <button class="w-full bg-red-500 text-white font-bold py-3 rounded" (click)="placeOrder()">Place Order</button>
-      </div>
+      <div *ngIf="errorMessage" class="mt-4 text-red-500">{{errorMessage}}</div>
     </div>
   </div>
 </div>
