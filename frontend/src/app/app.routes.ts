@@ -1,5 +1,8 @@
+import { ManageCategoryComponent } from './dashboard/admin-dashboard/manage-category/manage-category.component';
+import { Component } from '@angular/core';
+import { AddCategoryComponent } from './dashboard/admin-dashboard/add-category/add-category.component';
 import { ProfileComponent } from './dashboard/profile/profile.component';
-import { AddressManagerComponent } from './dashboard/address/address.component';
+import { AddressManagerComponent } from './dashboard/user-dashboard/address/address.component';
 import { Routes, CanActivate } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -60,6 +63,8 @@ export const routes: Routes = [
     children: [
       {path: "", redirectTo: "profile", pathMatch: "full"},
       { path: 'profile', component: ProfileComponent },
+      {path: 'addCategory', component: AddCategoryComponent},
+      {path: 'manageCategory', component: ManageCategoryComponent}
     ],
     data: { roles: ['ADMIN'] } // Only ADMIN can access this route
   },

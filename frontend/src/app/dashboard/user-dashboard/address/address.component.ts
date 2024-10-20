@@ -1,4 +1,4 @@
-import { ConfirmationModalComponent } from './../../common/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalComponent } from './../../../common/confirmation-modal/confirmation-modal.component';
 import { NgIconComponent } from '@ng-icons/core';
 import { Component, HostListener } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
