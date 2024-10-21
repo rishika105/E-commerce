@@ -2,27 +2,54 @@
   <h1 class="text-3xl font-bold mb-6 text-gray-800">Add New Category</h1>
 
   <div class="bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-xl font-semibold mb-4 text-gray-700">Add Category</h2>
-    <div class="flex items-center">
-      <input
-        type="text"
-        [(ngModel)]="categoryName"
-        placeholder="Enter category name"
-        class="flex-grow mr-4 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      <button
-        (click)="addCategory()"
-        class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-      >
-        Add Category
-      </button>
+    <h2 class="text-xl font-semibold mb-4 text-gray-700">Category Details</h2>
+    <form (ngSubmit)="addCategory()" #categoryForm="ngForm" class="space-y-4">
+      <div>
+        <label for="categoryName" class="block text-sm font-medium text-gray-700">Category Name</label>
+        <input
+          type="text"
+          id="categoryName"
+          name="categoryName"
+          [(ngModel)]="category.categoryName"
+          required
+          #nameInput="ngModel"
+          class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          placeholder="Enter category name"
+        />
+        <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)" class="text-red-500 text-sm mt-1">
+          Category name is required.
+        </div>
+      </div>
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="category.description"
+          required
+          #descriptionInput="ngModel"
+          rows="3"
+          class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+          placeholder="Enter category description"
+        ></textarea>
+        <div *ngIf="descriptionInput.invalid && (descriptionInput.dirty || descriptionInput.touched)" class="text-red-500 text-sm mt-1">
+          Category description is required.
+        </div>
+      </div>
+      <div>
+        <button
+          type="submit"
+          [disabled]="!categoryForm.form.valid"
+          class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+        >
+          Add Category
+        </button>
+      </div>
+    </form>
+  </div>
+    <!-- Loading -->
+    <div *ngIf="loading" class="mt-6 loader">
+      <p>Loading...</p>
     </div>
-  </div>
 
-  <div *ngIf="successMessage" class="mt-4 p-4 bg-green-100 text-green-700 rounded-md">
-    {{ successMessage }}
-  </div>
-  <div *ngIf="errorMessage" class="mt-4 p-4 bg-red-100 text-red-700 rounded-md">
-    {{ errorMessage }}
-  </div>
 </div>
