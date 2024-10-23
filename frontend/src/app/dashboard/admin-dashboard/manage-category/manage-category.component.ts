@@ -1,6 +1,6 @@
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { CategoryService, Category } from './../../../services/category.service';
+import { CategoryService, Category } from '../../../api services/category.service';
 import { Component } from '@angular/core';
 
 

@@ -7,7 +7,7 @@ import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Component } from '@angular/core';
 import { NavigationEnd } from '@angular/router';
-import { clearToken } from '../../actions/auth.action';
+import { clearToken } from '../../ngrx store/auth/auth.action';
 
 @Component({
   selector: 'app-sidebar',

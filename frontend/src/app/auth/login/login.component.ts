@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { AuthService } from '../../services/auth.service';
-import { setToken, setLoading, setRole } from '../../actions/auth.action'; // Added setRole action
+import { AuthService } from '../../api services/auth.service';
+import { setToken, setLoading, setRole } from '../../ngrx store/auth/auth.action'; // Added setRole action
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';

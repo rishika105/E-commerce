@@ -6,10 +6,10 @@ import { AddressManagerComponent } from './dashboard/user-dashboard/address/addr
 import { Routes, CanActivate } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
-import { AboutComponent } from './about/about.component';
-import { ContactComponent } from './contact/contact.component';
+import { AboutComponent } from './common/about/about.component';
+import { ContactComponent } from './common/contact/contact.component';
 import { HomeComponent } from './home/home.component';
-import { ErrorComponent } from './error/error.component';
+import { ErrorComponent } from './common/error/error.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminDashboardComponent } from './dashboard/admin-dashboard/admin-dashboard.component';
 import { SellerDashboardComponent } from './dashboard/seller-dashboard/seller-dashboard.component';
@@ -17,7 +17,8 @@ import { UserDashboardComponent } from './dashboard/user-dashboard/user-dashboar
 import { RoleGuard } from './guards/role.guard';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
-import { SellerComponent } from './seller/seller.component';
+import { AddProductComponent } from './dashboard/seller-dashboard/add-product/add-product.component';
+import { ManageProductsComponent } from './dashboard/seller-dashboard/manage-products/manage-products.component';
 
 // open routes
 export const routes: Routes = [
@@ -47,13 +48,6 @@ export const routes: Routes = [
   },
   { path: 'reset-password', component: ResetPasswordComponent },
 
-  // New route for Seller Form
-  {
-    path: 'seller-form',
-    component: SellerComponent,
-    canActivate: [AuthGuard, RoleGuard], // Optional
-    data: { roles: ['SELLER'] }, // Optional, only sellers can access
-  },
 
   // private routes
   {
@@ -75,6 +69,9 @@ export const routes: Routes = [
     children: [
       {path: "", redirectTo: "profile", pathMatch: "full"},
       { path: 'profile', component: ProfileComponent },
+      { path: 'add-product', component: AddProductComponent},
+      { path: 'manage-products', component: ManageProductsComponent},
+
     ],
     data: { roles: ['SELLER'] } // Only SELLER can access this route
   },
@@ -86,6 +83,7 @@ export const routes: Routes = [
       {path: "", redirectTo: "profile", pathMatch: "full"},
       { path: 'profile', component: ProfileComponent },
       { path: 'address', component: AddressManagerComponent},
+
       // Add more routes here for other dashboard pages
     ],
     canActivate: [AuthGuard, RoleGuard],

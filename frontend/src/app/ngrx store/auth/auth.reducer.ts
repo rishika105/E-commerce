@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { setLoading, setToken, clearToken, setOtpSent, setRole, logout } from '../actions/auth.action';
+import { setLoading, setToken, clearToken, setOtpSent, setRole, logout } from '../../ngrx store/auth/auth.action';
 
 export interface AuthState {
   token: string | null;

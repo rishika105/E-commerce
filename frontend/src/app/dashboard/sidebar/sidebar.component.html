@@ -9,7 +9,16 @@
 
 
 <div class="h-[570px] mt-[30px] ml-[30px] mb-[20px] w-64 bg-white p-6 rounded shadow-md relative text-gray-800">
-  <!-- User Sidebar -->
+
+
+
+
+
+     <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
+   <!------------------------------ USER - SIDEBAR --------------------------->
+   <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
   <div *ngIf="userRole === 'USER'" class="w-64 h-screen p-4">
     <!-- My Orders -->
     <p class="text-gray-800 mb-2">My Orders</p>
@@ -53,7 +62,13 @@
   </div>
 
 
-    <!-- Seller Sidebar -->
+
+
+    <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
+   <!------------------------------ SELLER - SIDEBAR --------------------------->
+   <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
     <div *ngIf="userRole === 'SELLER'" class="w-64 bg-gray-100 h-screen p-4">
 
       <!-- Profile -->
@@ -67,24 +82,21 @@
   <p class="text-gray-600 mb-1">Products</p>
   <ul class="pl-4">
     <li class="text-gray-700 mb-1 cursor-pointer"
-        [ngClass]="{'text-red-500': isActive('/addProduct')}"
-        [routerLink]="['/addProduct']">Add Product</li>
+        [ngClass]="{'text-red-500': isActive('/seller-dashboard/add-product')}"
+        [routerLink]="['/seller-dashboard/add-product']">Add Product</li>
     <li class="text-gray-700 mb-1 cursor-pointer"
-        [ngClass]="{'text-red-500': isActive('/manageProducts')}"
-        [routerLink]="['/manageProducts']">Manage Products</li>
+        [ngClass]="{'text-red-500': isActive('/seller-dashboard/manage-products')}"
+        [routerLink]="['/seller-dashboard/manage-products']">Manage Products</li>
     <li class="text-gray-700 mb-1 cursor-pointer"
-        [ngClass]="{'text-red-500': isActive('/stockManagement')}"
-        [routerLink]="['/stockManagement']">Stock Management</li>
+        [ngClass]="{'text-red-500': isActive('/seller-dashboard/stocks')}"
+        [routerLink]="['/seller-dashboard/stocks']">Stock Management</li>
   </ul>
 
   <!-- Orders -->
   <p class="text-gray-800 mb-2">Orders</p>
   <ul class="pl-4">
     <li class="text-gray-700 mb-1 cursor-pointer"
-        [ngClass]="{'text-red-500': isActive('/viewOrders')}"
-        [routerLink]="['/viewOrders']">View Orders</li>
-    <li class="text-gray-700 mb-1 cursor-pointer"
-        [ngClass]="{'text-red-500': isActive('/returns')}"
+        [ngClass]="{'text-red-500': isActive('/seller-dashboard/view-orders')}"
         [routerLink]="['/returns']">Manage Returns</li>
   </ul>
 
@@ -102,7 +114,12 @@
 </div>
 
 
-   <!-- Admin Sidebar -->
+
+   <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
+   <!------------------------------ ADMIN - SIDEBAR --------------------------->
+   <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
    <div *ngIf="userRole === 'ADMIN'" class="w-64 bg-gray-100 h-screen p-4">
 
     <!-- Profile -->
@@ -144,106 +161,8 @@
       [ngClass]="{'text-red-500': isActive('/salesReports')}"
       [routerLink]="['/salesReports']">Sales Statistics</li>
 </ul>
-
-
 <!-- Logout -->
 <p class="text-gray-800 mb-2 cursor-pointer" [ngClass]="{'text-red-500': isActive('/logout')}" (click)="logout()">Logout</p>
 </div>
 
-
-   <!-- Seller Sidebar -->
-   <div *ngIf="userRole === 'ADMIN'" class="w-64 bg-gray-100 h-screen p-4">
-
-    <!-- Profile -->
-    <ul class="pl-4">
-      <li class="text-gray-700 mb-1 cursor-pointer"
-          [ngClass]="{'text-red-500': isActive('/admin-dashboard/profile')}"
-          [routerLink]="['/admin-dashboard/profile']">Profile Information</li>
-    </ul>
-
-<!-- Products -->
-<p class="text-gray-600 mb-1">Categories</p>
-<ul class="pl-4">
-  <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/addProduct')}"
-      [routerLink]="['/addProduct']">Add Category</li>
-  <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/manageProducts')}"
-      [routerLink]="['/manageProducts']">Manage Categories</li>
-</ul>
-
-<!-- Orders -->
-<p class="text-gray-800 mb-2">Supervison</p>
-<ul class="pl-4">
-  <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/viewOrders')}"
-      [routerLink]="['/viewOrders']">View Orders</li>
-  <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/returns')}"
-      [routerLink]="['/returns']">View Customers</li>
-      <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/returns')}"
-      [routerLink]="['/returns']">View Sellers</li>
-</ul>
-
-<!-- Reports -->
-<p class="text-gray-800 mb-2">Reports</p>
-<ul class="pl-4">
-  <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/salesReports')}"
-      [routerLink]="['/salesReports']">Sales Statistics</li>
-</ul>
-
-
-<!-- Logout -->
-<p class="text-gray-800 mb-2 cursor-pointer" [ngClass]="{'text-red-500': isActive('/logout')}">Logout</p>
-</div>
-
- <!-- Admin Sidebar -->
-   <div *ngIf="userRole === 'ADMIN'" class="w-64 bg-gray-100 h-screen p-4">
-
-    <!-- Profile -->
-    <ul class="pl-4">
-      <li class="text-gray-700 mb-1 cursor-pointer"
-          [ngClass]="{'text-red-500': isActive('/admin-dashboard/profile')}"
-          [routerLink]="['/admin-dashboard/profile']">Profile Information</li>
-    </ul>
-
-<!-- Products -->
-<p class="text-gray-600 mb-1">Categories</p>
-<ul class="pl-4">
-  <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/admin-dashboard/addCategory')}"
-      [routerLink]="['/admin-dashboard/addCategory']">Add Category</li>
-  <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/admin-dashboard/manageCategory')}"
-      [routerLink]="['/admin-dashboard/manageCategory']">Manage Categories</li>
-</ul>
-
-<!-- Orders -->
-<p class="text-gray-800 mb-2">Supervison</p>
-<ul class="pl-4">
-  <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/viewOrders')}"
-      [routerLink]="['/viewOrders']">View Orders</li>
-  <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/returns')}"
-      [routerLink]="['/returns']">View Customers</li>
-      <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/returns')}"
-      [routerLink]="['/returns']">View Sellers</li>
-</ul>
-
-<!-- Reports -->
-<p class="text-gray-800 mb-2">Reports</p>
-<ul class="pl-4">
-  <li class="text-gray-700 mb-1 cursor-pointer"
-      [ngClass]="{'text-red-500': isActive('/salesReports')}"
-      [routerLink]="['/salesReports']">Sales Statistics</li>
-</ul>
-
-
-<!-- Logout -->
-<p class="text-gray-800 mb-2 cursor-pointer" [ngClass]="{'text-red-500': isActive('/logout')}" (click)="logout()">Logout</p>
-</div>
 </div>

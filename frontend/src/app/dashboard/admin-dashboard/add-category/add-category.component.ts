@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CategoryService } from '../../../services/category.service';
+import { CategoryService } from '../../../api services/category.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-category',
@@ -16,7 +17,11 @@ export class AddCategoryComponent {
   loading: boolean = false;
 
 
-  constructor(private categoryService: CategoryService, private toastr: ToastrService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
 
 
   addCategory(): void {
@@ -31,11 +36,15 @@ export class AddCategoryComponent {
           this.resetForm();
           this.toastr.success('Category added successfully!');
           this.loading = false;
+          // Reload the current route
+          this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+            this.router.navigate(['/admin-dashboard/addCategory']);
+          });
         },
         error: (error: Error) => {
           this.loading = false;
           console.error('Error adding category:', error);
-          this.toastr.error(error.message);
+          this.toastr.error('An error occurred while adding the category. Please try again.');
         }
       });
     } else {

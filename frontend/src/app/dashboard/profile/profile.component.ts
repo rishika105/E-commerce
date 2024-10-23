@@ -1,7 +1,7 @@
 import { ConfirmationModalComponent } from './../../common/confirmation-modal/confirmation-modal.component';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { ProfileService } from './../../services/profile.service';
+import { ProfileService } from '../../api services/profile.service';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators, FormGroup } from '@angular/forms';

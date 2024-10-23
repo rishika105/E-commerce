@@ -4,7 +4,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
-import { clearToken } from '../../actions/auth.action';
+import { clearToken } from '../../ngrx store/auth/auth.action';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 

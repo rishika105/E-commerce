@@ -1,4 +1,4 @@
-import { setToken } from './../actions/auth.action';
+import { setToken } from '../ngrx store/auth/auth.action';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
