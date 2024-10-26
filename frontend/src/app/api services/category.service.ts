@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { environment } from '../../../environment';
 import { map, first, switchMap, tap, catchError } from 'rxjs/operators';
+import { isPlatformBrowser } from '@angular/common';
 
 export interface Category {
   id: number;
@@ -18,13 +19,17 @@ export interface Category {
 export class CategoryService {
   private apiUrl = `${environment.apiUrl}/category`;
 
-  constructor(private http: HttpClient, private store: Store<any>) {}
+  constructor(
+    private http: HttpClient,
+    private store: Store<any>,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   private getAuthToken(): Observable<string> {
     return this.store.select('auth').pipe(
       first(),
       map((authData) => {
-        const token = authData?.token || localStorage.getItem('token') || '';
+        const token = authData?.token || (isPlatformBrowser(this.platformId) ? localStorage.getItem('token') : null) || '';
         console.log('Token from store/localStorage:', token);
         return token;
       })
@@ -40,9 +45,11 @@ export class CategoryService {
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!';
-    if (error.error instanceof ErrorEvent) {
+    if (error.error instanceof Error) {
+      // Client-side or network error
       errorMessage = `Error: ${error.error.message}`;
     } else {
+      // Backend error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.error?.error || error.message}`;
     }
     console.error(errorMessage);
@@ -115,6 +122,19 @@ export class CategoryService {
         return this.http.delete(`${this.apiUrl}/delete/${id}`, { headers, withCredentials: true })
           .pipe(
             tap(response => console.log('Delete category response:', response)),
+            catchError(this.handleError)
+          );
+      })
+    );
+  }
+
+  getCategoryById(id: number): Observable<Category> {
+    return this.getAuthToken().pipe(
+      switchMap((token) => {
+        const headers = this.getHeaders(token);
+        return this.http.get<Category>(`${this.apiUrl}/getCategorybyId/${id}`, { headers, withCredentials: true })
+          .pipe(
+            tap(response => console.log('Get category by ID response:', response)),
             catchError(this.handleError)
           );
       })

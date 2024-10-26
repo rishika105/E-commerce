@@ -1,3 +1,4 @@
+import { SidebarComponent } from './../sidebar/sidebar.component';
 import { ConfirmationModalComponent } from './../../common/confirmation-modal/confirmation-modal.component';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +13,7 @@ import { of } from 'rxjs';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ConfirmationModalComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ConfirmationModalComponent, SidebarComponent],
   templateUrl: './profile.component.html',
   styles: ``
 })
@@ -20,6 +21,7 @@ export class ProfileComponent {
   profileForm!: FormGroup;
   isEditing = false;
   showDeleteModal = false;
+  userName: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -49,7 +51,9 @@ export class ProfileComponent {
         phone: profileData.phone,
         gender: profileData.gender,
       });
+      this.userName = profileData.name;
     });
+
   }
 
   toggleEdit(): void {
@@ -61,6 +65,7 @@ export class ProfileComponent {
       this.profileService.updateProfile(this.profileForm.value).subscribe({
         next: (response) => {
           this.isEditing = false; // Stop editing after successful update
+          this.userName = this.profileForm.get('name')?.value; // Update userName
           this.toastr.success('Profile updated successfully!');
         },
         error: (error) => {

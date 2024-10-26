@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NavigationEnd } from '@angular/router';
 import { clearToken } from '../../ngrx store/auth/auth.action';
 
@@ -24,13 +24,15 @@ export class SidebarComponent {
   userDefaultPage: string = '/user-dashboard/profile';
   sellerDefaultPage: string = '/profile';
   showLogoutModal = false;
+  @Input() userName: string = '';
 
 
   constructor(
     private store: Store<{ auth: any }>, // Inject the store to access the auth state
     private router: Router,
     private route: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+
   ) {
     // Subscribe to the auth state to check if user is logged in
     this.store.select('auth').subscribe(authState => {

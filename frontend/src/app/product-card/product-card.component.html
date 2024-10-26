@@ -1,0 +1,42 @@
+<!-- <div class="border rounded-lg shadow-xl p-4 relative">
+  <button
+    (click)="toggleWishlist($event)"
+    class="absolute top-2 right-2 z-10 p-2 rounded-full transition-colors"
+    [attr.aria-label]="isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'">
+    <ng-icon
+      *ngIf="!isInWishlist"
+      [name]="'heroHeart'"
+      class="text-[28px] fill-current text-gray-500">
+    </ng-icon>
+    <img
+      *ngIf="isInWishlist"
+      src="assets/images/wishlist.png"
+      alt="wishlist"
+      class="w-[28px] h-[27px]">
+  </button>
+
+  <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-48 object-cover mb-4 rounded-md">
+  <p class="text-xl font-medium mb-2 text-gray-600">{{ product.name }}</p>
+  <p class="text-gray-600 mb-2">{{ product.description | slice:0:100 }}...</p>
+  <p class="font-medium mb-2">₹ {{ product.price.toFixed(2) }}</p>
+  <p class="mb-2 font-normal text-sm">Free Delivery</p>
+</div> -->
+
+
+<div class="border rounded-lg shadow-xl p-4 relative">
+  <button (click)="toggleWishlist()" class="absolute top-2 right-2 z-10">
+    <ng-icon
+      [name]="isInWishlist ? 'heroHeartSolid' : 'heroHeart'"
+      [class]="isInWishlist ? 'text-red-500' : 'text-gray-400'"
+      class="text-[28px] fill-current">
+    </ng-icon>
+  </button>
+
+  <img [src]="product.imageUrl" [alt]="product.name" class="w-full h-48 object-cover mb-4 rounded-md">
+
+  <p class="text-xl font-medium mb-2 text-gray-600">{{ product.name }}</p>
+
+  <p class="text-gray-600 mb-2">{{ product.description | slice:0:100 }}...</p>
+  <p class="font-medium mb-2">₹ {{ product.price.toFixed(2) }}</p>
+  <p class="mb-2 font-normal text-sm">Free Delivery</p>
+</div>

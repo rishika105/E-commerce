@@ -16,6 +16,7 @@ export interface Product {
     name: string;
   };
   imageUrl: string;
+  
 }
 
 @Injectable({
@@ -146,6 +147,21 @@ export class ProductService {
         return this.http.get<Product[]>(`${this.apiUrl}/search?keyword=${keyword}`, { headers, withCredentials: true })
           .pipe(
             tap(response => console.log('Search products response:', response)),
+            catchError(this.handleError)
+          );
+      })
+    );
+  }
+
+
+
+  getProductsByCategory(categoryId: number): Observable<Product[]> {
+    return this.getAuthToken().pipe(
+      switchMap((token) => {
+        const headers = this.getHeaders(token);
+        return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`, { headers, withCredentials: true })
+          .pipe(
+            tap(response => console.log('Get products by category response:', response)),
             catchError(this.handleError)
           );
       })
