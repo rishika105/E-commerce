@@ -1,11 +1,11 @@
-import { AuthState } from './../../reducers/auth.reducer';
+import { AuthState } from '../../ngrx store/auth/auth.reducer';
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../api services/auth.service';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { setLoading } from '../../actions/auth.action';
+import { setLoading } from '../../ngrx store/auth/auth.action';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

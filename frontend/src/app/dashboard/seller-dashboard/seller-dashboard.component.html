@@ -1,1 +1,7 @@
-<p>seller-dashboard works!</p>
+<div class="flex bg-gray-100">
+  <app-sidebar [userName]="userName"></app-sidebar>
+  <!-- display profile information and other things present in user dashboard -->
+  <div class="w-[900px] mx-auto mt-8 bg-white p-8 rounded-lg shadow-lg ml-[30px] mb-[50px]">
+    <router-outlet></router-outlet>
+   </div>
+</div>

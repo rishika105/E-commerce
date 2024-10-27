@@ -92,7 +92,7 @@
 
         <!-- OTP Section (when sent) -->
         <div *ngIf="otpSent" class="mt-8">
-          <h2 class="text-2xl font-semibold mb-4 text-center">Enter OTP</h2>
+          <p class="text-2xl font-medium mb-4 text-center">Enter OTP</p>
           <form [formGroup]="otpForm" (ngSubmit)="onSubmitOtp()">
             <div>
               <label for="otp" class="block text-sm font-medium text-gray-700">OTP</label>

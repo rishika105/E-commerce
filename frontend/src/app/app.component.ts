@@ -1,22 +1,30 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { FooterComponent } from './footer/footer.component';
+import { FooterComponent } from './common/footer/footer.component';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
-import { heroCamera, heroCheckBadge, heroComputerDesktop, heroCurrencyDollar, heroCurrencyRupee, heroDevicePhoneMobile, heroDeviceTablet, heroEnvelope, heroHome, heroMicrophone, heroPhone, heroPlay, heroShoppingBag, heroSwatch, heroTruck, heroUsers } from '@ng-icons/heroicons/outline';
+import { heroCamera, heroCheckBadge, heroComputerDesktop, heroCurrencyDollar,
+  heroCurrencyRupee, heroDevicePhoneMobile, heroDeviceTablet, heroEnvelope,
+  heroHome, heroPhone, heroShoppingBag, heroSwatch, heroTruck, heroUsers,
+  heroUserCircle, heroHeart, heroShoppingCart, heroMagnifyingGlass, heroEllipsisVertical,
+  heroPlus,heroUserGroup, heroWallet, heroFolderArrowDown, heroPower, heroFolder } from '@ng-icons/heroicons/outline';
+  import {heroHeartSolid, heroUserSolid, heroFolderSolid, heroWalletSolid, heroPowerSolid, heroFolderArrowDownSolid, heroChartBarSolid, heroSquaresPlusSolid} from "@ng-icons/heroicons/solid"
+import { CommonModule } from '@angular/common';
+import { NavbarComponent } from './common/navbar/navbar.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FooterComponent, RouterLink, NgIconComponent],
+  imports: [RouterOutlet, FooterComponent, RouterLink, NgIconComponent, CommonModule, NavbarComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  viewProviders: [provideIcons({ heroUsers, heroPhone, heroEnvelope, heroCurrencyDollar, heroHome, heroShoppingBag, heroCurrencyRupee, heroTruck, heroCheckBadge, heroDevicePhoneMobile, heroComputerDesktop, heroSwatch, heroCamera, heroDeviceTablet, heroMicrophone,  })]    ///IDHAR LAGADEEE....JAISE YEH HAI ICON KA NAAM
+  viewProviders: [provideIcons({ heroUsers, heroPhone, heroEnvelope, heroCurrencyDollar, heroHome,
+    heroShoppingBag, heroCurrencyRupee, heroTruck, heroCheckBadge, heroDevicePhoneMobile, heroComputerDesktop,
+    heroSwatch, heroCamera, heroDeviceTablet, heroUserCircle, heroHeart, heroShoppingCart, heroMagnifyingGlass,
+    heroEllipsisVertical , heroPlus, heroUserGroup, heroHeartSolid, heroWallet,heroFolderArrowDown, heroPower,
+    heroUserSolid, heroFolder,heroFolderSolid, heroWalletSolid, heroPowerSolid, heroFolderArrowDownSolid, heroChartBarSolid, heroSquaresPlusSolid})]   //ICONS NAME WE HAVE DOWNLOADED HERO ICONS PACKAGE FOR OUR PROJECT
+   /* https://ng-icons.github.io/ng-icons/#/browse-icons */
 })
 
 export class AppComponent {
-
-  handleClick() {
-    throw new Error('Method not implemented.');
-  }
-  title = 'my-project';
+  title = 'ShopNest-Ecommerce';
 }
