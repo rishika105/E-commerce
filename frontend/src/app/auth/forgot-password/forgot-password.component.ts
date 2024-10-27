@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../api services/auth.service';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
-import { setLoading } from '../../actions/auth.action';
+import { setLoading } from '../../ngrx store/auth/auth.action';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({

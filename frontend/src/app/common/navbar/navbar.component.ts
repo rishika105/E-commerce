@@ -4,9 +4,11 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { Store } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
-import { clearToken } from '../../actions/auth.action';
+import { clearToken } from '../../ngrx store/auth/auth.action';
 import { FormsModule } from '@angular/forms';
 import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -16,25 +18,25 @@ import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-m
   styles: ``
 })
 export class NavbarComponent {
-  isLoggedIn: boolean = false;
-  userRole = 'USER';
+  auth$: Observable<{ isLoggedIn: boolean; userRole: string }>;
   showProfileMenu = false;
   showLogoutModal = false;
 
   constructor(
-    private store: Store<{ auth: any }>, // Inject the store to access the auth state
+    private store: Store<{ auth: any }>,
     private router: Router,
     private toastr: ToastrService
   ) {
-    // Subscribe to the auth state to check if user is logged in
-    this.store.select('auth').subscribe(authState => {
-      this.isLoggedIn = !!authState.token; // If token exists, user is logged in
-      this.userRole = authState.role; // Get the role from the state
-    });
+    this.auth$ = this.store.select('auth').pipe(
+      map(authState => ({
+        isLoggedIn: !!authState.token,
+        userRole: authState.role
+      }))
+    );
   }
 
-   // Placeholder search functionality
-   onSearch(query: string) {
+  // Placeholder search functionality
+  onSearch(query: string) {
     if (!query) {
       alert("Please enter a search term");
       return;
@@ -89,6 +91,16 @@ export class NavbarComponent {
     if (!target.closest('.relative')) { // Adjust based on your container
       this.showProfileMenu = false;
     }
+  }
+
+  onWishlist() {
+    console.log("Wishlist clicked");
+    this.router.navigate(['/wishlist']);
+  }
+
+  onCart() {
+    console.log("Cart clicked");
+    this.router.navigate(['/cart']);
   }
 
 }
