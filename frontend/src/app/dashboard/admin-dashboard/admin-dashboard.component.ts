@@ -13,8 +13,6 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class AdminDashboardComponent {
-
-
   userName: string = '';
 
   constructor(
@@ -29,7 +27,6 @@ export class AdminDashboardComponent {
 
   loadUserProfile(): void {
     this.profileService.getProfile().subscribe((profileData: any) => {
-
       this.userName = profileData.name;
     });
 

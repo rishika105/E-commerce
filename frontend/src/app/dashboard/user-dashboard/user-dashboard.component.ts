@@ -14,17 +14,12 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class UserDashboardComponent {
-
-
   userName: string = '';
 
   constructor(
     private profileService: ProfileService,
     private store: Store<any>,
     private ToastrService: ToastrService ,
-
-
-
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +29,6 @@ export class UserDashboardComponent {
 
   loadUserProfile(): void {
     this.profileService.getProfile().subscribe((profileData: any) => {
-   
       this.userName = profileData.name;
     });
 

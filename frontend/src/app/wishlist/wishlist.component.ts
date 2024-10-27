@@ -1,58 +1,52 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { WishlistService } from './wishlist.service';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Product } from '../api services/product.service';
 import { ProductCardComponent } from '../product-card/product-card.component';
-import { Subscription } from 'rxjs';
-import { NgIconComponent } from '@ng-icons/core';
 
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [CommonModule, RouterLink, ProductCardComponent, NgIconComponent],
-  templateUrl: './wishlist.component.html',
-  styles: [`
-    .empty-state {
-      min-height: 400px;
-    }
+  imports: [CommonModule, ProductCardComponent],
+  template: `
+    <div class="container mx-auto p-4">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-3xl font-medium">My Wishlist</h2>
+        <button
+          *ngIf="wishlistItems.length > 0"
+          (click)="clearWishlist()"
+          class="px-4 py-2 text-sm text-red-600 hover:text-red-700 font-medium"
+        >
+          Clear All
+        </button>
+      </div>
 
-    .browse-btn {
-      transition: all 0.2s ease-in-out;
-    }
+      <div *ngIf="wishlistItems.length === 0" class="text-center py-8">
+        <p class="text-xl text-gray-600">Your wishlist is empty</p>
+      </div>
 
-    .browse-btn:hover {
-      transform: translateY(-2px);
-    }
-  `]
+      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <app-product-card
+          *ngFor="let product of wishlistItems"
+          [product]="product"
+        >
+        </app-product-card>
+      </div>
+    </div>
+  `
 })
-export class WishlistComponent implements OnInit, OnDestroy {
+export class WishlistComponent {
   wishlistItems: Product[] = [];
-  isLoading: boolean = true;
-  private wishlistSubscription: Subscription | undefined;
 
-  constructor(private wishlistService: WishlistService) {}
-
-  ngOnInit(): void {
-    this.wishlistSubscription = this.wishlistService.getWishlist().subscribe({
-      next: (items) => {
-        this.wishlistItems = items;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        console.error('Error fetching wishlist:', error);
-        this.isLoading = false;
-      }
+  constructor(private wishlistService: WishlistService) {
+    this.wishlistService.wishlist$.subscribe(items => {
+      // Convert Map to array of products
+      this.wishlistItems = Array.from(items.values());
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.wishlistSubscription) {
-      this.wishlistSubscription.unsubscribe();
-    }
-  }
-
-  trackByProductId(index: number, product: Product): number {
-    return product.id;
+  clearWishlist(): void {
+    this.wishlistService.clearWishlist();
   }
 }
+

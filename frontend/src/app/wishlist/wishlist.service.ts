@@ -1,68 +1,69 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Product } from '../api services/product.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WishlistService {
-  private readonly STORAGE_KEY = 'wishlist';
-  private wishlistItems: Product[] = [];
-  private wishlistSubject = new BehaviorSubject<Product[]>([]);
+  private readonly WISHLIST_KEY = 'wishlist';
+  private wishlistItems: Map<number, Product> = new Map();
+  private wishlistSubject = new BehaviorSubject<Map<number, Product>>(new Map());
+  wishlist$ = this.wishlistSubject.asObservable();
 
   constructor() {
-    this.loadWishlistFromLocalStorage();
+    this.loadWishlist();
   }
 
-  private loadWishlistFromLocalStorage(): void {
+  private loadWishlist(): void {
     try {
-      const storedWishlist = localStorage.getItem(this.STORAGE_KEY);
-      if (storedWishlist) {
-        this.wishlistItems = JSON.parse(storedWishlist);
-        this.wishlistSubject.next([...this.wishlistItems]);
+      const savedWishlist = localStorage.getItem(this.WISHLIST_KEY);
+      if (savedWishlist) {
+        const parsedWishlist = JSON.parse(savedWishlist);
+        this.wishlistItems = new Map(parsedWishlist.map((item: Product) => [item.id, item]));
+        this.wishlistSubject.next(new Map(this.wishlistItems));
       }
     } catch (error) {
       console.error('Error loading wishlist:', error);
-      this.wishlistItems = [];
-      this.wishlistSubject.next([]);
+      this.wishlistItems = new Map();
+      this.wishlistSubject.next(new Map());
     }
   }
 
-  private saveWishlistToLocalStorage(): void {
+  private saveWishlist(): void {
     try {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.wishlistItems));
+      const wishlistArray = Array.from(this.wishlistItems.values());
+      localStorage.setItem(this.WISHLIST_KEY, JSON.stringify(wishlistArray));
+      this.wishlistSubject.next(new Map(this.wishlistItems));
     } catch (error) {
       console.error('Error saving wishlist:', error);
     }
   }
 
-  getWishlist(): Observable<Product[]> {
-    return this.wishlistSubject.asObservable();
-  }
-
   addToWishlist(product: Product): void {
-    if (!this.isInWishlist(product.id)) {
-      this.wishlistItems = [...this.wishlistItems, { ...product }];
-      this.updateWishlist();
+    if (!this.wishlistItems.has(product.id)) {
+      this.wishlistItems.set(product.id, { ...product });
+      this.saveWishlist();
     }
   }
 
   removeFromWishlist(productId: number): void {
-    this.wishlistItems = this.wishlistItems.filter(item => item.id !== productId);
-    this.updateWishlist();
+    if (this.wishlistItems.has(productId)) {
+      this.wishlistItems.delete(productId);
+      this.saveWishlist();
+    }
   }
 
   isInWishlist(productId: number): boolean {
-    return this.wishlistItems.some(item => item.id === productId);
+    return this.wishlistItems.has(productId);
   }
 
-  private updateWishlist(): void {
-    this.wishlistSubject.next([...this.wishlistItems]);
-    this.saveWishlistToLocalStorage();
+  getWishlist(): Product[] {
+    return Array.from(this.wishlistItems.values());
   }
 
   clearWishlist(): void {
-    this.wishlistItems = [];
-    this.updateWishlist();
+    this.wishlistItems.clear();
+    this.saveWishlist();
   }
 }

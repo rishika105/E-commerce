@@ -12,16 +12,11 @@ import { Component } from '@angular/core';
   styles: ``
 })
 export class SellerDashboardComponent {
-
-
   userName: string = '';
 
   constructor(
     private profileService: ProfileService,
     private store: Store<any>,
-
-
-
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +26,6 @@ export class SellerDashboardComponent {
 
   loadUserProfile(): void {
     this.profileService.getProfile().subscribe((profileData: any) => {
-
       this.userName = profileData.name;
     });
 

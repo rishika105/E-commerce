@@ -130,13 +130,13 @@ constructor(private cdr: ChangeDetectorRef) {}
     this.showModal = false; // Close modal
   }
 
-    // HostListener to detect click outside the modal
-    @HostListener('document:click', ['$event'])
-    handleClickOutside(event: MouseEvent) {
-      const target = event.target as HTMLElement;
-      if (!target.closest('.relative')) { // Adjust based on your container
-        this.showModal = false;
-      }
-    }
+   // HostListener to detect click outside the modal
+   @HostListener('document:click', ['$event'])
+   handleClickOutside(event: MouseEvent) {
+     const target = event.target as HTMLElement;
+     if (!target.closest('.relative')) { // Adjust based on your container
+       this.showModal = false;
+     }
+   }
 
 }

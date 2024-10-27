@@ -1,6 +1,6 @@
-<div class="container mx-auto p-6 min-h-[570px] bg-white shadow relative m-[30px] w-[950px] ml-[20px]">
+<div class="">
   <div class="flex justify-between items-center mb-6">
-    <p class="text-xl font-medium">Manage Addresses</p>
+    <p class="text-xl font-medium text-gray-800">Manage Addresses</p>
   </div>
 
   <!-- Button to add new address -->
@@ -113,14 +113,14 @@
   <!-- List of Addresses -->
   <div
     *ngFor="let address of addresses"
-    class="bg-white p-6 flex flex-col relative gap-2 border border-gray-300 w-full cursor-pointer"
+    class="bg-white p-6 flex flex-col relative gap-2 border border-gray-300 w-full cursor-pointer mt-8"
   >
     <div class="absolute top-2 right-2">
       <ng-icon name="heroEllipsisVertical" (click)="openModal(address)" class="text-gray-500 hover:text-gray-700"
       [style.fontSize.px]="23">
       </ng-icon>
     </div>
-    <p><strong>{{ address.name }}</strong> <span>{{ address.phone }}</span></p>
+    <p><strong class="text-md font-medium mr-4 text-gray-800">{{ address.name }}</strong> <span class="text-md mr-3 font-medium text-gray-800">{{ address.phone }}</span></p>
     <p>{{ address.street }}, {{ address.city }}, {{ address.state }} - {{ address.zip }}</p>
   </div>
 

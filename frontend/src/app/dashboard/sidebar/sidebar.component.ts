@@ -1,3 +1,4 @@
+import { NgIconComponent } from '@ng-icons/core';
 import { ConfirmationModalComponent } from './../../common/confirmation-modal/confirmation-modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -12,7 +13,7 @@ import { clearToken } from '../../ngrx store/auth/auth.action';
 @Component({
   selector: 'app-sidebar',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, ConfirmationModalComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterLink, ConfirmationModalComponent, NgIconComponent],
   templateUrl: './sidebar.component.html',
   styles: ``
 })

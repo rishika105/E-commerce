@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 // add-product.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -22,7 +23,8 @@ export class AddProductComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private toastr: ToastrService
   ) {
     this.productForm = this.fb.group({
       name: ['', Validators.required],
@@ -92,12 +94,14 @@ export class AddProductComponent implements OnInit {
       this.productService.createProduct(formData).subscribe(
         (response) => {
           console.log('Product created successfully', response);
+          this.toastr.success("Product added successfully");
           this.productForm.reset();
           this.selectedFile = null;
           this.imagePreview = null;
         },
         (error) => {
           console.error('Error creating product', error);
+          this.toastr.error("Error adding product");
         }
       );
     }
