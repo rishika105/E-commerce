@@ -1,107 +1,64 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { CartService } from '../cart/cart.service';
 import { FormsModule } from '@angular/forms';
-import { CustomerService, Customer } from '../services/customer.service';
-import { OrderService, Order, OrderItem } from '../services/order.service';
-import { CouponService, Coupon } from '../services/coupon.service';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet, FormsModule],
+  imports: [CommonModule, RouterLink, RouterOutlet, FormsModule], 
   templateUrl: './checkout.component.html',
 })
 export class CheckoutComponent implements OnInit {
-  cart: OrderItem[] = [];
+  cart: any[] = [];
   paymentMethod: string = '';
   couponCode: string = '';
   discount: number = 0;
-  isLoading: boolean = false;
-  errorMessage: string = '';
   
-  billingDetails: Customer = {
-    fullName: '',
+  billingDetails = {
+    firstName: '',
     company: '',
     streetAddress: '',
     apartment: '',
     city: '',
     phone: '',
     email: '',
+    saveInfo: false
   };
 
-  constructor(
-    private customerService: CustomerService,
-    private orderService: OrderService,
-    private couponService: CouponService
-  ) {}
+  constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    // Fetch cart items from a cart service or local storage
-    this.cart = [
-      { itemName: 'Product 1', itemPrice: 10, quantity: 2 },
-      { itemName: 'Product 2', itemPrice: 15, quantity: 1 },
-    ];
+    this.cart = this.cartService.getCartItems(); // Fetch selected cart items
   }
 
   getTotal(): number {
-    return this.cart.reduce((total, item) => total + item.itemPrice * item.quantity, 0);
+    return this.cartService.getTotalPrice(); // Total price of cart items
   }
 
   getGrandTotal(): number {
-    return this.getTotal() - this.discount;
+    const total = this.getTotal();
+    return total - this.discount; // Grand total with discount applied
   }
 
   applyCoupon(): void {
-    this.isLoading = true;
-    this.errorMessage = '';
-    this.couponService.validateCoupon(this.couponCode).subscribe({
-      next: (coupon: Coupon) => {
-        this.discount = coupon.discount;
-        this.isLoading = false;
-      },
-      error: (error) => {
-        this.errorMessage = 'Invalid coupon code';
-        this.discount = 0;
-        this.isLoading = false;
-      }
-    });
+    if (this.couponCode === 'DISCOUNT10') {
+      this.discount = this.getTotal() * 0.1; // Apply a 10% discount
+    } else {
+      this.discount = 0; // No discount
+    }
   }
 
   placeOrder(): void {
-    this.isLoading = true;
-    this.errorMessage = '';
+    const orderDetails = {
+      billingDetails: this.billingDetails,
+      cart: this.cart,
+      paymentMethod: this.paymentMethod,
+      totalPrice: this.getGrandTotal(),
+    };
 
-    // First, create the customer
-    this.customerService.createCustomer(this.billingDetails).subscribe({
-      next: (customer: Customer) => {
-        // Now create the order
-        const order: Order = {
-          customerId: customer.customerId!,
-          subtotal: this.getTotal(),
-          grandTotal: this.getGrandTotal(),
-          paymentMethod: this.paymentMethod,
-          couponCode: this.couponCode,
-          orderDate: new Date().toISOString(),
-          orderItems: this.cart
-        };
-
-        this.orderService.createOrder(order).subscribe({
-          next: (createdOrder: Order) => {
-            console.log('Order placed successfully:', createdOrder);
-            this.isLoading = false;
-            // Redirect to a confirmation page or show a success message
-          },
-          error: (error) => {
-            this.errorMessage = 'Failed to place the order. Please try again.';
-            this.isLoading = false;
-          }
-        });
-      },
-      error: (error) => {
-        this.errorMessage = 'Failed to create customer. Please try again.';
-        this.isLoading = false;
-      }
-    });
+    console.log('Order Placed:', orderDetails);
+    // Send order details to the server here using a service (e.g., orderService.placeOrder(orderDetails))
   }
 }

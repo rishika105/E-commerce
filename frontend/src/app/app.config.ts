@@ -4,7 +4,7 @@ import { routes } from './app.routes';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
-import { rootReducer } from './actions/store';  // Import your root reducer
+import { rootReducer } from './ngrx store/store';  // Import your root reducer
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 
@@ -18,6 +18,5 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideToastr(), // Provide the rootReducer here
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-
   ]
 };

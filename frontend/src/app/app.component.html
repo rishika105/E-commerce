@@ -1,36 +1,8 @@
-
-<nav class="bg-gray-50 border-b border-gray-200">
-  <div class="container mx-auto flex justify-between items-center py-4">
-      <!-- Logo -->
-      <a href="#" class="flex items-center text-red-600 text-2xl font-bold">
-          <span class="text-black">Shop</span><span class="text-red-600">Nest</span>
-      </a>
-
-      <!-- Menu Links -->
-      <div class="hidden md:flex space-x-8 mt-2">
-          <a href="#" class="text-black hover:text-red-500" [routerLink] = "['/']">Home</a>
-          <a href="#" class="text-black hover:text-red-500" [routerLink]="['/about']"  >About Us</a>
-          <a href="#" class="text-black hover:text-red-500" [routerLink]="['/contact']" >Contact Us</a>
-          <a href="#" class="text-black hover:text-red-500" [routerLink]="['/register']" >Signup</a>
-          <a href="#" class="text-white mt-[-7px] pl-4 pr-4 pt-2 pb-2 rounded-md bg-red-500" [routerLink]="['/login']" >Login</a>
-          <a href="#" class="text-white mt-[-7px] pl-4 pr-4 pt-2 pb-2 rounded-md bg-red-500" [routerLink]="['/cart']" ><ng-icon name="heroShoppingCart" class="w-40 h-40"></ng-icon></a>
-      </div>
-
-      <!-- Mobile Menu Button -->
-      <div class="md:hidden">
-          <button class="text-gray-800 hover:text-gray-600 focus:outline-none">
-              <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
-          </button>
-      </div>
-</div>
-
-</nav>
-
-<!-- This is where the routed component (Login, Signup, etc.) will be displayed -->
+<!-- NavBar -->
+ <app-navbar></app-navbar>
+ 
+<!-- Routed component like login, signup, dashboard pages-->
 <router-outlet></router-outlet>
 
-<!-- common for all -->
+<!-- Footer -->
 <app-footer></app-footer>
-

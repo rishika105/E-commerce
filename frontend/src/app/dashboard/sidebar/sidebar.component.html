@@ -1,0 +1,258 @@
+<app-confirmation-modal
+  *ngIf="showLogoutModal"
+  title="Logout"
+  message="Are you sure you want to logout?"
+  confirmText="Logout"
+  (onCancel)="cancelLogout()"
+  (onConfirm)="confirmLogout()"
+></app-confirmation-modal>
+
+
+<div class="w-64 h-[80px] shadow-md bg-white p-5 ml-[30px] mt-8 mb-[-15px] relative flex">
+
+<img src="assets/images/profile.png" class="rounded-full absolute w-[50px] h-[50px] border">
+<div class=" ml-[70px]">
+  <div class="text-gray-700 text-sm">Hello,
+<p class="text-black text-[17px] pt-1">  {{userName}}</p>
+  </div>
+</div>
+</div>
+
+
+<div class="h-[510px] mt-[30px] ml-[30px] mb-[20px] w-64 bg-white p-6 rounded shadow-lg relative text-gray-800">
+
+
+
+     <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
+   <!------------------------------ USER - SIDEBAR --------------------------->
+   <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
+  <div *ngIf="userRole === 'USER'" class="w-64 h-screen p-4">
+    <!-- My Orders -->
+<div class="flex gap-2">
+  <ng-icon name="heroFolderArrowDownSolid" class="text-lg text-gray-500 mt-[1px] font-bold"></ng-icon>
+  <p class="text-gray-500 mb-2 text-md font-medium ">MY ORDERS</p>
+</div>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+    <!-- Account Settings -->
+   <div class="flex gap-2">
+    <ng-icon name="heroUserSolid" class="text-lg text-gray-500 mt-[1px] font-bold"> </ng-icon>
+    <p class="text-gray-500 mb-1 text-md font-medium">ACCOUNT SETTINGS</p>
+   </div>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/user-dashboard/profile')}"
+          [routerLink]="['/user-dashboard/profile']">Profile Information</li>
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/user-dashboard/address')}"
+          [routerLink]="['/user-dashboard/address']">Manage Address</li>
+
+    </ul>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+
+    <!-- payment -->
+<div class="flex gap-2">
+  <ng-icon name="heroWalletSolid" class="text-lg text-gray-500 mt-[1px] font-bold"></ng-icon>
+  <p class="text-gray-500 mb-1 cursor-pointer text-md font-medium">PAYMENTS</p>
+</div>
+    <ul class="pl-4">
+      <li class=" mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/savedUPI')}"
+          [routerLink]="['/savedUPI']">Saved UPI</li>
+      <li class=" mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/savedCard')}"
+          [routerLink]="['/savedCard']">Saved Cards</li>
+    </ul>
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+
+    <!-- My Stuff -->
+<div class="flex gap-2">
+  <ng-icon name="heroFolderSolid" class="text-lg text-gray-500 mt-[1px] font-bold"></ng-icon>
+  <p class="text-gray-500 mb-2 text-md font-medium">MY STUFF</p>
+</div>
+    <ul class="pl-4 text-base">
+      <li class=" mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/reviewRatings')}"
+          [routerLink]="['/reviewRatings']">My Reviews and Ratings</li>
+      <li class=" mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/wishlist')}"
+          [routerLink]="['/wishlist']">Wishlist</li>
+      <li class=" mb-1 cursor-pointer"
+          [ngClass]="{'text-red-500': isActive('/notifications')}"
+          [routerLink]="['/notifications']">All Notifications</li>
+    </ul>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+
+    <!-- Logout -->
+<div class="flex gap-2">
+  <ng-icon name="heroPowerSolid" class="text-xl text-gray-500 mt-[1px] font-bold">
+
+  </ng-icon>
+  <p class="text-gray-500 text-md font-medium mb-2 cursor-pointer" [ngClass]="{'text-red-500': isActive('/logout')}" (click)="logout()">LOGOUT</p>
+
+</div>  </div>
+
+
+
+
+    <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
+   <!------------------------------ SELLER - SIDEBAR --------------------------->
+   <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
+   <div *ngIf="userRole === 'SELLER'" class="w-64 h-screen p-4">
+    <!-- Profile -->
+    <div class="flex gap-2">
+      <ng-icon name="heroUserSolid" class="text-lg text-gray-500 mt-[1px] font-bold"> </ng-icon>
+      <p class="text-gray-500 mb-1 text-md font-medium">ACCOUNT SETTINGS</p>
+    </div>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/seller-dashboard/profile')}"
+          [routerLink]="['/seller-dashboard/profile']">Profile Information</li>
+    </ul>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+    <!-- Products -->
+    <div class="flex gap-2">
+      <ng-icon name="heroSquaresPlusSolid" class="text-lg text-gray-500 mt-[1px] font-bold"></ng-icon>
+      <p class="text-gray-500 mb-2 text-md font-medium">PRODUCTS</p>
+    </div>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/seller-dashboard/add-product')}"
+          [routerLink]="['/seller-dashboard/add-product']">Add Product</li>
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/seller-dashboard/manage-products')}"
+          [routerLink]="['/seller-dashboard/manage-products']">Manage Products</li>
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/seller-dashboard/stocks')}"
+          [routerLink]="['/seller-dashboard/stocks']">Stock Management</li>
+    </ul>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+    <!-- Orders -->
+    <div class="flex gap-2">
+      <ng-icon name="heroFolderArrowDownSolid" class="text-lg text-gray-500 mt-[1px] font-bold"></ng-icon>
+      <p class="text-gray-500 mb-2 text-md font-medium">ORDERS</p>
+    </div>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/seller-dashboard/view-orders')}"
+          [routerLink]="['/returns']">View Orders</li>
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/seller-dashboard/view-orders')}"
+          [routerLink]="['/returns']">Manage Returns</li>
+
+    </ul>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+    <!-- Reports -->
+    <div class="flex gap-2">
+      <ng-icon name="heroChartBarSolid" class="text-lg text-gray-500 mt-[1px] font-bold"></ng-icon>
+      <p class="text-gray-500 mb-2 text-md font-medium">REPORTS</p>
+    </div>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/salesReports')}"
+          [routerLink]="['/salesReports']">Sales Reports</li>
+    </ul>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+    <!-- Logout -->
+    <div class="flex gap-2">
+      <ng-icon name="heroPowerSolid" class="text-xl text-gray-500 mt-[1px] font-bold"></ng-icon>
+      <p class="text-gray-500 text-md font-medium mb-2 cursor-pointer"
+         [ngClass]="{'text-red-500': isActive('/logout')}" (click)="logout()">LOGOUT</p>
+    </div>
+  </div>
+
+
+
+   <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
+   <!------------------------------ ADMIN - SIDEBAR --------------------------->
+   <!-- -------------------------------------------------------------------- -->
+   <!-- -------------------------------------------------------------------- -->
+   <div *ngIf="userRole === 'ADMIN'" class="w-64 h-screen p-4">
+    <!-- Profile -->
+    <div class="flex gap-2">
+      <ng-icon name="heroUserSolid" class="text-lg text-gray-500 mt-[1px] font-bold"> </ng-icon>
+      <p class="text-gray-500 mb-1 text-md font-medium">Profile Information</p>
+    </div>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/admin-dashboard/profile')}"
+          [routerLink]="['/admin-dashboard/profile']">Profile Information</li>
+    </ul>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+    <!-- Categories -->
+    <div class="flex gap-2">
+      <ng-icon name="heroFolderSolid" class="text-lg text-gray-500 mt-[1px] font-bold"></ng-icon>
+      <p class="text-gray-500 mb-2 text-md font-medium">Categories</p>
+    </div>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/admin-dashboard/addCategory')}"
+          [routerLink]="['/admin-dashboard/addCategory']">Add Category</li>
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/admin-dashboard/manageCategory')}"
+          [routerLink]="['/admin-dashboard/manageCategory']">Manage Categories</li>
+    </ul>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+    <!-- Supervision -->
+    <div class="flex gap-2">
+      <ng-icon name="heroEyeSolid" class="text-lg text-gray-500 mt-[1px] font-bold"></ng-icon>
+      <p class="text-gray-500 mb-2 text-md font-medium">Supervision</p>
+    </div>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/viewOrders')}"
+          [routerLink]="['/viewOrders']">View Orders</li>
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/viewCustomers')}"
+          [routerLink]="['/viewCustomers']">View Customers</li>
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/viewSellers')}"
+          [routerLink]="['/viewSellers']">View Sellers</li>
+    </ul>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+    <!-- Reports -->
+    <div class="flex gap-2">
+      <ng-icon name="heroChartBarSolid" class="text-lg text-gray-500 mt-[1px] font-bold"></ng-icon>
+      <p class="text-gray-500 mb-2 text-md font-medium">Reports</p>
+    </div>
+    <ul class="pl-4">
+      <li class="text-gray-700 mb-1 cursor-pointer text-base"
+          [ngClass]="{'text-red-500': isActive('/salesReports')}"
+          [routerLink]="['/salesReports']">Sales Statistics</li>
+    </ul>
+
+    <div class="bg-gray-200 h-[1px] w-[255px] ml-[-40px] mb-4 mt-2"></div>
+
+    <!-- Logout -->
+    <div class="flex gap-2">
+      <ng-icon name="heroPowerSolid" class="text-xl text-gray-500 mt-[1px] font-bold"></ng-icon>
+      <p class="text-gray-500 text-md font-medium mb-2 cursor-pointer"
+         [ngClass]="{'text-red-500': isActive('/logout')}" (click)="logout()">Logout</p>
+    </div>
+  </div>
+
