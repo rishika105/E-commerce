@@ -1,4 +1,3 @@
-import { Subscription } from 'rxjs';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
@@ -6,7 +5,8 @@ import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroHeart } from '@ng-icons/heroicons/outline';
 import { heroHeartSolid } from '@ng-icons/heroicons/solid';
 import { Product } from '../api services/product.service';
-import { WishlistService } from '../wishlist/wishlist.service';
+import { WishlistService } from '../api services/wishlist.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-card',
@@ -20,8 +20,8 @@ import { WishlistService } from '../wishlist/wishlist.service';
         [attr.data-product-id]="product.id"
       >
         <ng-icon
-          [name]="isProductInWishlist(product.id) ? 'heroHeartSolid' : 'heroHeart'"
-          [class]="isProductInWishlist(product.id) ? 'text-red-500' : 'text-gray-400 group-hover:text-gray-600'"
+          [name]="inWishlist ? 'heroHeartSolid' : 'heroHeart'"
+          [class]="inWishlist ? 'text-red-500' : 'text-gray-400 group-hover:text-gray-600'"
           class="w-6 h-6 transition-colors duration-200"
         >
         </ng-icon>
@@ -44,27 +44,35 @@ import { WishlistService } from '../wishlist/wishlist.service';
     provideIcons({ heroHeart, heroHeartSolid })
   ]
 })
-export class ProductCardComponent implements OnInit {
+export class ProductCardComponent implements OnInit, OnDestroy {
   @Input() product!: Product;
+  inWishlist: boolean = false;
+  private wishlistSubscription?: Subscription;
 
   constructor(private wishlistService: WishlistService) {}
 
   ngOnInit(): void {
-    // No need to subscribe here anymore
+    // Initialize the wishlist state for this specific product
+    this.inWishlist = this.wishlistService.isInWishlist(this.product.id);
+    
+    // Subscribe to wishlist changes to update this product's state
+    this.wishlistSubscription = this.wishlistService.getWishlist().subscribe(items => {
+      this.inWishlist = items.some(item => item.id === this.product.id);
+    });
   }
 
-  isProductInWishlist(productId: number): boolean {
-    return this.wishlistService.isInWishlist(productId);
+  ngOnDestroy(): void {
+    if (this.wishlistSubscription) {
+      this.wishlistSubscription.unsubscribe();
+    }
   }
 
   toggleWishlist(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
 
-    const productId = this.product.id;
-
-    if (this.isProductInWishlist(productId)) {
-      this.wishlistService.removeFromWishlist(productId);
+    if (this.inWishlist) {
+      this.wishlistService.removeFromWishlist(this.product.id);
     } else {
       this.wishlistService.addToWishlist({ ...this.product });
     }

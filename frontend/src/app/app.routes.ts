@@ -22,7 +22,7 @@ import { ManageProductsComponent } from './dashboard/seller-dashboard/manage-pro
 import { CategoryComponent } from './category/category.component';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { WishlistComponent } from './wishlist/wishlist.component';
+
 import { CartComponent } from './cart/cart.component';
 
 // open routes
@@ -107,11 +107,7 @@ export const routes: Routes = [
     path: 'product-details/:id',
     component: ProductDetailsComponent
   },
-  {
-    path: 'wishlist',
-    component: WishlistComponent,
-    canActivate: [AuthGuard]
-  },
+
   {
     path: 'cart',
     component: CartComponent,
