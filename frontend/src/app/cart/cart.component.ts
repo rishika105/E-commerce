@@ -19,14 +19,15 @@ import { CartService } from './cart.service';
     CheckoutComponent
   ],
 })
+
 export class CartComponent implements OnInit {
-  cart: any[] = [];
+  cartItems: any[] = [];
   couponCode: string = '';
 
-  constructor(private cartService: CartService, private router: Router) { }
+  constructor(private cartService: CartService, private router: Router) {}
 
   ngOnInit() {
-    this.cart = this.cartService.getCartItems();
+    this.cartItems = this.cartService.getCartItems();
   }
 
   returnToShop() {
@@ -36,7 +37,6 @@ export class CartComponent implements OnInit {
   updateCart() {
     this.cartService.saveCartToLocalStorage();
     alert("Cart updated successfully!");
-
     if (this.couponCode) {
       this.applyCoupon();
     }
@@ -44,7 +44,7 @@ export class CartComponent implements OnInit {
 
   removeProduct(index: number) {
     this.cartService.removeFromCart(index);
-    this.cart = this.cartService.getCartItems();
+    this.cartItems = this.cartService.getCartItems();
   }
 
   applyCoupon() {
@@ -53,9 +53,8 @@ export class CartComponent implements OnInit {
   }
 
   updateQuantity(index: number, change: number) {
-    const item = this.cart[index];
+    const item = this.cartItems[index];
     const newQuantity = item.quantity + change;
-
     if (newQuantity > 0) {
       item.quantity = newQuantity;
       this.cartService.updateItemQuantity(index, newQuantity);
@@ -72,5 +71,9 @@ export class CartComponent implements OnInit {
 
   goToCheckout() {
     this.router.navigate(['/checkout']);
+  }
+
+  viewProductDetails(productId: number) {
+    this.router.navigate(['/product', productId]);
   }
 }

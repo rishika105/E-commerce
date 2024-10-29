@@ -1,40 +1,31 @@
+// product-details.component.ts
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ProductService, Product } from '../api services/product.service';
-import { CommonModule } from '@angular/common';
-import { Observable, of } from 'rxjs';
-import { switchMap, catchError } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-product-detail',
+  selector: 'app-product-details',
   templateUrl: './product-details.component.html',
-  styles: ``,
-  standalone: true,
-  imports: [CommonModule, RouterLink]
+  
 })
 export class ProductDetailsComponent implements OnInit {
-  product$: Observable<Product | null> = of(null);
-  error: string | null = null;
+  product: any;
 
-  constructor(
-    private route: ActivatedRoute,
-    private productService: ProductService
-  ) {}
+  private products = [
+    {
+      id: 1,
+      name: 'Sample Product',
+      description: 'This is a sample product description.',
+      specifications: ['Feature 1', 'Feature 2', 'Feature 3'],
+      price: 29.99,
+      imageUrl: 'https://via.placeholder.com/300'
+    },
+    // Add more products as needed
+  ];
+
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.product$ = this.route.paramMap.pipe(
-      switchMap(params => {
-        const productId = params.get('id');
-        if (!productId) {
-          throw new Error('Product ID is missing');
-        }
-        return this.productService.getProductById(+productId);
-      }),
-      catchError(error => {
-        console.error('Error loading product:', error);
-        this.error = 'Failed to load product. Please try again later.';
-        return of(null);
-      })
-    );
+    const productId = Number(this.route.snapshot.paramMap.get('id'));
+    this.product = this.products.find((p) => p.id === productId);
   }
 }

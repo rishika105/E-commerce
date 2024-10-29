@@ -14,10 +14,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of cart; let i = index">
+        <tr *ngFor="let item of cartItems; let i = index">
           <td class="py-3 px-4">
             <div class="flex items-center">
-              <img [src]="'./assets/images/' + item.name + '.jpeg'" [alt]="item.name" class="w-12 h-12 rounded-md mr-4">
+              <img [src]="item.imageUrl" [alt]="item.name" class="w-12 h-12 rounded-md mr-4">
               <div>
                 <h2 class="font-medium text-gray-800">{{item.name}}</h2>
               </div>
@@ -33,9 +33,7 @@
           </td>
           <td class="py-3 px-4 text-right">{{item.price * item.quantity | currency}}</td>
           <td class="py-3 px-4 text-right">
-            <button class="bg-red-600 text-white px-4 py-2 rounded" (click)="removeProduct(i)">
-              Remove
-            </button>
+            <button class="bg-red-600 text-white px-4 py-2 rounded" (click)="removeProduct(i)">Remove</button>
           </td>
         </tr>
       </tbody>
@@ -43,13 +41,8 @@
 
     <!-- Return to Shop and Update Cart -->
     <div class="flex justify-between mt-8">
-      <button class="bg-black text-white px-6 py-2 rounded" (click)="returnToShop()">
-        Return To Shop
-      </button>
-      
-      <button class="bg-red-600 text-white px-6 py-2 rounded" (click)="updateCart()">
-        Update Cart
-      </button>
+      <button class="bg-black text-white px-6 py-2 rounded" (click)="returnToShop()">Return To Shop</button>
+      <button class="bg-red-600 text-white px-6 py-2 rounded" (click)="updateCart()">Update Cart</button>
     </div>
 
     <!-- Coupon Code and Cart Total Side by Side -->
@@ -70,7 +63,7 @@
         </button>
       </div>
 
-      <!-- Right Side: Cart Total (50%) -->
+      <!-- Cart Total -->
       <div class="w-full md:w-1/2 flex justify-end mt-6 md:mt-0">
         <div class="bg-gray-100 p-6 rounded border w-full md:w-2/3">
           <h2 class="text-lg font-semibold mb-4">Cart Total</h2>
@@ -86,12 +79,9 @@
             <p class="text-gray-600">Total:</p>
             <p class="text-gray-800">{{getGrandTotal() | currency}}</p>
           </div>
-          <button class="w-full bg-red-600 text-white px-6 py-3 rounded mt-6" (click)="goToCheckout()">
-            Proceed to checkout
-          </button>
+          <button class="w-full bg-red-600 text-white px-6 py-3 rounded mt-6" (click)="goToCheckout()">Proceed to checkout</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-<app-checkout></app-checkout>
