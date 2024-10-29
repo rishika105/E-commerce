@@ -19,6 +19,8 @@ export class AddProductComponent implements OnInit {
   categories: Category[] = [];
   selectedFile: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+  loading: boolean = true; // Start with loading set to true
+
 
   constructor(
     private fb: FormBuilder,
@@ -39,12 +41,15 @@ export class AddProductComponent implements OnInit {
   }
 
   loadCategories(): void {
+    this.loading = true;
     this.categoryService.getCategories().subscribe(
       (data) => {
         this.categories = data;
+        this.loading = false;
       },
       (error) => {
         console.error('Error loading categories:', error);
+        this.loading = false;
       }
     );
   }
@@ -81,6 +86,7 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     if (this.productForm.valid && this.selectedFile) {
       const formData = new FormData();
       formData.append('image', this.selectedFile);
@@ -93,6 +99,7 @@ export class AddProductComponent implements OnInit {
 
       this.productService.createProduct(formData).subscribe(
         (response) => {
+          this.loading = false;
           console.log('Product created successfully', response);
           this.toastr.success("Product added successfully");
           this.productForm.reset();
@@ -100,6 +107,7 @@ export class AddProductComponent implements OnInit {
           this.imagePreview = null;
         },
         (error) => {
+          this.loading = false;
           console.error('Error creating product', error);
           this.toastr.error("Error adding product");
         }

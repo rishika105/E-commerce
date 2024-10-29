@@ -18,6 +18,7 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 })
 export class HomeComponent {
   categories: Category[] = [];
+  loading : boolean = false;
 
   constructor(
     private categoryService: CategoryService,
@@ -28,12 +29,15 @@ export class HomeComponent {
   }
 
   loadCategories(): void {
+    this.loading = true;
     this.categoryService.getCategories().subscribe(
       (data) => {
         this.categories = data;
+        this.loading = false;
       },
       (error) => {
         console.error('Error loading categories:', error);
+        this.loading = false;
       }
     );
   }
