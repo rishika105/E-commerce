@@ -18,12 +18,9 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 })
 export class HomeComponent {
   categories: Category[] = [];
-  searchTerm: string = '';
-  searchResults: Product[] = [];
 
   constructor(
     private categoryService: CategoryService,
-    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -41,16 +38,6 @@ export class HomeComponent {
     );
   }
 
-  searchProducts(): void {
-    if (this.searchTerm.trim()) {
-      this.productService.searchProducts(this.searchTerm).subscribe(
-        (data) => {
-          this.searchResults = data;
-        },
-        (error) => {
-          console.error('Error searching products:', error);
-        }
-      );
-    }
-  }
+
+
 }

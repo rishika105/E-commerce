@@ -1,3 +1,6 @@
+import { ProductListingComponent } from './product-listing/product-listing.component';
+import { SavedCardsComponent } from './dashboard/user-dashboard/saved-cards/saved-cards.component';
+import { SavedUPIComponent } from './dashboard/user-dashboard/saved-upi/saved-upi.component';
 import { ManageCategoryComponent } from './dashboard/admin-dashboard/manage-category/manage-category.component';
 import { Component } from '@angular/core';
 import { AddCategoryComponent } from './dashboard/admin-dashboard/add-category/add-category.component';
@@ -51,7 +54,16 @@ export const routes: Routes = [
     path: 'forgot-password',
     component: ForgotPasswordComponent,
   },
-  { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'reset-password',
+    component: ResetPasswordComponent
+  },
+  {
+    path: 'products',
+    component: ProductListingComponent
+  }, // Browse all products
+  {
+    path: 'search',
+    component: ProductListingComponent },   // Search specific products
 
   // private routes
   {
@@ -87,6 +99,9 @@ export const routes: Routes = [
       {path: "", redirectTo: "profile", pathMatch: "full"},
       { path: 'profile', component: ProfileComponent },
       { path: 'address', component: AddressManagerComponent},
+      {path: 'savedUPI', component: SavedUPIComponent},
+      {path: 'savedCards', component: SavedCardsComponent},
+      {path: 'wishlist', component: WishlistComponent}
 
       // Add more routes here for other dashboard pages
     ],

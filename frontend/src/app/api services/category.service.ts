@@ -134,7 +134,7 @@ export class CategoryService {
         const headers = this.getHeaders(token);
         return this.http.get<Category>(`${this.apiUrl}/getCategorybyId/${id}`, { headers, withCredentials: true })
           .pipe(
-            tap(response => console.log('Get category by ID response:', response)),
+            tap(response => console.log('Get category by ID response')),
             catchError(this.handleError)
           );
       })

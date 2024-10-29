@@ -1,0 +1,27 @@
+<!-- Loading -->
+<div *ngIf="loading" class="mt-[150px] mb-[150px] mx-auto loader">
+  <p>Loading...</p>
+</div>
+
+<!-- Display the search term if there are results -->
+<div *ngIf="isSearchMode && searchTerm && searchResults.length > 0" class="p-8">
+  <p class="text-xl font-medium">Showing results for "{{ searchTerm }}"</p>
+</div>
+
+<!-- Product Cards -->
+<div *ngIf="!loading" class="p-8 mt-[-60px]">
+  <!-- Show product cards only if search results exist -->
+  <div *ngIf="searchResults.length > 0; else noResults" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    <app-product-card *ngFor="let product of searchResults" [product]="product"></app-product-card>
+  </div>
+</div>
+
+<!-- No results message -->
+<ng-template #noResults>
+  <div class="mx-auto flex justify-center items-center flex-col mt-[25px]">
+    <img src="assets/images/product-not-found.gif" class="w-[350px] h-[350px]" />
+    <p class="font-medium text-2xl text-gray-800">Sorry! No products found!</p>
+    <p class="font-normal text-md text-gray-80 font-sans">Please check the spelling or try searching for something else</p>
+  </div>
+  <br><br>
+</ng-template>
