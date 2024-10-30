@@ -1,4 +1,3 @@
-// product-details.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -8,6 +7,9 @@ import { ActivatedRoute } from '@angular/router';
   
 })
 export class ProductDetailsComponent implements OnInit {
+addToCart() {
+throw new Error('Method not implemented.');
+}
   product: any;
 
   private products = [
@@ -25,7 +27,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    const productId = Number(this.route.snapshot.paramMap.get('id'));
+    const productId = Number(this.route.snapshot .paramMap.get('id'));
     this.product = this.products.find((p) => p.id === productId);
   }
 }

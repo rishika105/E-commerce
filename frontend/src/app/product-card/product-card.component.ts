@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core'; // Add EventEmitter here
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
@@ -38,6 +38,9 @@ import { Subscription } from 'rxjs';
       <p class="text-gray-600 mb-2">{{ product.description | slice:0:100 }}...</p>
       <p class="font-medium mb-2">₹ {{ product.price.toFixed(2) }}</p>
       <p class="mb-2 font-normal text-sm text-green-600">Free Delivery</p>
+
+      <!-- Add to Cart Button -->
+      <button (click)="onAddToCart()">Add to Cart</button>
     </div>
   `,
   providers: [
@@ -46,6 +49,7 @@ import { Subscription } from 'rxjs';
 })
 export class ProductCardComponent implements OnInit, OnDestroy {
   @Input() product!: Product;
+  @Output() addToCart = new EventEmitter<Product>(); // Ensure EventEmitter is properly imported
   inWishlist: boolean = false;
   private wishlistSubscription?: Subscription;
 
@@ -76,5 +80,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     } else {
       this.wishlistService.addToWishlist({ ...this.product });
     }
+  }
+
+  onAddToCart(): void {
+    this.addToCart.emit(this.product);
   }
 }

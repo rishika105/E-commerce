@@ -1,26 +1,32 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgIconComponent } from '@ng-icons/core';
 import { CheckoutComponent } from '../checkout/checkout.component';
 import { CartService } from './cart.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   standalone: true,
   imports: [
-    CommonModule,
-    FormsModule,
     NgIconComponent,
     RouterLink,
     RouterOutlet,
-    CheckoutComponent
+    CheckoutComponent,
+    FormsModule,
+    CommonModule,
   ],
 })
-
 export class CartComponent implements OnInit {
+updateQuantity(_t16: number,arg1: number) {
+throw new Error('Method not implemented.');
+}
+updateCart() {
+throw new Error('Method not implemented.');
+}
   cartItems: any[] = [];
   couponCode: string = '';
 
@@ -30,50 +36,27 @@ export class CartComponent implements OnInit {
     this.cartItems = this.cartService.getCartItems();
   }
 
-  returnToShop() {
-    this.router.navigate(['/category']);
-  }
-
-  updateCart() {
-    this.cartService.saveCartToLocalStorage();
-    alert("Cart updated successfully!");
-    if (this.couponCode) {
-      this.applyCoupon();
-    }
-  }
-
-  removeProduct(index: number) {
-    this.cartService.removeFromCart(index);
-    this.cartItems = this.cartService.getCartItems();
-  }
-
-  applyCoupon() {
-    console.log('Applying coupon:', this.couponCode);
-    // Implement coupon logic here
-  }
-
-  updateQuantity(index: number, change: number) {
-    const item = this.cartItems[index];
-    const newQuantity = item.quantity + change;
-    if (newQuantity > 0) {
-      item.quantity = newQuantity;
-      this.cartService.updateItemQuantity(index, newQuantity);
-    }
-  }
-
-  getTotal() {
+  getTotalPrice(): number {
     return this.cartService.getTotalPrice();
   }
 
-  getGrandTotal() {
+  getGrandTotal(): number {
     return this.cartService.getGrandTotal();
   }
 
-  goToCheckout() {
-    this.router.navigate(['/checkout']);
+  removeFromCart(index: number) {
+    this.cartService.removeFromCart(index);
   }
 
-  viewProductDetails(productId: number) {
-    this.router.navigate(['/product', productId]);
+  returnToShop() {
+    this.router.navigate(['/category']); // Adjust this route as needed
+  }
+
+  applyCoupon() {
+    // Implement coupon logic
+  }
+
+  goToCheckout() {
+    this.router.navigate(['/checkout']); // Adjust this route as needed
   }
 }

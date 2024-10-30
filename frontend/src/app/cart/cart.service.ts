@@ -5,6 +5,9 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class CartService {
+  applyCoupon(couponCode: string) {
+    throw new Error('Method not implemented.');
+  }
   private cart: any[] = [];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
@@ -49,7 +52,7 @@ export class CartService {
   }
 
   // Update item quantity in the cart
-  updateItemQuantity(index: number, newQuantity: number) {
+ updateItemQuantity(index: number, newQuantity: number) {
     if (newQuantity > 0 && index >= 0 && index < this.cart.length) {
       this.cart[index].quantity = newQuantity;
       this.saveCartToLocalStorage(); // Save updated cart to localStorage

@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { CategoryService, Category } from '../api services/category.service';
 import { Subscription } from 'rxjs';
+import { CartService } from '../cart/cart.service';
 
 @Component({
   selector: 'app-category',
@@ -15,7 +16,8 @@ import { Subscription } from 'rxjs';
       <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <app-product-card 
           *ngFor="let product of products; trackBy: trackByProductId" 
-          [product]="product">
+          [product]="product"
+          (addToCart)="addToCart($event)">
         </app-product-card>
       </div>
     </div>
@@ -23,6 +25,7 @@ import { Subscription } from 'rxjs';
   standalone: true,
   imports: [CommonModule, ProductCardComponent]
 })
+
 export class CategoryComponent implements OnInit, OnDestroy {
   categoryId: number = 0;
   products: Product[] = [];
@@ -33,6 +36,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private productService: ProductService,
     private categoryService: CategoryService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -52,7 +56,7 @@ export class CategoryComponent implements OnInit, OnDestroy {
   loadCategory(): void {
     this.categoryService.getCategoryById(this.categoryId).subscribe({
       next: (data) => {
-        this.category = data;
+         this.category = data;
       },
       error: (error) => {
         console.error('Error loading category:', error);
@@ -80,5 +84,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
 
   trackByProductId(index: number, product: Product): number {
     return product.id;
+  }
+
+  addToCart(product: Product): void {
+    this.cartService.addToCart(product);
   }
 }
