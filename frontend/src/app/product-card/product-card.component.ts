@@ -1,12 +1,12 @@
-import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core'; // Add EventEmitter here
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { heroHeart } from '@ng-icons/heroicons/outline';
 import { heroHeartSolid } from '@ng-icons/heroicons/solid';
-import { Product } from '../api services/product.service';
-import { WishlistService } from '../api services/wishlist.service';
 import { Subscription } from 'rxjs';
+import { WishlistService } from '../api services/wishlist.service';
+import { Product } from '../product.model';
 
 @Component({
   selector: 'app-product-card',
@@ -38,9 +38,7 @@ import { Subscription } from 'rxjs';
       <p class="text-gray-600 mb-2">{{ product.description | slice:0:100 }}...</p>
       <p class="font-medium mb-2">₹ {{ product.price.toFixed(2) }}</p>
       <p class="mb-2 font-normal text-sm text-green-600">Free Delivery</p>
-
-      <!-- Add to Cart Button -->
-      <button (click)="onAddToCart()">Add to Cart</button>
+      
     </div>
   `,
   providers: [
@@ -49,7 +47,7 @@ import { Subscription } from 'rxjs';
 })
 export class ProductCardComponent implements OnInit, OnDestroy {
   @Input() product!: Product;
-  @Output() addToCart = new EventEmitter<Product>(); // Ensure EventEmitter is properly imported
+  @Output() addToCart = new EventEmitter<Product>();
   inWishlist: boolean = false;
   private wishlistSubscription?: Subscription;
 
@@ -82,7 +80,9 @@ export class ProductCardComponent implements OnInit, OnDestroy {
     }
   }
 
-  onAddToCart(): void {
+  onAddToCart(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
     this.addToCart.emit(this.product);
   }
 }
