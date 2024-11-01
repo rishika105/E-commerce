@@ -1,91 +1,71 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../api services/product.service';
+import { Product } from '../api services/product.service';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { CategoryService, Category } from '../api services/category.service';
-import { Subscription } from 'rxjs';
-import { Product } from '../product.model';
-import { CartService } from '../cart/cart.service';
 
 @Component({
   selector: 'app-category',
-  template: `
-    <div class="container mx-auto p-4">
-      <p class="text-3xl font-medium mb-2" *ngIf="category">Browse {{category.categoryName}}</p>
-      <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <app-product-card 
-          *ngFor="let product of products; trackBy: trackByProductId" 
-          [product]="product"
-          (addToCart)="addToCart(product)">
-        </app-product-card>
-      </div>
-    </div>
-  `,
+  templateUrl: './category.component.html',
+  styles: ``,
   standalone: true,
-  imports: [CommonModule, ProductCardComponent],
+  imports: [CommonModule, ProductCardComponent]
 })
-export class CategoryComponent implements OnInit, OnDestroy {
-  categoryId: number = 0;
+export class CategoryComponent implements OnInit {
+  categoryId: number;
   products: Product[] = [];
   category: Category | null = null;
-  private subscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private categoryService: CategoryService,
-    private cartService: CartService
-  ) {}
+
+  ) {
+    this.categoryId = 0;
+  }
 
   ngOnInit(): void {
-    this.subscription = this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.categoryId = +params['id'];
+      console.log('Category ID from route:', this.categoryId);  // Add this line
       this.loadCategory();
       this.loadProducts();
     });
   }
 
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
-  }
-
   loadCategory(): void {
-    this.categoryService.getCategoryById(this.categoryId).subscribe({
-      next: (data) => {
+    this.categoryService.getCategoryById(this.categoryId).subscribe(
+      (data) => {
         this.category = data;
+        console.log('Loaded category:', this.category);  // Add this line
       },
-      error: (error) => {
+      (error) => {
         console.error('Error loading category:', error);
-        this.category = null;
+        this.category = null;  // Add this line
       }
-    });
+    );
   }
 
+  // Load products by category
   loadProducts(): void {
-    this.productService.getProductsByCategory(this.categoryId).subscribe({
-      next: (response: any) => {
-        if (response && Array.isArray(response.products)) {
+    this.productService.getProductsByCategory(this.categoryId).subscribe(
+      (response: any) => {
+        // Extract the 'products' array from the API response
+        if (response && response.products) {
           this.products = response.products;
         } else {
-          console.error('Invalid products response format:', response);
           this.products = [];
+          console.error('No products found for this category.');
         }
       },
-      error: (error) => {
+      (error) => {
+        // Handle error and display in the console
         console.error('Error loading products:', error);
-        this.products = [];
+        this.products = []; // Ensure products array is empty in case of an error
       }
-    });
-  }
-
-  trackByProductId(index: number, product: Product): number {
-    return product.id;
-  }
-
-  addToCart(product: Product): void {
-    this.cartService.addToCart(product);
+    );
   }
 }

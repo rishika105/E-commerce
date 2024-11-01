@@ -1,89 +1,44 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Product } from '../product.model';
+import { Observable, of } from 'rxjs';
+import { switchMap, catchError, tap } from 'rxjs/operators';
+import { Product, ProductService } from '../api services/product.service';
 
 @Component({
   selector: 'app-product-details',
-  template: `
-    <div class="container mx-auto p-4 grid grid-cols-1 md:grid-cols-2 gap-8">
-      <!-- Image Gallery -->
-      <div class="space-y-4">
-        <img [src]="product.imageUrl" alt="Product Image" class="w-full h-96 object-cover rounded-lg shadow-md" />
-        <div class="flex space-x-4">
-          <img *ngFor="let image of product.images" [src]="image" alt="Product Thumbnail" 
-               class="w-20 h-20 object-cover rounded-md cursor-pointer" />
-        </div>
-      </div>
-
-      <!-- Product Details -->
-      <div class="space-y-4">
-        <h2 class="text-2xl font-semibold">{{ product.name }}</h2>
-        <div class="flex items-center space-x-2 text-gray-500">
-          <span>★★★★★</span>
-          <span>150 Reviews</span>
-          <span class="text-green-600">In Stock</span>
-        </div>
-        <p class="text-3xl font-bold text-gray-800">{{ product.price | currency: 'USD':'symbol' }}</p>
-        <p class="text-gray-600">{{ product.description }}</p>
-
-        <!-- Color Options -->
-        <div class="flex items-center space-x-2">
-          <span>Colour:</span>
-          <div *ngFor="let color of product.colors" [style.background]="color" class="w-6 h-6 rounded-full cursor-pointer"></div>
-        </div>
-
-        <!-- Size Options -->
-        <div class="flex items-center space-x-2">
-          <span>Size:</span>
-          <button *ngFor="let size of sizes"
-                  class="px-3 py-1 border rounded hover:bg-gray-100"
-                  (click)="selectSize(size)">
-            {{ size }}
-          </button>
-        </div>
-
-        <!-- Quantity Selector and Buy Button -->
-        <div class="flex items-center space-x-4">
-          <div class="flex items-center border rounded">
-            <button class="px-2" (click)="decrementQuantity()">-</button>
-            <span class="px-4">{{ quantity }}</span>
-            <button class="px-2" (click)="incrementQuantity()">+</button>
-          </div>
-          <button class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600" (click)="buyNow()">
-            Buy Now
-          </button>
-        </div>
-      </div>
-    </div>
-  `,
   standalone: true,
-  imports: [CommonModule]
+  imports: [CommonModule, RouterLink],
+  templateUrl: './product-details.component.html'
 })
 export class ProductDetailsComponent implements OnInit {
-  @Input() product!: Product;
-  quantity: number = 1;
-  sizes: string[] = ['XS', 'S', 'M', 'L', 'XL'];
+  product$: Observable<Product | null>;
+  error: string | null = null;
+
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProductService
+  ) {
+    // Initialize the product$ observable in the constructor
+    this.product$ = this.route.params.pipe(
+      switchMap(params => {
+        const id = +params['id']; // Convert id to number
+        return this.productService.getProductById(id).pipe(
+          catchError(error => {
+            this.error = error.message;
+            return of(null);
+          })
+        );
+      })
+    );
+  }
 
   ngOnInit(): void {
-    // Initialization logic if needed
+    // The product loading is handled by the product$ observable
   }
 
-  selectSize(size: string): void {
-    // Handle size selection
-    console.log('Selected size:', size);
-  }
-
-  incrementQuantity(): void {
-    this.quantity++;
-  }
-
-  decrementQuantity(): void {
-    if (this.quantity > 1) {
-      this.quantity--;
-    }
-  }
-
-  buyNow(): void {
-    console.log('Buying product:', this.product.name);
+  addToCart(product: Product): void {
+    // Implement cart functionality here
+    console.log('Adding to cart:', product);
   }
 }

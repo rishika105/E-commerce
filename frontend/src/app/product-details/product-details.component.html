@@ -1,83 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Product Details</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="bg-gray-100">
+<div class="container mx-auto px-4 py-8">
+  <ng-container *ngIf="product$ | async as product; else loading">
+    <div *ngIf="product; else notFound" class="max-w-4xl mx-auto">
+      <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="md:flex">
+          <!-- Product Image -->
+          <div class="md:w-1/2">
+            <img 
+              [src]="product.imageUrl" 
+              [alt]="product.name" 
+              class="w-full h-96 object-cover"
+              onerror="this.src='assets/placeholder.png'"
+            >
+          </div>
+          
+          <!-- Product Details -->
+          <div class="md:w-1/2 p-8">
+            <h1 class="text-2xl font-bold text-gray-800 mb-4">{{ product.name }}</h1>
+            <p class="text-gray-600 mb-4">{{ product.description }}</p>
+            
+            <div class="mb-4">
+              <span class="text-3xl font-bold text-gray-900">₹{{ product.price.toFixed(2) }}</span>
+            </div>
+            
+            <div class="mb-4">
+              <span class="text-sm text-gray-500">Stock Available:</span>
+              <span class="ml-2 text-lg font-semibold {{ product.stock > 0 ? 'text-green-600' : 'text-red-600' }}">
+                {{ product.stock > 0 ? product.stock : 'Out of Stock' }}
+              </span>
+            </div>
 
-  <div class="container mx-auto p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-    <!-- Image Gallery -->
-    <div class="space-y-4">
-      <img src="https://via.placeholder.com/400" alt="Main Product Image" class="w-full h-96 object-cover rounded-lg shadow-md">
-      <div class="flex space-x-4">
-        <img src="https://via.placeholder.com/80" alt="Thumbnail 1" class="w-20 h-20 object-cover rounded-md cursor-pointer">
-        <img src="https://via.placeholder.com/80" alt="Thumbnail 2" class="w-20 h-20 object-cover rounded-md cursor-pointer">
-        <img src="https://via.placeholder.com/80" alt="Thumbnail 3" class="w-20 h-20 object-cover rounded-md cursor-pointer">
-      </div>
-    </div>
+            <!-- Category -->
+            <div class="mb-6">
+              <span class="text-sm text-gray-500">Category:</span>
+              <span class="ml-2 text-gray-700">{{ product.category?.name }}</span>
+            </div>
 
-    <!-- Product Details -->
-    <div class="space-y-4">
-      <h2 class="text-2xl font-semibold">Product Name</h2>
-      <div class="flex items-center space-x-2 text-gray-500">
-        <span>★★★★★</span>
-        <span>150 Reviews</span>
-        <span class="text-green-600">In Stock</span>
-      </div>
-      <p class="text-3xl font-bold text-gray-800">$99.99</p>
-      <p class="text-gray-600">
-        This is a sample product description. It provides an overview of the product's features and benefits. This text is placeholder content to show how the details would look.
-      </p>
-
-      <!-- Color Options -->
-      <div class="flex items-center space-x-2">
-        <span>Colour:</span>
-        <div class="w-6 h-6 rounded-full bg-red-500 cursor-pointer"></div>
-        <div class="w-6 h-6 rounded-full bg-blue-500 cursor-pointer"></div>
-        <div class="w-6 h-6 rounded-full bg-green-500 cursor-pointer"></div>
-      </div>
-
-      <!-- Size Options -->
-      <div class="flex items-center space-x-2">
-        <span>Size:</span>
-        <button class="px-3 py-1 border rounded hover:bg-gray-100">XS</button>
-        <button class="px-3 py-1 border rounded hover:bg-gray-100">S</button>
-        <button class="px-3 py-1 border rounded hover:bg-gray-100">M</button>
-        <button class="px-3 py-1 border rounded hover:bg-gray-100">L</button>
-        <button class="px-3 py-1 border rounded hover:bg-gray-100">XL</button>
-      </div>
-
-      <!-- Quantity Selector and Buy Button -->
-      <div class="flex items-center space-x-4">
-        <div class="flex items-center border rounded">
-          <button class="px-2" onclick="decrementQuantity()">-</button>
-          <span id="quantity" class="px-4">1</span>
-          <button class="px-2" onclick="incrementQuantity()">+</button>
+            <!-- Add to Cart Button -->
+            <button 
+              (click)="addToCart(product)"
+              class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-200"
+              [disabled]="product.stock <= 0"
+            >
+              {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
+            </button>
+          </div>
         </div>
-        <button class="px-6 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600">
-          Buy Now
-        </button>
       </div>
     </div>
+  </ng-container>
+</div>
+
+<ng-template #loading>
+  <div class="text-center py-12">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+    <p class="mt-4 text-gray-600">Loading product details...</p>
   </div>
+</ng-template>
 
-  <script>
-    // Quantity logic
-    let quantity = 1;
-    function incrementQuantity() {
-      quantity++;
-      document.getElementById('quantity').innerText = quantity;
-    }
-
-    function decrementQuantity() {
-      if (quantity > 1) {
-        quantity--;
-        document.getElementById('quantity').innerText = quantity;
-      }
-    }
-  </script>
-</body>
-</html>
+<ng-template #notFound>
+  <div class="text-center py-12">
+    <p class="text-xl text-gray-800 mb-4">Product not found or an error occurred.</p>
+    <p *ngIf="error" class="text-red-500 mb-4">{{ error }}</p>
+    <a routerLink="/" class="text-blue-600 hover:underline">Return to Home</a>
+  </div>
+</ng-template>

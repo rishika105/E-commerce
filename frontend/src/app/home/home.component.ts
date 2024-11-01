@@ -12,7 +12,7 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NgIconComponent, ReactiveFormsModule, RouterLink, FormsModule, ProductCardComponent], // Import modules directly
+  imports: [CommonModule, NgIconComponent, ReactiveFormsModule, RouterLink, FormsModule, ProductCardComponent, MatCard, MatCardContent], // Import modules directly
   templateUrl: 'home.component.html',
   styles: ``,
 })
