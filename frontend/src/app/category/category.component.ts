@@ -5,6 +5,8 @@ import { Product } from '../api services/product.service';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { CategoryService, Category } from '../api services/category.service';
+import { CartService } from '../cart/cart.service';
+import { WishlistService } from '../api services/wishlist.service';
 
 @Component({
   selector: 'app-category',
@@ -22,7 +24,8 @@ export class CategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private categoryService: CategoryService,
-
+    private cartService: CartService,
+    private wishlistService: WishlistService
   ) {
     this.categoryId = 0;
   }
@@ -67,5 +70,21 @@ export class CategoryComponent implements OnInit {
         this.products = []; // Ensure products array is empty in case of an error
       }
     );
+  }
+
+  onAddToCart(product: Product): void {
+    this.cartService.addToCart(product);
+    // Optional: Add a notification or feedback to user
+    console.log('Product added to cart:', product);
+  }
+
+  onAddToWishlist(product: Product): void {
+    this.wishlistService.addToWishlist(product);
+    console.log('Product added to wishlist:', product);
+  }
+
+  onRemoveFromWishlist(product: Product): void {
+    this.wishlistService.removeFromWishlist(product.id);
+    console.log('Product removed from wishlist:', product);
   }
 }

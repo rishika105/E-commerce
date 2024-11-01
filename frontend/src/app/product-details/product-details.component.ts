@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { switchMap, catchError, tap } from 'rxjs/operators';
 import { Product, ProductService } from '../api services/product.service';
+import { WishlistService } from '../api services/wishlist.service';
 
 @Component({
   selector: 'app-product-details',
@@ -17,7 +18,8 @@ export class ProductDetailsComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private wishlistService: WishlistService
   ) {
     // Initialize the product$ observable in the constructor
     this.product$ = this.route.params.pipe(
@@ -40,5 +42,17 @@ export class ProductDetailsComponent implements OnInit {
   addToCart(product: Product): void {
     // Implement cart functionality here
     console.log('Adding to cart:', product);
+  }
+
+  isInWishlist(productId: number): boolean {
+    return this.wishlistService.isInWishlist(productId);
+  }
+
+  toggleWishlist(product: Product): void {
+    if (this.isInWishlist(product.id)) {
+      this.wishlistService.removeFromWishlist(product.id);
+    } else {
+      this.wishlistService.addToWishlist(product);
+    }
   }
 }
