@@ -12,7 +12,6 @@ import { environment } from '../../../environment'; // Your environment configur
 //**********************************************************************/
 //*******************API INTEGRATION TO BACKEND*************************/
 //**********************************************************************/
-
 export class AuthService {
   private baseUrl = environment.apiUrl;  // Define your API URL in environments file
 
@@ -41,6 +40,7 @@ export class AuthService {
             localStorage.setItem('token', response.token);
             // Dispatch an action to update the store
             this.store.dispatch(setToken({ token: response.token }));  // Dispatch the setToken action
+            console.log(response);
           }
         })
       );

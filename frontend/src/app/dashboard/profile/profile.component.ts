@@ -54,7 +54,6 @@ export class ProfileComponent {
       });
       this.userName = profileData.name;
     });
-
   }
 
   toggleEdit(): void {

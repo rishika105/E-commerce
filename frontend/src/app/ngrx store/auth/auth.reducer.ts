@@ -1,84 +1,103 @@
 import { createReducer, on } from '@ngrx/store';
-import { setLoading, setToken, clearToken, setOtpSent, setRole, logout } from '../../ngrx store/auth/auth.action';
+import { setLoading, setToken, setUserId, clearToken, setOtpSent, setRole, logout } from '../../ngrx store/auth/auth.action';
 
 export interface AuthState {
   token: string | null;
   loading: boolean;
   otpSent: boolean;
-  role: string | null;  // Add role to state
+  role: string | null;
+  user_id: number | null;
 }
 
-// Helper function to check if we are in the browser
 function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
 }
 
+// Helper function to safely get item from localStorage
+function getStorageItem(key: string): any {
+  if (!isBrowser()) return null;
+  const item = localStorage.getItem(key);
+  if (!item) return null;
+  try {
+    return JSON.parse(item);
+  } catch {
+    // If parsing fails, return the raw value
+    return item;
+  }
+}
+
 const initialState: AuthState = {
-  token: isBrowser() && localStorage.getItem('token') ? JSON.parse(localStorage.getItem('token')!) : null,
+  token: getStorageItem('token'),
   loading: false,
   otpSent: false,
-  role: isBrowser() && localStorage.getItem('role') ? JSON.parse(localStorage.getItem('role')!) : null,  // Initialize role from localStorage
+  role: getStorageItem('role'),
+  user_id: getStorageItem('user_id')
 };
 
 export const authReducer = createReducer(
   initialState,
 
-  // Set loading state
   on(setLoading, (state, { loading }) => ({
     ...state,
     loading,
   })),
 
-  // Set token and role, and store them in localStorage
   on(setToken, (state, { token }) => {
     if (isBrowser()) {
-      localStorage.setItem('token', JSON.stringify(token));
+      // Store token without stringifying if it's already a string
+      localStorage.setItem('token', typeof token === 'string' ? token : JSON.stringify(token));
     }
-    return {
-      ...state,
-      token, // Update token in state
-    };
+    return { ...state, token };
+  }),
+
+  on(setUserId, (state, { userId }) => {
+    if (isBrowser()) {
+      localStorage.setItem('user_id', JSON.stringify(userId));
+      console.log('Stored user_id:', userId); // Debug log
+    }
+    return { ...state, user_id: userId };
   }),
 
   on(setRole, (state, { role }) => {
     if (isBrowser()) {
-      localStorage.setItem('role', JSON.stringify(role));  // Save role in localStorage
+      localStorage.setItem('role', typeof role === 'string' ? role : JSON.stringify(role));
     }
     return {
       ...state,
-      role  // Update role in state
+      role
     };
   }),
 
-  // Clear token and role from state and localStorage (used for logout)
   on(clearToken, (state) => {
     if (isBrowser()) {
       localStorage.removeItem('token');
-      localStorage.removeItem('role');  // Also remove role from localStorage
+      localStorage.removeItem('role');
+      localStorage.removeItem('user_id');
     }
     return {
       ...state,
       token: null,
-      role: null  // Clear role in state
+      role: null,
+      user_id: null
     };
   }),
 
-  // Handle logout action by clearing the token, role, and resetting state
   on(logout, (state) => {
     if (isBrowser()) {
       localStorage.removeItem('token');
       localStorage.removeItem('role');
+      localStorage.removeItem('user_id');
     }
     return {
       ...state,
       token: null,
-      role: null, // Clear role in state
-      loading: false, // Reset loading state
-      otpSent: false, // Reset OTP state
+      role: null,
+      user_id: null,
+      loading: false,
+      otpSent: false,
     };
   }),
 
-  // Set OTP sent status
   on(setOtpSent, (state, { otpSent }) => ({
     ...state,
     otpSent,

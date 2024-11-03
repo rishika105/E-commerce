@@ -6,17 +6,17 @@ import { environment } from '../../../environment';
 import { map, first, switchMap, tap, catchError } from 'rxjs/operators';
 
 export interface Product {
-  id: number;
+  productId: number;
   name: string;
   description: string;
   price: number;
   stock: number;
   category: {
     categoryId: number;
-    name: string;
+    categoryName: string;
   };
   imageUrl: string;
-
+  userId: number; // Add this line to represent the seller
 }
 
 @Injectable({
@@ -46,7 +46,6 @@ export class ProductService {
   }
 
   private handleError(error: HttpErrorResponse) {
-
     let errorMessage = 'An unknown error occurred!';
     if (error.error instanceof ErrorEvent) {
       errorMessage = `Error: ${error.error.message}`;
@@ -89,7 +88,6 @@ export class ProductService {
         const headers = new HttpHeaders({
           Authorization: `Bearer ${token}`
         });
-        // Remove 'Content-Type' header to let the browser set it with the boundary for FormData
         return this.http.post<Product>(`${this.apiUrl}/createProduct`, product, { headers, withCredentials: true })
           .pipe(
             tap(response => console.log('Create product response:', response)),
@@ -153,8 +151,6 @@ export class ProductService {
     );
   }
 
-
-
   getProductsByCategory(categoryId: number): Observable<Product[]> {
     return this.getAuthToken().pipe(
       switchMap((token) => {
@@ -162,6 +158,20 @@ export class ProductService {
         return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`, { headers, withCredentials: true })
           .pipe(
             tap(response => console.log('Get products by category response:', response)),
+            catchError(this.handleError)
+          );
+      })
+    );
+  }
+
+  getProductsBySeller(userId: number): Observable<Product[]> {
+    return this.getAuthToken().pipe(
+      switchMap((token) => {
+        const headers = this.getHeaders(token);
+        console.log("user id at service: " , userId);
+        return this.http.get<Product[]>(`${this.apiUrl}/seller/${userId}`, { headers, withCredentials: true })
+          .pipe(
+            tap(response => console.log('Get products by seller response:', response)),
             catchError(this.handleError)
           );
       })

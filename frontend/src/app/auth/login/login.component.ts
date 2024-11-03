@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../api services/auth.service';
-import { setToken, setLoading, setRole } from '../../ngrx store/auth/auth.action'; // Added setRole action
+import { setLoading, setRole, setToken, setUserId } from '../../ngrx store/auth/auth.action'; // Added setRole action
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -63,8 +63,7 @@ export class LoginComponent {
         if (response && response.token) {
           // Token received, store it in the app's state
           this.store.dispatch(setToken({ token: response.token }));
-
-          // Store user role in the app's state
+          this.store.dispatch(setUserId({ userId: response.userId }));
           this.store.dispatch(setRole({ role: response.role }));
 
           this.store.dispatch(setLoading({ loading: false }));
