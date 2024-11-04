@@ -1,5 +1,5 @@
 <div class="container mx-auto px-4 py-8">
-  <h1 class="text-xl font-bold mb-6 text-black-800 text-center">Manage Categories</h1>
+  <p class="text-2xl font-medium mb-6 text-black-800 text-center">Manage Categories</p>
 
   <div *ngIf="successMessage" class="mb-4 p-4 bg-green-100 text-green-700 rounded-md">
     {{ successMessage }}
@@ -9,7 +9,7 @@
   </div>
 
   <div class="bg-white p-6 rounded-lg shadow-md">
-    <h2 class="text-lg font-semibold mb-4 text-black-700">Categories</h2>
+
     <ul class="divide-y divide-gray-200">
       <li *ngFor="let category of categories" class="py-4 flex justify-between items-center">
         <ng-container *ngIf="editingCategory?.id !== category.id; else editForm">
@@ -34,12 +34,12 @@
             <input
               type="text"
               [(ngModel)]="editingCategory.categoryName"
-              class="flex-grow mr-4 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              class="flex-grow mr-4 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
             />
             <div>
               <button
                 (click)="saveCategory()"
-                class="px-3 py-1 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 mr-2"
+                class="px-3 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 mr-2"
               >
                 Save
               </button>
