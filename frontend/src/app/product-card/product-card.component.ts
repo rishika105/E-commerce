@@ -45,8 +45,9 @@ export class ProductCardComponent implements OnInit {
     }
   }
 
-  onAddToCart() {
+  onAddToCart(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
     this.addToCart.emit(this.product);
-    alert(`${this.product.name} has been added to the cart!`);
   }
 }

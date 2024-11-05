@@ -1,5 +1,5 @@
 <div class="container mx-auto px-4 py-8">
-  <h1 class="text-3xl font-bold mb-6 text-gray-800">Shopping Cart</h1>
+  <p class="text-3xl font-bold mb-6 text-gray-800">Shopping Cart</p>
 
   <!-- Full-width Shopping Cart Table -->
   <div class="w-full">
@@ -19,19 +19,19 @@
             <div class="flex items-center">
               <img [src]="item.imageUrl" [alt]="item.name" class="w-12 h-12 rounded-md mr-4">
               <div>
-                <h2 class="font-medium text-gray-800">{{item.name}}</h2>
+                <p class="font-medium text-gray-800">{{item.name}}</p>
               </div>
             </div>
           </td>
-          <td class="py-3 px-4 text-right">{{item.price | currency}}</td>
+          <td class="py-3 px-4 text-right">{{item.price | currency:'INR':'symbol'}}</td>
           <td class="py-3 px-4 text-right">
             <div class="flex justify-end items-center">
-              <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateQuantity(i, -1 )">-</button>
+              <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateQuantity(i, -1)">-</button>
               <input type="number" [(ngModel)]="item.quantity" [ngModelOptions]="{standalone: true}" class="w-12 text-center py-2 border border-gray-300 rounded" min="1">
               <button class="bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded" (click)="updateQuantity(i, 1)">+</button>
             </div>
           </td>
-          <td class="py-3 px-4 text-right">{{item.price * item.quantity | currency}}</td>
+          <td class="py-3 px-4 text-right">{{item.price * item.quantity | currency:'INR':'symbol'}}</td>
           <td class="py-3 px-4 text-right">
             <button class="bg-red-600 text-white px-4 py-2 rounded" (click)="removeFromCart(i)">Remove</button>
           </td>
@@ -45,31 +45,14 @@
       <button class="bg-red-600 text-white px-6 py-2 rounded" (click)="updateCart()">Update Cart</button>
     </div>
 
-    <!-- Coupon Code and Cart Total Side by Side -->
+    <!-- Cart Total -->
     <div class="flex flex-col md:flex-row justify-between mt-8 w-full">
-      <div class="w-full md:w-1/2 flex items-center">
-        <input
-          type="text"
-          placeholder="Coupon Code"
-          [(ngModel)]="couponCode"
-          [ngModelOptions]="{standalone: true}"
-          class="w-3/4 px-4 py-2 border border-gray-300 rounded-l"
-        >
-        <button
-          (click)="applyCoupon()"
-          class="w-1/4 bg-red-600 text-white px-6 py-2 rounded-r"
-        >
-          Apply Coupon
-        </button>
-      </div>
-
-      <!-- Cart Total -->
       <div class="w-full md:w-1/2 flex justify-end mt-6 md:mt-0">
         <div class="bg-gray-100 p-6 rounded border w-full md:w-2/3">
           <h2 class="text-lg font-semibold mb-4">Cart Total</h2>
           <div class="flex justify-between mb-2">
             <p class="text-gray-600">Subtotal:</p>
-            <p class="text-gray-800">{{getTotalPrice() | currency}}</p>
+            <p class="text-gray-800">{{getTotalPrice() | currency:'INR':'symbol'}}</p>
           </div>
           <div class="flex justify-between mb-2">
             <p class="text-gray-600">Shipping:</p>
@@ -77,7 +60,7 @@
           </div>
           <div class="flex justify-between mb-4">
             <p class="text-gray-600">Total:</p>
-            <p class="text-gray-800">{{getGrandTotal() | currency}}</p>
+            <p class="text-gray-800">{{getGrandTotal() | currency:'INR':'symbol'}}</p>
           </div>
           <button class="w-full bg-red-600 text-white px-6 py-3 rounded mt-6" (click)="goToCheckout()">Proceed to checkout</button>
         </div>

@@ -67,6 +67,8 @@ export class CategoryComponent implements OnInit {
 
   onAddToCart(product: Product): void {
     this.cartService.addToCart(product);
+    // Optional: Add a notification or feedback to user
+    console.log('Product added to cart:', product);
   }
 
   onAddToWishlist(product: Product): void {
