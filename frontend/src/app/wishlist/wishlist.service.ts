@@ -1,24 +1,68 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+import { Product } from '../api services/product.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WishlistService {
-  private wishlist: any[] = [];
+  private wishlistItems: Set<number> = new Set();
+  private wishlistProducts = new BehaviorSubject<Product[]>([]);
+  private products: Product[] = [];
 
-  addToWishlist(product: any) {
-    this.wishlist.push(product);
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadWishlist();
+    }
   }
 
-  getWishlist() {
-    return this.wishlist;
+  private saveToStorage() {
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.setItem('wishlist', JSON.stringify(Array.from(this.wishlistItems)));
+      localStorage.setItem('wishlistProducts', JSON.stringify(this.products));
+    }
+  }
+
+  addToWishlist(product: Product) {
+    if (!this.wishlistItems.has(product.id)) {
+      this.wishlistItems.add(product.id);
+      this.products.push(product);
+      this.wishlistProducts.next([...this.products]);
+      this.saveToStorage();
+    }
   }
 
   removeFromWishlist(productId: number) {
-    this.wishlist = this.wishlist.filter(item => item.id !== productId);
+    if (this.wishlistItems.has(productId)) {
+      this.wishlistItems.delete(productId);
+      this.products = this.products.filter(p => p.id !== productId);
+      this.wishlistProducts.next([...this.products]);
+      this.saveToStorage();
+    }
+  }
+
+  getWishlist(): Product[] {
+    return this.products;
+  }
+
+  getWishlistObservable() {
+    return this.wishlistProducts.asObservable();
   }
 
   isInWishlist(productId: number): boolean {
-    return this.wishlist.some(item => item.id === productId);
+    return this.wishlistItems.has(productId);
+  }
+
+  loadWishlist() {
+    if (isPlatformBrowser(this.platformId)) {
+      const savedWishlist = localStorage.getItem('wishlist');
+      const savedProducts = localStorage.getItem('wishlistProducts');
+      if (savedWishlist && savedProducts) {
+        this.wishlistItems = new Set(JSON.parse(savedWishlist));
+        this.products = JSON.parse(savedProducts);
+        this.wishlistProducts.next([...this.products]);
+      }
+    }
   }
 }

@@ -5,17 +5,17 @@
     class="w-full h-48 object-cover mb-4 rounded-md"
     onerror="this.src='assets/placeholder.png'"/>
    
-
   <p class="text-xl font-medium mb-2 text-gray-600">{{ product.name }}</p>
   <p class="text-gray-600 mb-2">{{ product.description | slice:0:100 }}...</p>
   <p class="font-medium mb-2">₹ {{ product.price.toFixed(2) }}</p>
   <p class="mb-2 font-normal text-sm text-green-600">Free Delivery</p>
 
-        <!-- Wishlist icon with click event -->
-        <button (click)="onAddToWishlist()" class="wishlist-icon text-gray-500 hover:text-red-500 transition duration-300">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-          </svg>
-           <!-- Font Awesome heart icon -->
-        </button>
+  <!-- Wishlist icon with toggle functionality -->
+  <button 
+    (click)="toggleWishlist($event)" 
+    class="absolute top-4 right-4 p-2 rounded-full transition-colors duration-300"
+    [class.text-red-500]="isWishlisted"
+    [class.text-gray-400]="!isWishlisted">
+    <ng-icon name="heroHeart"></ng-icon>
+  </button>
 </div>

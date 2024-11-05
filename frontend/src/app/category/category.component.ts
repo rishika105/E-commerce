@@ -10,7 +10,7 @@ import { WishlistService } from '../wishlist/wishlist.service';
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
-  styles: ``,
+  styles: [],
   standalone: true,
   imports: [CommonModule, ProductCardComponent]
 })
@@ -28,12 +28,11 @@ export class CategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to route parameters and fetch category and products data
+    this.wishlistService.loadWishlist();
     this.route.params.subscribe(params => {
       this.categoryId = +params['id'];
-      console.log('Category ID from route:', this.categoryId);  // Log for debugging
-      this.loadCategory();  // Load category first
-      this.loadProducts();   // Then load products
+      this.loadCategory();
+      this.loadProducts();
     });
   }
 
@@ -41,20 +40,17 @@ export class CategoryComponent implements OnInit {
     this.categoryService.getCategoryById(this.categoryId).subscribe(
       (data: Category) => {
         this.category = data;
-        console.log('Loaded category:', this.category);  // Log loaded category
       },
       (error) => {
         console.error('Error loading category:', error);
-        this.category = null;  // Set to null on error
+        this.category = null;
       }
     );
   }
 
-  // Load products by category
   loadProducts(): void {
     this.productService.getProductsByCategory(this.categoryId).subscribe(
       (response: any) => {
-        // Extract the 'products' array from the API response
         if (response && response.products) {
           this.products = response.products;
         } else {
@@ -63,28 +59,21 @@ export class CategoryComponent implements OnInit {
         }
       },
       (error) => {
-        // Handle error and display in the console
         console.error('Error loading products:', error);
-        this.products = []; // Ensure products array is empty in case of an error
+        this.products = [];
       }
     );
   }
-  
-  
 
   onAddToCart(product: Product): void {
     this.cartService.addToCart(product);
-    console.log('Product added to cart:', product);
   }
 
   onAddToWishlist(product: Product): void {
     this.wishlistService.addToWishlist(product);
-    console.log('Product added to wishlist:', product);
   }
 
   onRemoveFromWishlist(product: Product): void {
-    // Directly remove from wishlist by ID and log result
     this.wishlistService.removeFromWishlist(product.id);
-    console.log('Product removed from wishlist:', product);
   }
 }
