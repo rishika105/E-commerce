@@ -1,13 +1,20 @@
 <app-confirmation-modal
   *ngIf="showDeleteModal"
   title="Delete Account"
-  message="This will erase all your data including giftcards, discounts,etc.?"
+  message="We are sorry to see you go! Please note that once you choose to delete your account, your account will no longer be available to you, and you will not be able to activate, restore, or use it again. Before proceeding, please make sure of the following:
+
+- There are no pending orders, cancellations, returns, or refunds. 
+- You do not have any active subscriptions or memberships.
+- You have no remaining balance of rewards, gift cards, or points. 
+
+By deleting your account, you acknowledge that this action is permanent, and you will lose access to all your data, including order history. Please confirm by checking the boxes below before proceeding with account deletion."
   confirmText="Delete"
   (onCancel)="onCancelDel()"
   (onConfirm)="onDelete()"
 ></app-confirmation-modal>
 
-<div>
+
+
   <p class="text-2xl font-medium text-gray-800 mb-6">Profile Information</p>
 
 
@@ -129,4 +136,4 @@
   <button (click)="onDel()" class="text-red-500 text-md font-medium mt-3">
     Delete Account
   </button>
-</div>
+
