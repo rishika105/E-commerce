@@ -1,44 +1,110 @@
-// import { Component, OnInit } from '@angular/core';
-// import { Product, ProductService } from '../../../api services/product.service';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Product, ProductService } from '../../../api services/product.service';
+import { ToastrService } from 'ngx-toastr';
+import { catchError, map, Observable, of } from 'rxjs';
 
-// @Component({
-//   selector: 'app-stock-management',
-//   templateUrl: './stock-management.component.html',
-//   styles: ``
-// })
-// export class StockManagementComponent implements OnInit {
-//   products: Product[] = [];
+interface ProductStock {
+  productId: number;
+  name: string;
+  stock: number;
+  imageUrl: string;
+  price: number;
+  isUpdating: boolean;
+}
 
-//   constructor(private productService: ProductService) {}
+@Component({
+  selector: 'app-stock-management',
+  templateUrl: './stock-management.component.html',
+  standalone: true,
+  imports: [CommonModule, FormsModule]
+})
+export class StockManagementComponent implements OnInit {
+  products: ProductStock[] = [];
+  loading: boolean = true;
+  selectedProducts: Set<number> = new Set();
+  batchStockValue: number = 0;
+  userId:number | null = null;
+  products$: Observable<Product[]> | null = null;
 
-//   ngOnInit(): void {
-//     this.loadSellerProducts();
-//   }
+  constructor(
+    private productService: ProductService,
+    private toastr: ToastrService
+  ) {}
 
-//   loadSellerProducts() {
-//     this.productService.getAllProducts().subscribe({
-//       next: (response) => {
-//         this.products = response.filter(product => product.sellerId === this.getLoggedInSellerId());
-//       },
-//       error: (err) => {
-//         console.error('Error loading products', err);
-//       }
-//     });
-//   }
+  ngOnInit(): void {
+    this.loadSellerProducts();
+  }
 
-//   updateStock(id: number, newStock: number) {
-//     this.productService.updateStock(id, newStock).subscribe({
-//       next: () => {
-//         alert('Stock updated successfully');
-//       },
-//       error: (err) => {
-//         console.error('Error updating stock', err);
-//       }
-//     });
-//   }
 
-//   getLoggedInSellerId(): number {
-//     // Fetch the logged-in seller's ID (from token or local storage)
-//     return 123;  // Replace with actual logic
-//   }
-// }
+  loadSellerProducts(): void {
+    if (this.userId) {
+      this.loading = true;
+      this.products$ = this.productService.getProductsBySeller(this.userId).pipe(
+        map((response: any) => {
+          if (response && Array.isArray(response)) {
+            return response;
+          } else if (response && Array.isArray(response.products)) {
+            return response.products;
+          }
+          throw new Error('Invalid response format');
+        }),
+        catchError(error => {
+
+        console.error('Products loading error:', error);
+          return of([]);
+        })
+      );
+      this.loading = false;
+    }
+  }
+
+  updateStock(product: ProductStock): void {
+    product.isUpdating = true;
+    this.productService.updateStock(product.productId, product.stock).subscribe({
+      next: () => {
+        this.toastr.success(`Stock updated for ${product.name}`);
+        product.isUpdating = false;
+      },
+      error: (error) => {
+        this.toastr.error(`Failed to update stock for ${product.name}`);
+        product.isUpdating = false;
+      }
+    });
+  }
+
+  toggleProductSelection(productId: number): void {
+    if (this.selectedProducts.has(productId)) {
+      this.selectedProducts.delete(productId);
+    } else {
+      this.selectedProducts.add(productId);
+    }
+  }
+
+  updateBatchStock(): void {
+    if (this.selectedProducts.size === 0) {
+      this.toastr.warning('Please select products to update');
+      return;
+    }
+
+    const updates = Array.from(this.selectedProducts).map(productId => {
+      const product = this.products.find(p => p.productId === productId);
+      if (product) {
+        product.isUpdating = true;
+        return this.productService.updateStock(productId, this.batchStockValue).toPromise();
+      }
+      return Promise.resolve();
+    });
+
+    Promise.all(updates).then(() => {
+      this.toastr.success('Batch stock update successful');
+      this.selectedProducts.clear();
+      this.batchStockValue = 0;
+      this.loadSellerProducts();
+    }).catch(() => {
+      this.toastr.error('Error updating some products');
+      this.loadSellerProducts();
+    });
+  }
+}

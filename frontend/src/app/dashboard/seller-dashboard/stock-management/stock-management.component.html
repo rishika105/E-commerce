@@ -1,27 +1,79 @@
-<div class="stock-management">
-  <h2>Stock Management</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Product ID</th>
-        <th>Name</th>
-        <th>Current Stock</th>
-        <th>New Stock</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let product of products">
-        <td>{{ product.id }}</td>
-        <td>{{ product.name }}</td>
-        <td>{{ product.stock }}</td>
-        <td>
-          <input type="number" [(ngModel)]="product.newStock" placeholder="Enter new stock" />
-        </td>
-        <td>
-          <button (click)="updateStock(product.id, product.newStock)" class="btn btn-primary">Update Stock</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="container mx-auto px-4 py-8">
+  <div class="mb-8">
+    <h1 class="text-2xl font-bold text-gray-900">Stock Management</h1>
+    <p class="text-gray-600">Manage your product inventory</p>
+  </div>
+
+  <!-- Batch Update Section -->
+  <div class="bg-white p-4 rounded-lg shadow mb-6">
+    <h2 class="text-lg font-semibold mb-4">Batch Stock Update</h2>
+    <div class="flex items-center gap-4">
+      <input
+        type="number"
+        [(ngModel)]="batchStockValue"
+        min="0"
+        class="w-32 px-3 py-2 border rounded-md"
+        placeholder="New stock"
+      >
+      <button
+        (click)="updateBatchStock()"
+        [disabled]="selectedProducts.size === 0"
+        class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 disabled:bg-gray-400"
+      >
+        Update Selected ({{selectedProducts.size}})
+      </button>
+    </div>
+  </div>
+
+  <!-- Products Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let product of products" class="bg-white rounded-lg shadow p-4">
+      <div class="flex items-start gap-4">
+        <!-- Checkbox for batch selection -->
+        <input
+          type="checkbox"
+          [checked]="selectedProducts.has(product.productId)"
+          (change)="toggleProductSelection(product.productId)"
+          class="mt-2"
+        >
+
+        <!-- Product Image -->
+        <img [src]="product.imageUrl" [alt]="product.name" class="w-20 h-20 object-cover rounded">
+
+        <!-- Product Details -->
+        <div class="flex-1">
+          <h3 class="font-semibold text-lg">{{product.name}}</h3>
+          <p class="text-gray-600">Price: ₹{{product.price}}</p>
+
+          <!-- Stock Input -->
+          <div class="mt-2 flex items-center gap-2">
+            <input
+              type="number"
+              [(ngModel)]="product.stock"
+              min="0"
+              class="w-24 px-2 py-1 border rounded"
+            >
+            <button
+              (click)="updateStock(product)"
+              [disabled]="product.isUpdating"
+              class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600 disabled:bg-gray-400"
+            >
+              <span *ngIf="!product.isUpdating">Update</span>
+              <span *ngIf="product.isUpdating">Updating...</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="loading" class="flex justify-center items-center h-64">
+    <p class="text-lg text-gray-600">Loading products...</p>
+  </div>
+
+  <!-- Empty State -->
+  <div *ngIf="!loading && products.length === 0" class="text-center py-12">
+    <p class="text-lg text-gray-600">No products found</p>
+  </div>
 </div>

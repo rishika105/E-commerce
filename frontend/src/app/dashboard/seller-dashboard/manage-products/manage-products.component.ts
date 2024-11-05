@@ -22,6 +22,8 @@ export class ManageProductsComponent implements OnInit {
   isLoading: boolean = true;
   entriesPerPage: number = 2;
   category: Category[] = [];
+  showConfirmDeleteModal = false; // Controls modal visibility
+  productIdToDelete: number | null = null; // Stores the product ID to delete
 
   constructor(
     private productService: ProductService,
@@ -35,6 +37,7 @@ export class ManageProductsComponent implements OnInit {
   }
 
   loadUserProfile(): void {
+    this.isLoading = true;
     this.profileService.getProfile().subscribe({
       next: (profileData: any) => {
         this.userId = profileData.user_id;
@@ -78,28 +81,43 @@ export class ManageProductsComponent implements OnInit {
 
   editProduct(productId: number): void {
     if (productId) {
-      this.router.navigate(['/edit-product', productId]);
+      this.router.navigate(['/seller-dashboard/edit-product', productId]);
     } else {
       this.toastr.error('Invalid product ID');
     }
   }
 
-  deleteProduct(productId: number): void {
-    if (!productId) {
+  delProduct(productId: number): void {
+    // Trigger the modal and pass the product ID
+    this.showConfirmDeleteModal = true;
+    this.productIdToDelete = productId;
+  }
+
+  cancelDelete(): void {
+    // Hide the modal
+    this.showConfirmDeleteModal = false;
+    this.productIdToDelete = null;
+  }
+
+  deleteProduct(): void {
+    // Hide the modal and proceed with deletion
+    if (!this.productIdToDelete) {
       this.toastr.error('Invalid product ID');
       return;
     }
-      this.productService.deleteProduct(productId).subscribe({
-        next: () => {
-          this.toastr.success('Product deleted successfully');
-          this.loadSellerProducts(); // Reload the products list
-        },
-        error: (error) => {
-          this.error = 'Failed to delete product. Please try again.';
-          console.error('Product deletion error:', error);
-          this.toastr.error('Error deleting the product');
-        }
-      });
 
+    this.productService.deleteProduct(this.productIdToDelete).subscribe({
+      next: () => {
+        this.toastr.success('Product deleted successfully');
+        this.loadSellerProducts(); // Reload the products list after deletion
+      },
+      error: (error) => {
+        this.error = 'Failed to delete product. Please try again.';
+        console.error('Product deletion error:', error);
+        this.toastr.error('Error deleting the product');
+      }
+    });
+
+    this.showConfirmDeleteModal = false;
   }
 }

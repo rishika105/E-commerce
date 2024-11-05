@@ -16,7 +16,9 @@ export interface Product {
     categoryName: string;
   };
   imageUrl: string;
-  userId: number; // Add this line to represent the seller
+  user:{
+    userId: number;
+  } // Add this line to represent the seller
 }
 
 @Injectable({
@@ -88,11 +90,20 @@ export class ProductService {
         const headers = new HttpHeaders({
           Authorization: `Bearer ${token}`
         });
-        return this.http.post<Product>(`${this.apiUrl}/createProduct`, product, { headers, withCredentials: true })
-          .pipe(
-            tap(response => console.log('Create product response:', response)),
-            catchError(this.handleError)
-          );
+
+        // Log the FormData contents for debugging
+        console.log('FormData contents:');
+        product.forEach((value, key) => {
+          console.log(key, value);
+        });
+
+        return this.http.post<Product>(`${this.apiUrl}/createProduct`, product, {
+          headers,
+          withCredentials: true
+        }).pipe(
+          tap(response => console.log('Create product response:', response)),
+          catchError(this.handleError)
+        );
       })
     );
   }

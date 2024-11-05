@@ -53,7 +53,7 @@ export const authReducer = createReducer(
   on(setUserId, (state, { userId }) => {
     if (isBrowser()) {
       localStorage.setItem('user_id', JSON.stringify(userId));
-      console.log('Stored user_id:', userId); // Debug log
+      console.log('Stored user_id:', userId); 
     }
     return { ...state, user_id: userId };
   }),

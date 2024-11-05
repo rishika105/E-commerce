@@ -2,7 +2,6 @@ import { ProductListingComponent } from './product-listing/product-listing.compo
 import { SavedCardsComponent } from './dashboard/user-dashboard/saved-cards/saved-cards.component';
 import { SavedUPIComponent } from './dashboard/user-dashboard/saved-upi/saved-upi.component';
 import { ManageCategoryComponent } from './dashboard/admin-dashboard/manage-category/manage-category.component';
-import { Component } from '@angular/core';
 import { AddCategoryComponent } from './dashboard/admin-dashboard/add-category/add-category.component';
 import { ProfileComponent } from './dashboard/profile/profile.component';
 import { AddressManagerComponent } from './dashboard/user-dashboard/address/address.component';
@@ -27,6 +26,7 @@ import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { CartComponent } from './cart/cart.component';
+import { StockManagementComponent } from './seller-dashboard/stock-management/stock-management.component';
 
 // open routes
 export const routes: Routes = [
@@ -87,6 +87,8 @@ export const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'add-product', component: AddProductComponent},
       { path: 'manage-products', component: ManageProductsComponent},
+      {path: 'edit-product/:id', component: AddProductComponent},
+      {path: 'stocks', component: StockManagementComponent}
 
     ],
     data: { roles: ['SELLER'] } // Only SELLER can access this route
@@ -132,6 +134,7 @@ export const routes: Routes = [
     component: CartComponent,
     canActivate: [AuthGuard]
   },
+
 
   // Default route
   {

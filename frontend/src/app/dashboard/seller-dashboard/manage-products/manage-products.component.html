@@ -1,3 +1,19 @@
+<!-- Confirmation Modal -->
+<app-confirmation-modal
+  *ngIf="showConfirmDeleteModal"
+  [title]="'Delete Product'"
+  [message]="'Are you sure you want to delete this product?'"
+  [confirmText]="'Delete'"
+  (onCancel)="cancelDelete()"
+  (onConfirm)="deleteProduct()"
+  class="fixed inset-0 flex items-center justify-center z-50"
+>
+  <div class="fixed inset-0 bg-gray-200 bg-opacity-50"></div> <!-- Transparent light background -->
+  <div class="relative bg-white border border-gray-500 p-6">
+  </div>
+</app-confirmation-modal>
+
+<!-- Product Table -->
 <div class="container mx-auto p-4 w-[900px] ml-[-30px]">
   <div class="mb-6">
     <p class="text-2xl font-medium text-gray-800 mb-4 pl-6">My Products</p>
@@ -12,14 +28,14 @@
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
           <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
-          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"><span class="text-white">w</span> Actions</th>
+          <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
         </tr>
       </thead>
       <tbody class="bg-white divide-y divide-gray-200">
         <!-- Loading state -->
         <tr *ngIf="isLoading">
-          <td colspan="5" class="px-6 py-4 text-center loader">
-            Loading products...
+          <td colspan="5" class="text-center">
+            <div class="ml-[400px] mt-[200px] loader">Loading products...</div>
           </td>
         </tr>
 
@@ -31,24 +47,22 @@
         </tr>
 
         <!-- Products list -->
-        <tr *ngFor="let product of products$ | async">
-          <td class="px-6 py-4 whitespace-nowrap">
-            <div class="flex items-center">
-              <div class="h-10 w-10 flex-shrink-0">
-                <img
-                  [src]="product.imageUrl || 'assets/placeholder.png'"
-                  [alt]="product.name"
-                  class="h-[50px] w-[100px] object-cover"
-                >
-              </div>
-              <div class="ml-4">
-                <div class="text-sm font-medium text-gray-900">{{product.name}}</div>
-                <div class="text-sm text-gray-500">{{product.description | slice:0:30}}...</div>
-              </div>
+        <tr *ngFor="let product of products$ | async" class="px-6 py-4 whitespace-nowrap">
+          <td class="flex items-center">
+            <div class="h-10 w-10 flex-shrink-0">
+              <img
+                [src]="product.imageUrl || 'assets/placeholder.png'"
+                [alt]="product.name"
+                class="h-[50px] w-[100px] object-cover"
+              />
+            </div>
+            <div class="ml-4">
+              <div class="text-sm font-medium text-gray-900">{{product.name}}</div>
+              <div class="text-sm text-gray-500">{{product.description | slice:0:30}}...</div>
             </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
-            <span class="text-sm text-gray-900"> {{ product.category.categoryName }}</span>
+            <span class="text-sm text-gray-900">{{product.category.categoryName}}</span>
           </td>
           <td class="px-6 py-4 whitespace-nowrap">
             <span class="text-sm font-medium text-gray-900">₹{{product.price.toFixed(2)}}</span>
@@ -64,7 +78,7 @@
               Edit
             </button>
             <button
-              (click)="deleteProduct(product.productId)"
+              (click)="delProduct(product.productId)"
               class="text-red-600 hover:text-red-900 bg-red-100 hover:bg-red-200 px-3 py-1 rounded-md transition duration-150 ease-in-out"
             >
               Delete
@@ -74,9 +88,4 @@
       </tbody>
     </table>
   </div>
-
-<!-- Loading -->
-<div *ngIf="isLoading" class="mt-[150px] mb-[150px] mx-auto loader">
-  <p>Loading...</p>
-</div>
 </div>
