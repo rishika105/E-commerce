@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
-import { switchMap, catchError, tap } from 'rxjs/operators';
+import { switchMap, catchError } from 'rxjs/operators';
 import { Product, ProductService } from '../api services/product.service';
-import { WishlistService } from '../api services/wishlist.service';
+import { WishlistService } from '../wishlist/wishlist.service';
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './product-details.component.html'
 })
 export class ProductDetailsComponent implements OnInit {
@@ -44,15 +44,5 @@ export class ProductDetailsComponent implements OnInit {
     console.log('Adding to cart:', product);
   }
 
-  isInWishlist(productId: number): boolean {
-    return this.wishlistService.isInWishlist(productId);
-  }
 
-  toggleWishlist(product: Product): void {
-    if (this.isInWishlist(product.id)) {
-      this.wishlistService.removeFromWishlist(product.id);
-    } else {
-      this.wishlistService.addToWishlist(product);
-    }
   }
-}

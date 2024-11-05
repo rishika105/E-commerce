@@ -1,17 +1,16 @@
-<div class="container mx-auto p-4">
-    <h1 class="text-3xl font-bold mb-6">My Wishlist</h1>
-    
-    <div *ngIf="wishlistItems.length === 0" class="text-center py-8">
-      <p class="text-gray-600">Your wishlist is empty</p>
-      <a routerLink="/home" class="text-blue-600 hover:underline mt-4 inline-block">Continue Shopping</a>
+<div class="wishlist-page py-8">
+  <h2 class="text-center text-3xl font-bold text-black mb-8">My Wishlist</h2>
+  
+  <div *ngIf="wishlistItems.length > 0; else noItems">
+    <div class="wishlist-item bg-red-100 border border-red-300 rounded-lg p-6 w-64 text-center shadow-lg mb-4" *ngFor="let item of wishlistItems">
+      <img [src]="'./assets/images/' + item.name + '.jpeg'" alt="{{item.name}}" class="w-full h-48 object-contain mb-4" />
+      <h3 class="text-xl font-semibold text-black mb-2">{{item.name}}</h3>
+      <p class="text-lg text-gray-700 mb-4">Price: {{item.price | currency}}</p>
+      <button (click)="removeFromWishlist(item)" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-black transition duration-300">Remove from Wishlist</button>
     </div>
+  </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      <app-product-card
-        *ngFor="let product of wishlistItems"
-        [product]="product"
-        (addToCart)="onAddToCart($event)"
-        (removeFromWishlist)="onRemoveFromWishlist($event)"
-      ></app-product-card>
-    </div>
+  <ng-template #noItems>
+    <p class="text-center">Your wishlist is empty.</p>
+  </ng-template>
 </div>

@@ -1,12 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProductService } from '../api services/product.service';
-import { Product } from '../api services/product.service';
-import { CommonModule } from '@angular/common';
-import { ProductCardComponent } from '../product-card/product-card.component';
-import { CategoryService, Category } from '../api services/category.service';
+import { Category, CategoryService } from '../api services/category.service';
+import { Product, ProductService } from '../api services/product.service';
 import { CartService } from '../cart/cart.service';
-import { WishlistService } from '../api services/wishlist.service';
+import { ProductCardComponent } from '../product-card/product-card.component';
+import { WishlistService } from '../wishlist/wishlist.service';
 
 @Component({
   selector: 'app-category',
@@ -16,7 +15,7 @@ import { WishlistService } from '../api services/wishlist.service';
   imports: [CommonModule, ProductCardComponent]
 })
 export class CategoryComponent implements OnInit {
-  categoryId: number;
+  categoryId: number = 0;
   products: Product[] = [];
   category: Category | null = null;
 
@@ -26,55 +25,50 @@ export class CategoryComponent implements OnInit {
     private categoryService: CategoryService,
     private cartService: CartService,
     private wishlistService: WishlistService
-  ) {
-    this.categoryId = 0;
-  }
+  ) {}
 
   ngOnInit(): void {
+    // Subscribe to route parameters and fetch category and products data
     this.route.params.subscribe(params => {
       this.categoryId = +params['id'];
-      console.log('Category ID from route:', this.categoryId);  // Add this line
-      this.loadCategory();
-      this.loadProducts();
+      console.log('Category ID from route:', this.categoryId);  // Log for debugging
+      this.loadCategory();  // Load category first
+      this.loadProducts();   // Then load products
     });
   }
 
   loadCategory(): void {
     this.categoryService.getCategoryById(this.categoryId).subscribe(
-      (data) => {
+      (data: Category) => {
         this.category = data;
-        console.log('Loaded category:', this.category);  // Add this line
+        console.log('Loaded category:', this.category);  // Log loaded category
       },
       (error) => {
         console.error('Error loading category:', error);
-        this.category = null;  // Add this line
+        this.category = null;  // Set to null on error
       }
     );
   }
 
-  // Load products by category
   loadProducts(): void {
     this.productService.getProductsByCategory(this.categoryId).subscribe(
-      (response: any) => {
-        // Extract the 'products' array from the API response
-        if (response && response.products) {
-          this.products = response.products;
-        } else {
-          this.products = [];
-          console.error('No products found for this category.');
+      (products: Product[]) => {
+        this.products = products;
+        if (this.products.length === 0) {
+          console.warn('No products found for this category.');
         }
       },
       (error) => {
-        // Handle error and display in the console
         console.error('Error loading products:', error);
-        this.products = []; // Ensure products array is empty in case of an error
+        this.products = []; // Clear products on error
       }
     );
   }
+  
+  
 
   onAddToCart(product: Product): void {
     this.cartService.addToCart(product);
-    // Optional: Add a notification or feedback to user
     console.log('Product added to cart:', product);
   }
 
@@ -84,6 +78,7 @@ export class CategoryComponent implements OnInit {
   }
 
   onRemoveFromWishlist(product: Product): void {
+    // Directly remove from wishlist by ID and log result
     this.wishlistService.removeFromWishlist(product.id);
     console.log('Product removed from wishlist:', product);
   }

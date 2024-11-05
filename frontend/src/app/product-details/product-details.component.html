@@ -6,21 +6,7 @@
           <!-- Product Image -->
           <div class="md:w-1/2 relative">
             <!-- Wishlist Heart Icon -->
-            <button 
-              (click)="toggleWishlist(product)"
-              class="absolute top-4 right-4 z-10 p-2 rounded-full bg-white shadow-md hover:bg-gray-100"
-            >
-              <svg 
-                xmlns="http://www.w3.org/2000/svg" 
-                [class.text-red-500]="isInWishlist(product.id)"
-                [class.text-gray-400]="!isInWishlist(product.id)"
-                class="h-6 w-6 transition-colors duration-200"
-                fill="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-              </svg>
-            </button>
+           
             <img 
               [src]="product.imageUrl" 
               [alt]="product.name" 
@@ -48,7 +34,7 @@
             <!-- Category -->
             <div class="mb-6">
               <span class="text-sm text-gray-500">Category:</span>
-              <span class="ml-2 text-gray-700">{{ product.category?.name }}</span>
+              <span class="ml-2 text-gray-700">{{ product.category ? product.category.name : 'N/A' }}</span>
             </div>
 
             <!-- Add to Cart Button -->
@@ -75,8 +61,6 @@
 
 <ng-template #notFound>
   <div class="text-center py-12">
-    <p class="text-xl text-gray-800 mb-4">Product not found or an error occurred.</p>
-    <p *ngIf="error" class="text-red-500 mb-4">{{ error }}</p>
-    <a routerLink="/" class="text-blue-600 hover:underline">Return to Home</a>
+    <p class="text-gray-600">Product not found.</p>
   </div>
 </ng-template>
