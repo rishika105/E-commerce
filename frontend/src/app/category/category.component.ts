@@ -50,17 +50,22 @@ export class CategoryComponent implements OnInit {
     );
   }
 
+  // Load products by category
   loadProducts(): void {
     this.productService.getProductsByCategory(this.categoryId).subscribe(
-      (products: Product[]) => {
-        this.products = products;
-        if (this.products.length === 0) {
-          console.warn('No products found for this category.');
+      (response: any) => {
+        // Extract the 'products' array from the API response
+        if (response && response.products) {
+          this.products = response.products;
+        } else {
+          this.products = [];
+          console.error('No products found for this category.');
         }
       },
       (error) => {
+        // Handle error and display in the console
         console.error('Error loading products:', error);
-        this.products = []; // Clear products on error
+        this.products = []; // Ensure products array is empty in case of an error
       }
     );
   }
