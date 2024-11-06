@@ -20,8 +20,12 @@ import { of } from 'rxjs';
 export class ProfileComponent {
   profileForm!: FormGroup;
   isEditing = false;
-  showDeleteModal = false;
+  isModalOpen = false;
   userName: string = '';
+  termsChecked = false;
+  balanceChecked = false;
+  serviceChecked = false;
+  feedback = '';
 
   constructor(
     private fb: FormBuilder,
@@ -77,27 +81,30 @@ export class ProfileComponent {
     }
   }
 
-  onDel(){
-    this.showDeleteModal = true;
+  openModal() {
+    this.isModalOpen = true;
   }
 
-  onCancelDel(){
-    this.showDeleteModal = false;
+  closeModal() {
+    this.isModalOpen = false;
+    this.resetForm();
   }
 
-  onDelete() : void{
-    this.showDeleteModal = false;
-    this.profileService.deleteProfile().subscribe({
-      next: (response) => {
-         this.toastr.success("Deleted User Sucessfully!");
-         this.router.navigate(['/register']);
-      },
-      error: (error) => {
-        const errorMessage = error?.error?.message || 'Failed to delete profile';
-          this.toastr.error(errorMessage);
-        }
-
-    });
+  confirmDelete() {
+    if (this.termsChecked && this.balanceChecked && this.serviceChecked) {
+      // Add delete logic here
+      console.log('Account deleted with feedback:', this.feedback);
+      this.closeModal();
+    }
   }
 
+  resetForm() {this.termsChecked = false;
+    this.balanceChecked = false;
+    this.serviceChecked = false;
+    this.feedback = '';
+  }
+
+  canDelete(): boolean {
+    return this.termsChecked && this.balanceChecked && this.serviceChecked;
+  }
 }
