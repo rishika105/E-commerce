@@ -28,9 +28,10 @@ export class CategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.wishlistService.loadWishlist();
+    // Subscribe to route parameters and fetch category and products data
     this.route.params.subscribe(params => {
       this.categoryId = +params['id'];
+      console.log('Category ID from route:', this.categoryId);  // Log for debugging
       this.loadCategory();
       this.loadProducts();
     });
@@ -40,30 +41,30 @@ export class CategoryComponent implements OnInit {
     this.categoryService.getCategoryById(this.categoryId).subscribe(
       (data: Category) => {
         this.category = data;
+        console.log('Loaded category:', this.category);  // Log loaded category
       },
       (error) => {
         console.error('Error loading category:', error);
-        this.category = null;
+        this.category = null;  // Set to null on error
       }
     );
   }
 
   loadProducts(): void {
     this.productService.getProductsByCategory(this.categoryId).subscribe(
-      (response: any) => {
-        if (response && response.products) {
-          this.products = response.products;
-        } else {
-          this.products = [];
-          console.error('No products found for this category.');
+      (products: Product[]) => {
+        this.products = products;
+        if (this.products.length === 0) {
+          console.warn('No products found for this category.');
         }
       },
       (error) => {
         console.error('Error loading products:', error);
-        this.products = [];
+        this.products = []; // Clear products on error
       }
     );
   }
+  
 
   onAddToCart(product: Product): void {
     this.cartService.addToCart(product);

@@ -2,32 +2,28 @@
   <div class="container mx-auto px-4">
     <p class="text-3xl font-bold mb-8 text-gray-800">My Wishlist</p>
 
-    <div *ngIf="wishlistItems.length > 0; else noItems" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      <!-- Wishlist Item Card -->
-      <div *ngFor="let item of wishlistItems" class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-        <div class="relative">
-          <img [src]="item.imageUrl" [alt]="item.name" class="w-full h-64 object-cover" />
-          <button 
-            (click)="removeFromWishlist(item.id)" 
-            class="absolute top-4 right-4 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 transition-colors duration-300 group">
-            <ng-icon 
-              name="heroHeart" 
-              class="w-6 h-6 text-red-600 group-hover:scale-110 transition-transform duration-300">
-            </ng-icon>
-          </button>
-        </div>
+    <div *ngIf="wishlistItems.length > 0; else noItems" class="space-y-4">
+      <!-- Wishlist Item Row -->
+      <div *ngFor="let item of wishlistItems" class="bg-white rounded-lg shadow-md p-4 flex items-center gap-4">
+        <img [src]="item.imageUrl" [alt]="item.name" class="w-16 h-16 object-cover rounded-md" />
         
-        <div class="p-6">
-          <p class="text-lg font-semibold text-gray-800 mb-2 line-clamp-2">{{item.name}}</p>
-          <div class="flex items-center justify-between mt-4">
-            <span class="text-2xl font-bold text-gray-900">₹{{item.price.toFixed(2)}}</span>
-            <button 
-              (click)="addToCart(item)" 
-              class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300 flex items-center gap-2">
-              <ng-icon name="heroShoppingCart" class="w-5 h-5"></ng-icon>
-              Add to Cart
-            </button>
-          </div>
+        <div class="flex-1">
+          <p class="text-lg font-semibold text-gray-800">{{item.name}}</p>
+          <p class="text-xl font-bold text-gray-900">₹{{item.price.toFixed(2)}}</p>
+        </div>
+
+        <div class="ml-auto flex items-center space-x-4">
+          <button 
+            (click)="addToCart(item)" 
+            class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300 flex items-center gap-2">
+            <ng-icon name="heroShoppingCart" class="w-5 h-5"></ng-icon>
+            Add to Cart
+          </button>
+          
+          <button (click)="removeFromWishlist(item.id)" class="remove-button">
+            <i class="fa fa-trash"></i> 
+        </button>
+        
         </div>
       </div>
     </div>
@@ -35,19 +31,10 @@
     <!-- Empty Wishlist State -->
     <ng-template #noItems>
       <div class="text-center py-16 bg-white rounded-lg shadow-md">
-        <div class="mb-6">
-          <ng-icon 
-            name="heroHeart" 
-            class="w-16 h-16 text-gray-300 mx-auto">
-          </ng-icon>
-        </div>
+        <ng-icon name="heroHeart" class="w-16 h-16 text-gray-300 mx-auto mb-4"></ng-icon>
         <p class="text-2xl font-bold text-gray-800 mb-2">Your wishlist is empty</p>
         <p class="text-gray-600 mb-8">Add items to your wishlist to save them for later</p>
-        <button 
-          routerLink="/home" 
-          class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors duration-300">
-          Continue Shopping
-        </button>
+        <button routerLink="/home" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors duration-300">Continue Shopping</button>
       </div>
     </ng-template>
   </div>
