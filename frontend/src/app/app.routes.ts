@@ -1,9 +1,4 @@
-import { ManageCategoryComponent } from './dashboard/admin-dashboard/manage-category/manage-category.component';
-import { Component } from '@angular/core';
-import { AddCategoryComponent } from './dashboard/admin-dashboard/add-category/add-category.component';
-import { ProfileComponent } from './dashboard/profile/profile.component';
-import { AddressManagerComponent } from './dashboard/user-dashboard/address/address.component';
-import { Routes, CanActivate } from '@angular/router';
+import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AboutComponent } from './common/about/about.component';
@@ -20,12 +15,15 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { AddProductComponent } from './dashboard/seller-dashboard/add-product/add-product.component';
 import { ManageProductsComponent } from './dashboard/seller-dashboard/manage-products/manage-products.component';
 import { CategoryComponent } from './category/category.component';
-import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { WishlistComponent } from './wishlist/wishlist.component';
 import { CartComponent } from './cart/cart.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { ProfileComponent } from './dashboard/profile/profile.component';
+import { AddCategoryComponent } from './dashboard/admin-dashboard/add-category/add-category.component';
+import { ManageCategoryComponent } from './dashboard/admin-dashboard/manage-category/manage-category.component';
+import { AddressManagerComponent } from './dashboard/user-dashboard/address/address.component';
 
-// open routes
 export const routes: Routes = [
   {
     path: 'login',
@@ -51,9 +49,10 @@ export const routes: Routes = [
     path: 'forgot-password',
     component: ForgotPasswordComponent,
   },
-  { path: 'reset-password', component: ResetPasswordComponent },
-
-  // private routes
+  { 
+    path: 'reset-password', 
+    component: ResetPasswordComponent 
+  },
   {
     path: 'admin-dashboard',
     component: AdminDashboardComponent,
@@ -64,7 +63,7 @@ export const routes: Routes = [
       {path: 'addCategory', component: AddCategoryComponent},
       {path: 'manageCategory', component: ManageCategoryComponent}
     ],
-    data: { roles: ['ADMIN'] } // Only ADMIN can access this route
+    data: { roles: ['ADMIN'] }
   },
   {
     path: 'seller-dashboard',
@@ -75,37 +74,37 @@ export const routes: Routes = [
       { path: 'profile', component: ProfileComponent },
       { path: 'add-product', component: AddProductComponent},
       { path: 'manage-products', component: ManageProductsComponent},
-
     ],
-    data: { roles: ['SELLER'] } // Only SELLER can access this route
+    data: { roles: ['SELLER'] }
   },
-  //NESTED ROUTING
   {
     path: 'user-dashboard',
-    component: UserDashboardComponent, // This contains the sidebar
+    component: UserDashboardComponent,
     children: [
       {path: "", redirectTo: "profile", pathMatch: "full"},
       { path: 'profile', component: ProfileComponent },
       { path: 'address', component: AddressManagerComponent},
-
-      // Add more routes here for other dashboard pages
     ],
     canActivate: [AuthGuard, RoleGuard],
     data: {roles: ['USER']}
   },
-
   {
     path: 'category/:id',
     component: CategoryComponent,
   },
-
-  {
-    path: 'product/:id',
-    component: ProductCardComponent,
-  },
   {
     path: 'product-details/:id',
     component: ProductDetailsComponent
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'wishlist',
@@ -113,19 +112,10 @@ export const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'cart',
-    component: CartComponent,
-    canActivate: [AuthGuard]
-  },
-
-  // Default route
-  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
   },
-
-  // Wildcard route for 404 error page
   {
     path: '**',
     component: ErrorComponent,
