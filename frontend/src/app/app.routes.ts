@@ -22,14 +22,12 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { AddProductComponent } from './dashboard/seller-dashboard/add-product/add-product.component';
 import { ManageProductsComponent } from './dashboard/seller-dashboard/manage-products/manage-products.component';
 import { CategoryComponent } from './category/category.component';
-import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
-import { WishlistComponent } from './wishlist/wishlist.component';
 import { CartComponent } from './cart/cart.component';
-import { StockManagementComponent } from './seller-dashboard/stock-management/stock-management.component';
 import { StocksManagementComponent } from './dashboard/seller-dashboard/stock-management/stock-management.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
-// open routes
 export const routes: Routes = [
   {
     path: 'login',
@@ -77,7 +75,7 @@ export const routes: Routes = [
       {path: 'addCategory', component: AddCategoryComponent},
       {path: 'manageCategory', component: ManageCategoryComponent}
     ],
-    data: { roles: ['ADMIN'] } // Only ADMIN can access this route
+    data: { roles: ['ADMIN'] }
   },
   {
     path: 'seller-dashboard',
@@ -92,12 +90,11 @@ export const routes: Routes = [
       {path: 'stocks', component: StocksManagementComponent}
 
     ],
-    data: { roles: ['SELLER'] } // Only SELLER can access this route
+    data: { roles: ['SELLER'] }
   },
-  //NESTED ROUTING
   {
     path: 'user-dashboard',
-    component: UserDashboardComponent, // This contains the sidebar
+    component: UserDashboardComponent,
     children: [
       {path: "", redirectTo: "profile", pathMatch: "full"},
       { path: 'profile', component: ProfileComponent },
@@ -111,19 +108,23 @@ export const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: {roles: ['USER']}
   },
-
   {
     path: 'category/:id',
     component: CategoryComponent,
   },
-
-  {
-    path: 'product/:id',
-    component: ProductCardComponent,
-  },
   {
     path: 'product-details/:id',
     component: ProductDetailsComponent
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'wishlist',
@@ -143,8 +144,6 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
-
-  // Wildcard route for 404 error page
   {
     path: '**',
     component: ErrorComponent,

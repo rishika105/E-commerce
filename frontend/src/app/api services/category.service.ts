@@ -7,6 +7,7 @@ import { map, first, switchMap, tap, catchError } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 
 export interface Category {
+name: any;
   id: number;
   categoryName: string;
   description: string;

@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterOutlet, FormsModule], 
+  imports: [CommonModule, RouterLink, RouterOutlet, FormsModule],
   templateUrl: './checkout.component.html',
 })
 export class CheckoutComponent implements OnInit {
@@ -30,35 +30,48 @@ export class CheckoutComponent implements OnInit {
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
-    this.cart = this.cartService.getCartItems(); // Fetch selected cart items
+    this.cart = this.cartService.getCartItems();
   }
 
   getTotal(): number {
-    return this.cartService.getTotalPrice(); // Total price of cart items
+    return this.cartService.getTotalPrice();
   }
 
   getGrandTotal(): number {
     const total = this.getTotal();
-    return total - this.discount; // Grand total with discount applied
+    return total - this.discount;
   }
 
   applyCoupon(): void {
     if (this.couponCode === 'DISCOUNT10') {
-      this.discount = this.getTotal() * 0.1; // Apply a 10% discount
+      this.discount = this.getTotal() * 0.1;
     } else {
-      this.discount = 0; // No discount
+      this.discount = 0;
     }
   }
 
   placeOrder(): void {
+    if (!this.billingDetails.firstName || !this.billingDetails.streetAddress || 
+        !this.billingDetails.city || !this.billingDetails.phone || !this.billingDetails.email) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    if (!this.paymentMethod) {
+      alert('Please select a payment method');
+      return;
+    }
+
     const orderDetails = {
       billingDetails: this.billingDetails,
       cart: this.cart,
       paymentMethod: this.paymentMethod,
       totalPrice: this.getGrandTotal(),
+      discount: this.discount
     };
 
     console.log('Order Placed:', orderDetails);
-    // Send order details to the server here using a service (e.g., orderService.placeOrder(orderDetails))
+    // Here you would typically send the order to your backend
+    alert('Order placed successfully!');
   }
 }

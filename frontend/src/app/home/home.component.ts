@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { NgIconComponent } from '@ng-icons/core';
-import {ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { Category, CategoryService } from '../api services/category.service';
 import { Product, ProductService } from '../api services/product.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -42,6 +42,22 @@ export class HomeComponent {
     );
   }
 
+<<<<<<< HEAD
 
 
 }
+=======
+  searchProducts(): void {
+    if (this.searchTerm.trim()) {
+      this.productService.searchProducts(this.searchTerm).subscribe(
+        (data) => {
+          this.searchResults = data;
+        },
+        (error) => {
+          console.error('Error searching products:', error);
+        }
+      );
+    }
+  }
+}
+>>>>>>> a80e418bbfc9b1934f833a379ec2df98098d8f45

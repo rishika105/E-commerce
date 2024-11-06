@@ -1,0 +1,1210 @@
+//ELECTRONICS
+[
+  {
+    "name": "Smartphone",
+    "description": "Latest 5G smartphone with 128GB storage.",
+    "price": 14999.99,
+    "stock": 50,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Laptop",
+    "description": "High-performance laptop for gaming and work.",
+    "price": 59999.99,
+    "stock": 30,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Smartwatch",
+    "description": "Smartwatch with health tracking and notifications.",
+    "price": 2999.99,
+    "stock": 100,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Bluetooth Speaker",
+    "description": "Portable Bluetooth speaker with excellent sound quality.",
+    "price": 1999.99,
+    "stock": 75,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Washing Machine",
+    "description": "Front-load washing machine with smart features.",
+    "price": 24999.99,
+    "stock": 10,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Refrigerator",
+    "description": "Refrigerator with inverter technology.",
+    "price": 17999.99,
+    "stock": 20,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "LED TV",
+    "description": "43-inch 4K UHD Smart LED TV.",
+    "price": 27999.99,
+    "stock": 15,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Tablet",
+    "description": "10-inch tablet with 64GB storage and WiFi support.",
+    "price": 14999.99,
+    "stock": 60,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Gaming Console",
+    "description": "Next-gen gaming console with 1TB storage.",
+    "price": 49999.99,
+    "stock": 25,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Headphones",
+    "description": "Wireless noise-canceling over-ear headphones.",
+    "price": 7999.99,
+    "stock": 80,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Printer",
+    "description": "Wireless all-in-one inkjet printer.",
+    "price": 8999.99,
+    "stock": 40,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Router",
+    "description": "Dual-band WiFi router with high-speed connectivity.",
+    "price": 1999.99,
+    "stock": 100,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Power Bank",
+    "description": "10000mAh portable power bank with fast charging.",
+    "price": 999.99,
+    "stock": 200,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Camera",
+    "description": "DSLR camera with 24MP sensor and 4K video recording.",
+    "price": 44999.99,
+    "stock": 30,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Fitness Tracker",
+    "description": "Waterproof fitness tracker with heart rate monitor.",
+    "price": 2999.99,
+    "stock": 120,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Smart Home Assistant",
+    "description": "Voice-controlled smart home assistant with WiFi connectivity.",
+    "price": 4999.99,
+    "stock": 90,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Monitor",
+    "description": "27-inch 4K monitor with HDR support.",
+    "price": 19999.99,
+    "stock": 35,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "External Hard Drive",
+    "description": "2TB portable external hard drive.",
+    "price": 4999.99,
+    "stock": 70,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Electric Kettle",
+    "description": "1.5L electric kettle with auto shut-off.",
+    "price": 1299.99,
+    "stock": 150,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  {
+    "name": "Smart Light Bulb",
+    "description": "WiFi-enabled smart light bulb with color change feature.",
+    "price": 499.99,
+    "stock": 500,
+    "category": {
+      "categoryId": 4
+    }
+  },
+  //FASHION
+  {
+    "name": "Casual Shirt",
+    "description": "Comfortable cotton casual shirt",
+    "price": 999,
+    "stock": 50,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Jeans",
+    "description": "Slim-fit blue jeans",
+    "price": 1599,
+    "stock": 75,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Leather Jacket",
+    "description": "Stylish leather jacket",
+    "price": 4999,
+    "stock": 20,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Sneakers",
+    "description": "Comfortable everyday sneakers",
+    "price": 2999,
+    "stock": 100,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Formal Trousers",
+    "description": "Classic formal trousers",
+    "price": 1999,
+    "stock": 60,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Denim Jacket",
+    "description": "Trendy denim jacket",
+    "price": 2499,
+    "stock": 30,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Running Shoes",
+    "description": "Lightweight running shoes",
+    "price": 2799,
+    "stock": 80,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Summer Dress",
+    "description": "Floral printed summer dress",
+    "price": 1499,
+    "stock": 100,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Woolen Sweater",
+    "description": "Warm woolen sweater",
+    "price": 3499,
+    "stock": 45,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Leather Belt",
+    "description": "Genuine leather belt",
+    "price": 799,
+    "stock": 200,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Cargo Pants",
+    "description": "Comfortable cargo pants with pockets",
+    "price": 1599,
+    "stock": 50,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Blazer",
+    "description": "Formal blazer for office wear",
+    "price": 5999,
+    "stock": 40,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Sports T-Shirt",
+    "description": "Breathable sports t-shirt",
+    "price": 1299,
+    "stock": 90,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Polo T-Shirt",
+    "description": "Classic polo t-shirt",
+    "price": 1099,
+    "stock": 120,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Wrist Watch",
+    "description": "Elegant wrist watch with leather strap",
+    "price": 3499,
+    "stock": 35,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Winter Coat",
+    "description": "Warm winter coat",
+    "price": 6999,
+    "stock": 15,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Scarf",
+    "description": "Woolen scarf for winter",
+    "price": 599,
+    "stock": 150,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Sunglasses",
+    "description": "Stylish UV-protected sunglasses",
+    "price": 2499,
+    "stock": 75,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Leather Wallet",
+    "description": "Genuine leather wallet with card slots",
+    "price": 1299,
+    "stock": 100,
+    "category": { "categoryId": 7 }
+  },
+  {
+    "name": "Woolen Cap",
+    "description": "Warm woolen cap for winter",
+    "price": 699,
+    "stock": 200,
+    "category": { "categoryId": 7 }
+  },
+  //APPILIANCE
+  {
+    "name": "Washing Machine",
+    "description": "Front load fully automatic washing machine",
+    "price": 25999,
+    "stock": 50,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Refrigerator",
+    "description": "Double door refrigerator with frost-free technology",
+    "price": 35999,
+    "stock": 30,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Microwave Oven",
+    "description": "Convection microwave oven with grill function",
+    "price": 15999,
+    "stock": 40,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Air Conditioner",
+    "description": "Split AC with inverter compressor",
+    "price": 42999,
+    "stock": 25,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Dishwasher",
+    "description": "Stainless steel dishwasher with multiple wash programs",
+    "price": 49999,
+    "stock": 15,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Mixer Grinder",
+    "description": "Powerful mixer grinder with multiple jars",
+    "price": 2999,
+    "stock": 120,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Water Purifier",
+    "description": "RO+UV water purifier with mineral booster",
+    "price": 12999,
+    "stock": 60,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Vacuum Cleaner",
+    "description": "Bagless vacuum cleaner with high suction power",
+    "price": 7999,
+    "stock": 70,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Ceiling Fan",
+    "description": "High-speed ceiling fan with energy-saving technology",
+    "price": 2499,
+    "stock": 150,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Air Purifier",
+    "description": "HEPA filter air purifier for clean indoor air",
+    "price": 14999,
+    "stock": 35,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Induction Cooktop",
+    "description": "Portable induction cooktop with digital control",
+    "price": 3499,
+    "stock": 100,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Electric Kettle",
+    "description": "Fast boiling electric kettle with auto shut-off",
+    "price": 1999,
+    "stock": 80,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Toaster",
+    "description": "2-slice toaster with adjustable browning control",
+    "price": 999,
+    "stock": 90,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Water Heater",
+    "description": "Instant water heater with energy efficiency",
+    "price": 5999,
+    "stock": 50,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Electric Iron",
+    "description": "Dry iron with non-stick soleplate",
+    "price": 1299,
+    "stock": 110,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Blender",
+    "description": "High-speed blender with multiple speed settings",
+    "price": 3499,
+    "stock": 65,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Food Processor",
+    "description": "Multi-functional food processor with multiple attachments",
+    "price": 5999,
+    "stock": 30,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Chimney",
+    "description": "Auto-clean chimney with powerful suction",
+    "price": 17999,
+    "stock": 20,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Rice Cooker",
+    "description": "Electric rice cooker with automatic warming",
+    "price": 2499,
+    "stock": 100,
+    "category": { "categoryId": 8 }
+  },
+  {
+    "name": "Electric Tandoor",
+    "description": "Compact electric tandoor for grilling and baking",
+    "price": 3999,
+    "stock": 40,
+    "category": { "categoryId": 8 }
+  },
+  //HOME AND FURNITURE
+  {
+    "name": "Wooden Shelf",
+    "description": "Elegant wooden shelf for living room",
+    "price": 2499,
+    "stock": 50,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Sofa Set",
+    "description": "Comfortable 3-seater fabric sofa",
+    "price": 14999,
+    "stock": 20,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Coffee Table",
+    "description": "Stylish wooden coffee table",
+    "price": 2999,
+    "stock": 30,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Dining Table",
+    "description": "6-seater wooden dining table",
+    "price": 9999,
+    "stock": 15,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Wardrobe",
+    "description": "Spacious 3-door wooden wardrobe",
+    "price": 7999,
+    "stock": 10,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "TV Stand",
+    "description": "Modern TV stand with storage",
+    "price": 3499,
+    "stock": 25,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Recliner Chair",
+    "description": "Comfortable reclining chair for home",
+    "price": 5999,
+    "stock": 18,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Study Desk",
+    "description": "Compact wooden study desk",
+    "price": 2499,
+    "stock": 40,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Bookshelf",
+    "description": "5-tier wooden bookshelf for home",
+    "price": 1999,
+    "stock": 35,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Bed Frame",
+    "description": "Queen-sized wooden bed frame",
+    "price": 8999,
+    "stock": 20,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Office Chair",
+    "description": "Ergonomic office chair with lumbar support",
+    "price": 3999,
+    "stock": 50,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Bean Bag",
+    "description": "Comfortable bean bag for living room",
+    "price": 1599,
+    "stock": 100,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Floor Lamp",
+    "description": "Decorative floor lamp for home",
+    "price": 1799,
+    "stock": 80,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Curtains",
+    "description": "Stylish curtains for living room",
+    "price": 999,
+    "stock": 120,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Wall Mirror",
+    "description": "Decorative wall mirror for home",
+    "price": 1299,
+    "stock": 60,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Dining Chairs",
+    "description": "Set of 4 dining chairs",
+    "price": 4999,
+    "stock": 40,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Ottoman",
+    "description": "Upholstered ottoman for living room",
+    "price": 2299,
+    "stock": 70,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Nightstand",
+    "description": "Compact nightstand with storage",
+    "price": 1299,
+    "stock": 35,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Shoe Rack",
+    "description": "Wooden shoe rack for hallway",
+    "price": 1999,
+    "stock": 50,
+    "category": { "categoryId": 9 }
+  },
+  {
+    "name": "Chest of Drawers",
+    "description": "Wooden chest of drawers with 4 drawers",
+    "price": 4499,
+    "stock": 25,
+    "category": { "categoryId": 9 }
+  },
+  //BEAUTY AND SKINCARE
+  {
+    "name": "Hydrating Facial Cleanser",
+    "description": "Gently cleanses and hydrates the skin.",
+    "price": 799,
+    "stock": 150,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Moisturizing Lotion",
+    "description": "Lightweight lotion for all-day hydration.",
+    "price": 899,
+    "stock": 200,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Sunscreen SPF 50",
+    "description": "Broad-spectrum sunscreen for daily protection.",
+    "price": 1299,
+    "stock": 180,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Anti-Aging Serum",
+    "description": "Reduces the appearance of fine lines and wrinkles.",
+    "price": 1999,
+    "stock": 75,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Exfoliating Scrub",
+    "description": "Gently exfoliates for smoother skin.",
+    "price": 649,
+    "stock": 120,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Hydrating Face Mask",
+    "description": "Intensely hydrates and rejuvenates the skin.",
+    "price": 499,
+    "stock": 100,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Night Cream",
+    "description": "Rich cream for overnight hydration.",
+    "price": 1599,
+    "stock": 90,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Vitamin C Serum",
+    "description": "Brightens skin tone and reduces dark spots.",
+    "price": 1499,
+    "stock": 85,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Eye Cream",
+    "description": "Reduces puffiness and dark circles.",
+    "price": 1299,
+    "stock": 110,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Lip Balm",
+    "description": "Nourishing balm for soft, hydrated lips.",
+    "price": 299,
+    "stock": 250,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Clay Face Mask",
+    "description": "Detoxifies and clarifies the skin.",
+    "price": 799,
+    "stock": 70,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Facial Toner",
+    "description": "Balances skin pH and tightens pores.",
+    "price": 599,
+    "stock": 130,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Cleansing Oil",
+    "description": "Removes makeup and impurities effortlessly.",
+    "price": 899,
+    "stock": 95,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Peeling Gel",
+    "description": "Gently removes dead skin cells for a fresh look.",
+    "price": 699,
+    "stock": 100,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Moisturizing Sunscreen",
+    "description": "Hydrating sunscreen for daily use.",
+    "price": 1199,
+    "stock": 140,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Face Oil",
+    "description": "Nourishing oil for a radiant complexion.",
+    "price": 1299,
+    "stock": 60,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Skin Brightening Cream",
+    "description": "Enhances skin glow and reduces dark spots.",
+    "price": 1499,
+    "stock": 80,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Body Lotion",
+    "description": "Rich moisturizer for all skin types.",
+    "price": 799,
+    "stock": 120,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Sheet Masks",
+    "description": "Instant hydration with convenient sheet masks.",
+    "price": 299,
+    "stock": 200,
+    "category": { "categoryId": 10 }
+  },
+  {
+    "name": "Makeup Remover Wipes",
+    "description": "Convenient wipes to remove makeup effortlessly.",
+    "price": 399,
+    "stock": 150,
+    "category": { "categoryId": 10 }
+  },
+  //SPORTS AND FITNESS
+  {
+    "name": "Yoga Mat",
+    "description": "Non-slip yoga mat for comfortable workouts.",
+    "price": 299,
+    "stock": 200,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Dumbbell Set",
+    "description": "Adjustable dumbbell set for strength training.",
+    "price": 1999,
+    "stock": 150,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Resistance Bands",
+    "description": "Versatile resistance bands for all fitness levels.",
+    "price": 899,
+    "stock": 180,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Jump Rope",
+    "description": "Durable jump rope for cardio workouts.",
+    "price": 299,
+    "stock": 220,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Fitness Tracker",
+    "description": "Track your workouts and monitor your health.",
+    "price": 2499,
+    "stock": 75,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Kettlebell",
+    "description": "Cast iron kettlebell for strength and endurance training.",
+    "price": 899,
+    "stock": 120,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Exercise Ball",
+    "description": "Stability ball for core workouts and balance training.",
+    "price": 499,
+    "stock": 140,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Foam Roller",
+    "description": "Foam roller for muscle recovery and flexibility.",
+    "price": 699,
+    "stock": 160,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Treadmill",
+    "description": "Home treadmill for running and walking workouts.",
+    "price": 29999,
+    "stock": 30,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Exercise Bike",
+    "description": "Stationary bike for indoor cycling.",
+    "price": 19999,
+    "stock": 50,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Boxing Gloves",
+    "description": "High-quality gloves for boxing and martial arts.",
+    "price": 1299,
+    "stock": 100,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Water Bottle",
+    "description": "Durable water bottle for hydration during workouts.",
+    "price": 299,
+    "stock": 300,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Gym Bag",
+    "description": "Spacious gym bag for carrying workout gear.",
+    "price": 899,
+    "stock": 200,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Pull-Up Bar",
+    "description": "Doorway pull-up bar for upper body workouts.",
+    "price": 999,
+    "stock": 150,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Ab Wheel",
+    "description": "Effective ab wheel for core strengthening.",
+    "price": 399,
+    "stock": 200,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Gym Mat",
+    "description": "Comfortable mat for floor exercises and stretching.",
+    "price": 499,
+    "stock": 180,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Bicycle Pump",
+    "description": "Portable pump for inflating bike tires.",
+    "price": 299,
+    "stock": 250,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Fitness Guidebook",
+    "description": "Comprehensive guide for fitness training and nutrition.",
+    "price": 799,
+    "stock": 80,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Resistance Parachute",
+    "description": "Parachute for resistance training during runs.",
+    "price": 699,
+    "stock": 90,
+    "category": { "categoryId": 11 }
+  },
+  {
+    "name": "Skipping Rope",
+    "description": "Lightweight skipping rope for cardio workouts.",
+    "price": 199,
+    "stock": 300,
+    "category": { "categoryId": 11 }
+  },
+  //HOME AND KITCHEN
+  {
+    "name": "Cookware Set",
+    "description": "Complete cookware set for all your cooking needs.",
+    "price": 4999,
+    "stock": 150,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Blender",
+    "description": "High-speed blender for smoothies and sauces.",
+    "price": 2999,
+    "stock": 100,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Air Fryer",
+    "description": "Healthier frying with hot air circulation.",
+    "price": 3999,
+    "stock": 80,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Coffee Maker",
+    "description": "Brew your favorite coffee at home.",
+    "price": 2499,
+    "stock": 120,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Microwave Oven",
+    "description": "Compact microwave for quick heating.",
+    "price": 4999,
+    "stock": 70,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Cutlery Set",
+    "description": "Premium stainless steel cutlery set.",
+    "price": 1299,
+    "stock": 200,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Food Storage Containers",
+    "description": "Airtight containers for keeping food fresh.",
+    "price": 999,
+    "stock": 180,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Dish Rack",
+    "description": "Space-saving dish rack for drying dishes.",
+    "price": 599,
+    "stock": 150,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Slow Cooker",
+    "description": "Perfect for making stews and casseroles.",
+    "price": 3499,
+    "stock": 90,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Electric Kettle",
+    "description": "Quickly boil water with this electric kettle.",
+    "price": 1499,
+    "stock": 200,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Juicer",
+    "description": "Extract fresh juice from fruits and vegetables.",
+    "price": 1999,
+    "stock": 110,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Toaster",
+    "description": "Compact toaster for perfectly toasted bread.",
+    "price": 899,
+    "stock": 160,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Rice Cooker",
+    "description": "Perfectly cooked rice every time.",
+    "price": 2499,
+    "stock": 75,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Baking Set",
+    "description": "Complete baking set with various tools.",
+    "price": 1299,
+    "stock": 130,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Pizza Stone",
+    "description": "Get that perfect crust with a pizza stone.",
+    "price": 699,
+    "stock": 140,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Salad Spinner",
+    "description": "Quickly dry your salad greens.",
+    "price": 499,
+    "stock": 200,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Knife Set",
+    "description": "Professional knife set for all your chopping needs.",
+    "price": 2499,
+    "stock": 90,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Measuring Cups",
+    "description": "Essential measuring cups for precise cooking.",
+    "price": 399,
+    "stock": 300,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Coffee Grinder",
+    "description": "Grind your coffee beans for a fresh brew.",
+    "price": 799,
+    "stock": 100,
+    "category": { "categoryId": 12 }
+  },
+  {
+    "name": "Potato Peeler",
+    "description": "Ergonomic potato peeler for quick peeling.",
+    "price": 199,
+    "stock": 250,
+    "category": { "categoryId": 12 }
+  },
+  //GROCERIES
+  {
+    "name": "Rice Bag",
+    "description": "Premium Basmati Rice, 5kg",
+    "price": 500,
+    "stock": 100,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Wheat Flour",
+    "description": "Whole Wheat Flour, 10kg",
+    "price": 350,
+    "stock": 150,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Cooking Oil",
+    "description": "Sunflower Oil, 1 liter",
+    "price": 150,
+    "stock": 200,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Pasta",
+    "description": "Durum Wheat Pasta, 500g",
+    "price": 100,
+    "stock": 300,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Sugar",
+    "description": "White Granulated Sugar, 1kg",
+    "price": 60,
+    "stock": 500,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Salt",
+    "description": "Iodized Salt, 1kg",
+    "price": 20,
+    "stock": 600,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Tea Leaves",
+    "description": "Black Tea Leaves, 500g",
+    "price": 250,
+    "stock": 250,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Coffee Beans",
+    "description": "Arabica Coffee Beans, 250g",
+    "price": 400,
+    "stock": 100,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Spices Mix",
+    "description": "Garam Masala Mix, 100g",
+    "price": 80,
+    "stock": 200,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Honey",
+    "description": "Natural Honey, 250g",
+    "price": 200,
+    "stock": 150,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Biscuits",
+    "description": "Oatmeal Cookies, 200g",
+    "price": 50,
+    "stock": 400,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Chocolates",
+    "description": "Dark Chocolate Bar, 100g",
+    "price": 120,
+    "stock": 300,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Lentils",
+    "description": "Red Lentils, 1kg",
+    "price": 120,
+    "stock": 500,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Canned Beans",
+    "description": "Baked Beans in Tomato Sauce, 400g",
+    "price": 70,
+    "stock": 300,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Oats",
+    "description": "Instant Oats, 500g",
+    "price": 80,
+    "stock": 350,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Noodles",
+    "description": "Instant Noodles, 75g",
+    "price": 25,
+    "stock": 1000,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Bread",
+    "description": "Whole Wheat Bread, 400g",
+    "price": 40,
+    "stock": 200,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Peanut Butter",
+    "description": "Smooth Peanut Butter, 500g",
+    "price": 300,
+    "stock": 100,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Jam",
+    "description": "Mixed Fruit Jam, 250g",
+    "price": 120,
+    "stock": 150,
+    "category": {
+      "categoryId": 2
+    }
+  },
+  {
+    "name": "Corn Flakes",
+    "description": "Breakfast Corn Flakes, 500g",
+    "price": 180,
+    "stock": 250,
+    "category": {
+      "categoryId": 2
+    }
+  }
+]

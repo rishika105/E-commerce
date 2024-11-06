@@ -6,8 +6,8 @@ import { heroCamera, heroCheckBadge, heroComputerDesktop, heroCurrencyDollar,
   heroCurrencyRupee, heroDevicePhoneMobile, heroDeviceTablet, heroEnvelope,
   heroHome, heroPhone, heroShoppingBag, heroSwatch, heroTruck, heroUsers,
   heroUserCircle, heroHeart, heroShoppingCart, heroMagnifyingGlass, heroEllipsisVertical,
-  heroPlus,heroUserGroup, heroWallet, heroFolderArrowDown, heroPower, heroFolder } from '@ng-icons/heroicons/outline';
-  import {heroHeartSolid, heroUserSolid, heroFolderSolid, heroWalletSolid, heroPowerSolid, heroFolderArrowDownSolid, heroChartBarSolid, heroSquaresPlusSolid} from "@ng-icons/heroicons/solid"
+  heroPlus,heroUserGroup, heroWallet, heroFolderArrowDown, heroPower, heroFolder ,heroTrash} from '@ng-icons/heroicons/outline';
+  import {heroHeartSolid, heroUserSolid, heroFolderSolid, heroWalletSolid, heroPowerSolid, heroFolderArrowDownSolid, heroChartBarSolid, heroSquaresPlusSolid,} from "@ng-icons/heroicons/solid"
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './common/navbar/navbar.component';
 
