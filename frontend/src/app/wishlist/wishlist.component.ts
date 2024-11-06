@@ -6,11 +6,12 @@ import { Product } from '../api services/product.service';
 import { NgIconComponent } from '@ng-icons/core';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../cart/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-wishlist',
   standalone: true,
-  imports: [CommonModule, NgIconComponent, RouterLink],
+  imports: [CommonModule, NgIconComponent, RouterLink,],
   templateUrl: './wishlist.component.html',
 })
 export class WishlistComponent implements OnInit, OnDestroy {
@@ -19,7 +20,8 @@ export class WishlistComponent implements OnInit, OnDestroy {
 
   constructor(
     private wishlistService: WishlistService,
-    private cartService: CartService
+    private cartService: CartService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
@@ -37,10 +39,11 @@ export class WishlistComponent implements OnInit, OnDestroy {
 
   removeFromWishlist(productId: number) {
     this.wishlistService.removeFromWishlist(productId);
+    this.toastr.success("Removed From Wishlist");
   }
 
   addToCart(product: Product) {
     this.cartService.addToCart(product);
-    this.removeFromWishlist(product.id);
+    this.toastr.success("Added to Cart");
   }
 }

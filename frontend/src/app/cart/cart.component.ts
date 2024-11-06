@@ -5,6 +5,7 @@ import { CheckoutComponent } from '../checkout/checkout.component';
 import { CartService } from './cart.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -22,27 +23,29 @@ import { CommonModule } from '@angular/common';
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
   showCheckout = false;
+  isCartEmpty = true;
 
-  constructor(private cartService: CartService, private router: Router) {}
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
+    this.updateCartState();
+  }
+
+  updateCartState() {
     this.cartItems = this.cartService.getCartItems();
+    this.isCartEmpty = this.cartItems.length === 0;
   }
 
   updateQuantity(index: number, change: number) {
     const newQuantity = this.cartItems[index].quantity + change;
     if (newQuantity > 0) {
-      this.cartItems[index].quantity = newQuantity;
-      // Don't update the service yet - wait for Update Cart button
+      this.cartService.updateItemQuantity(index, newQuantity);
+      this.updateCartState();
     }
-  }
-
-  updateCart() {
-    this.cartItems.forEach((item, index) => {
-      this.cartService.updateItemQuantity(index, item.quantity);
-    });
-    this.cartItems = this.cartService.getCartItems(); // Refresh cart items
-    this.cartService.saveCartToLocalStorage(); // Save updated cart to localStorage
   }
 
   returnToShop() {
@@ -58,8 +61,9 @@ export class CartComponent implements OnInit {
   }
 
   removeFromCart(index: number) {
+    this.toastr.success("Removed from cart");
     this.cartService.removeFromCart(index);
-    this.cartItems = this.cartService.getCartItems(); // Refresh cart items
+    this.updateCartState();
   }
 
   goToCheckout() {

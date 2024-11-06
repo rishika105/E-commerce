@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { WishlistService } from '../wishlist/wishlist.service';
 
 @Component({
   selector: 'app-product-listing',
@@ -23,7 +24,8 @@ export class ProductListingComponent implements OnInit {
     private productService: ProductService,
     private route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private wishlistService: WishlistService
   ) {}
 
   ngOnInit(): void {
@@ -74,5 +76,15 @@ export class ProductListingComponent implements OnInit {
         this.loading = false; // Set loading false even on error
       }
     );
+  }
+
+  onAddToWishlist(product: Product): void {
+    this.wishlistService.addToWishlist(product);
+    this.toastr.success("Added to Wishlist");
+  }
+
+  onRemoveFromWishlist(product: Product): void {
+    this.wishlistService.removeFromWishlist(product.productId);
+    this.toastr.success("Removed from Wishlist");
   }
 }

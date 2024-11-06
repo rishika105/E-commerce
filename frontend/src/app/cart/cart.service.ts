@@ -22,7 +22,7 @@ export class CartService {
     }
   }
 
-  saveCartToLocalStorage() {
+  private saveCartToLocalStorage() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('cart', JSON.stringify(this.cart));
     }

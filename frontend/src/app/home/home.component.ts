@@ -42,22 +42,6 @@ export class HomeComponent {
     );
   }
 
-<<<<<<< HEAD
 
 
 }
-=======
-  searchProducts(): void {
-    if (this.searchTerm.trim()) {
-      this.productService.searchProducts(this.searchTerm).subscribe(
-        (data) => {
-          this.searchResults = data;
-        },
-        (error) => {
-          console.error('Error searching products:', error);
-        }
-      );
-    }
-  }
-}
->>>>>>> a80e418bbfc9b1934f833a379ec2df98098d8f45
