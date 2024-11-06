@@ -1,3 +1,5 @@
+import { ProductCardComponent } from './../../product-card/product-card.component';
+import { Product, ProductService } from './../../api services/product.service';
 import { ToastrService } from 'ngx-toastr';
 import { Component, HostListener } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
@@ -13,7 +15,7 @@ import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgIconComponent, RouterLink, RouterOutlet, ConfirmationModalComponent],
+  imports: [CommonModule, FormsModule, NgIconComponent, RouterLink, RouterOutlet, ConfirmationModalComponent, ProductCardComponent],
   templateUrl: './navbar.component.html',
   styles: ``
 })
@@ -21,11 +23,14 @@ export class NavbarComponent {
   auth$: Observable<{ isLoggedIn: boolean; userRole: string }>;
   showProfileMenu = false;
   showLogoutModal = false;
+  searchTerm: string = '';
+  searchResults: Product[] = [];
 
   constructor(
     private store: Store<{ auth: any }>,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private productService: ProductService
   ) {
     this.auth$ = this.store.select('auth').pipe(
       map(authState => ({
@@ -35,22 +40,6 @@ export class NavbarComponent {
     );
   }
 
-  // Placeholder search functionality
-  onSearch(query: string) {
-    if (!query) {
-      alert("Please enter a search term");
-      return;
-    }
-
-    // Simulate product search by redirecting to a placeholder page
-    const noProducts = true;  // Simulate no results found
-    if (noProducts) {
-      window.location.href = '/no-results';
-    } else {
-      // Implement real search logic later
-      console.log("Search for products:", query);
-    }
-  }
 
   // Function to toggle the dropdown menu
   toggleProfileMenu() {
@@ -102,5 +91,32 @@ export class NavbarComponent {
     console.log("Cart clicked");
     this.router.navigate(['/cart']);
   }
+
+
+  searchProducts(): void {
+    if (this.searchTerm.trim()) {
+      this.productService.searchProducts(this.searchTerm).subscribe(
+        (response: any) => {
+          this.searchResults = response.products; // Accessing products inside the response
+          console.log('Search products response:', this.searchResults);
+        },
+        (error) => {
+          console.error('Error searching products:', error);
+        }
+      );
+    }
+  }
+  onSearch(query: string) {
+    if (!query.trim()) {
+      this.toastr.warning("Please enter something!")
+      return;
+
+    }
+
+    // Navigate to the search results page with query as a parameter
+    this.router.navigate(['/search'], { queryParams: { search: query } });
+  }
+
+
 
 }

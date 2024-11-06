@@ -25,8 +25,8 @@ export class WishlistService {
   }
 
   addToWishlist(product: Product) {
-    if (!this.wishlistItems.has(product.id)) {
-      this.wishlistItems.add(product.id);
+    if (!this.wishlistItems.has(product.productId)) {
+      this.wishlistItems.add(product.productId);
       this.products.push(product);
       this.wishlistProducts.next([...this.products]);
       this.saveToStorage();
@@ -36,7 +36,7 @@ export class WishlistService {
   removeFromWishlist(productId: number) {
     if (this.wishlistItems.has(productId)) {
       this.wishlistItems.delete(productId);
-      this.products = this.products.filter(p => p.id !== productId);
+      this.products = this.products.filter(p => p.productId !== productId);
       this.wishlistProducts.next([...this.products]);
       this.saveToStorage();
     }

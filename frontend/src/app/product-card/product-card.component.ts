@@ -5,6 +5,7 @@ import { CartService } from '../cart/cart.service';
 import { WishlistService } from '../wishlist/wishlist.service';
 import { Product } from '../api services/product.service';
 import { NgIconComponent } from '@ng-icons/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-card',
@@ -14,33 +15,31 @@ import { NgIconComponent } from '@ng-icons/core';
 })
 export class ProductCardComponent implements OnInit {
   @Input() product!: Product;
-  @Output() addToCart = new EventEmitter<Product>();
   @Output() addToWishlist = new EventEmitter<Product>();
   @Output() removeFromWishlist = new EventEmitter<Product>();
-  
+
   isWishlisted: boolean = false;
 
   constructor(
-    private cartService: CartService, 
-    private wishlistService: WishlistService
+    private cartService: CartService,
+    private wishlistService: WishlistService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
-    this.isWishlisted = this.wishlistService.isInWishlist(this.product.id);
+    this.isWishlisted = this.wishlistService.isInWishlist(this.product.productId);
     this.wishlistService.getWishlistObservable().subscribe(() => {
-      this.isWishlisted = this.wishlistService.isInWishlist(this.product.id);
+      this.isWishlisted = this.wishlistService.isInWishlist(this.product.productId);
     });
   }
 
   toggleWishlist(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-    
+
     if (this.isWishlisted) {
-      this.wishlistService.removeFromWishlist(this.product.id);
       this.removeFromWishlist.emit(this.product);
     } else {
-      this.wishlistService.addToWishlist(this.product);
       this.addToWishlist.emit(this.product);
     }
   }
@@ -48,6 +47,7 @@ export class ProductCardComponent implements OnInit {
   onAddToCart(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
-    this.addToCart.emit(this.product);
+    this.cartService.addToCart(this.product);
+    this.toastr.success("Added to Cart");
   }
 }

@@ -6,6 +6,7 @@ import { Product, ProductService } from '../api services/product.service';
 import { CartService } from '../cart/cart.service';
 import { ProductCardComponent } from '../product-card/product-card.component';
 import { WishlistService } from '../wishlist/wishlist.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-category',
@@ -24,59 +25,54 @@ export class CategoryComponent implements OnInit {
     private productService: ProductService,
     private categoryService: CategoryService,
     private cartService: CartService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to route parameters and fetch category and products data
     this.route.params.subscribe(params => {
       this.categoryId = +params['id'];
-      console.log('Category ID from route:', this.categoryId);  // Log for debugging
       this.loadCategory();
       this.loadProducts();
     });
   }
 
   loadCategory(): void {
-    this.categoryService.getCategoryById(this.categoryId).subscribe(
-      (data: Category) => {
+    this.categoryService.getCategoryById(this.categoryId).subscribe({
+      next: (data: Category) => {
         this.category = data;
-        console.log('Loaded category:', this.category);  // Log loaded category
       },
-      (error) => {
+      error: (error) => {
         console.error('Error loading category:', error);
-        this.category = null;  // Set to null on error
+        this.category = null;
       }
-    );
+    });
   }
 
   loadProducts(): void {
-    this.productService.getProductsByCategory(this.categoryId).subscribe(
-      (products: Product[]) => {
+    this.productService.getProductsByCategory(this.categoryId).subscribe({
+      next: (products: Product[]) => {
         this.products = products;
-        if (this.products.length === 0) {
-          console.warn('No products found for this category.');
-        }
       },
-      (error) => {
+      error: (error) => {
         console.error('Error loading products:', error);
-        this.products = []; // Clear products on error
+        this.products = [];
       }
-    );
+    });
   }
-  
 
   onAddToCart(product: Product): void {
     this.cartService.addToCart(product);
-    // Optional: Add a notification or feedback to user
-    console.log('Product added to cart:', product);
+    this.toastr.success("Added to Cart");
   }
 
   onAddToWishlist(product: Product): void {
     this.wishlistService.addToWishlist(product);
+    this.toastr.success("Added to Wishlist");
   }
 
   onRemoveFromWishlist(product: Product): void {
-    this.wishlistService.removeFromWishlist(product.id);
+    this.wishlistService.removeFromWishlist(product.productId);
+    this.toastr.success("Removed from Wishlist");
   }
 }

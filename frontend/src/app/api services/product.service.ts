@@ -6,17 +6,19 @@ import { catchError, first, map, switchMap, tap } from 'rxjs/operators';
 import { environment } from '../../../environment';
 
 export interface Product {
-  images: any;
-  id: number;
+  productId: number;
   name: string;
   price: number;
   description: string;
   stock: number;
   category: {
     categoryId: number;
-    name: string;
+    categoryName: string;
   };
   imageUrl: string;
+  user:{
+    userId: number;
+  } // Add this line to represent the seller
 }
 
 @Injectable({
@@ -42,11 +44,13 @@ export class ProductService {
     });
   }
 
-  private handleError(error: HttpErrorResponse): Observable<never> {
-    const errorMessage = error.error instanceof ErrorEvent
-      ? `Error: ${error.error.message}`
-      : `Error Code: ${error.status}\nMessage: ${error.error?.error || error.message}`;
-      
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.error?.error || error.message}`;
+    }
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
@@ -77,13 +81,25 @@ export class ProductService {
 
   createProduct(product: FormData): Observable<Product> {
     return this.getAuthToken().pipe(
-      switchMap(token => this.http.post<Product>(`${this.apiUrl}/createProduct`, product, {
-        headers: new HttpHeaders({ Authorization: `Bearer ${token}` }),
-        withCredentials: true
-      }).pipe(
-        tap(response => console.log('Create product response:', response)),
-        catchError(this.handleError)
-      ))
+      switchMap((token) => {
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${token}`
+        });
+
+        // Log the FormData contents for debugging
+        console.log('FormData contents:');
+        product.forEach((value, key) => {
+          console.log(key, value);
+        });
+
+        return this.http.post<Product>(`${this.apiUrl}/createProduct`, product, {
+          headers,
+          withCredentials: true
+        }).pipe(
+          tap(response => console.log('Create product response:', response)),
+          catchError(this.handleError)
+        );
+      })
     );
   }
 
@@ -146,6 +162,20 @@ export class ProductService {
         tap(response => console.log('Get products by category response:', response)),
         catchError(this.handleError)
       ))
+    );
+  }
+
+  getProductsBySeller(userId: number): Observable<Product[]> {
+    return this.getAuthToken().pipe(
+      switchMap((token) => {
+        const headers = this.getHeaders(token);
+        console.log("user id at service: " , userId);
+        return this.http.get<Product[]>(`${this.apiUrl}/seller/${userId}`, { headers, withCredentials: true })
+          .pipe(
+            tap(response => console.log('Get products by seller response:', response)),
+            catchError(this.handleError)
+          );
+      })
     );
   }
 }

@@ -1,12 +1,12 @@
 <div class="min-h-screen bg-gray-50 py-8">
   <div class="container mx-auto px-4">
-    <p class="text-3xl font-bold mb-8 text-gray-800">Checkout</p>
+    <p class="text-3xl font-medium mb-8 text-gray-800">Checkout</p>
 
     <div class="flex flex-col lg:flex-row gap-8">
       <!-- Billing Details Form -->
       <div class="lg:w-2/3">
         <div class="bg-white rounded-lg shadow-md p-6">
-          <p class="text-xl font-bold mb-6">Billing Details</p>
+          <p class="text-xl font-medium mb-6">Billing Details</p>
           <form class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -56,8 +56,8 @@
       <!-- Order Summary -->
       <div class="lg:w-1/3">
         <div class="bg-white rounded-lg shadow-md p-6">
-          <p class="text-xl font-bold mb-6">Your Order</p>
-          
+          <p class="text-xl font-medium mb-6">Your Order</p>
+
           <!-- Order Items -->
           <div class="space-y-4 mb-6">
             <div *ngFor="let item of cart" class="flex items-center justify-between py-4 border-b">
@@ -84,15 +84,15 @@
             </div>
             <div class="flex justify-between border-t pt-3">
               <span class="font-medium">Total</span>
-              <span class="font-bold text-xl text-red-600">{{getGrandTotal() | currency:'INR':'symbol'}}</span>
+              <span class="font-medium text-xl text-red-600">{{getGrandTotal() | currency:'INR':'symbol'}}</span>
             </div>
           </div>
 
-          
+
 
           <!-- Payment Methods -->
           <div class="space-y-4 mb-6">
-            <h3 class="font-medium text-gray-800">Payment Method</h3>
+            <p class="font-medium text-2xl text-gray-800">Payment Method</p>
             <div class="space-y-3">
               <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
                 <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="bank" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300">

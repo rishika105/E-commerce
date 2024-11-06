@@ -1,30 +1,31 @@
 
-<div class="border rounded-lg shadow-xl p-4 relative group cursor-pointer" 
-     [routerLink]="['/product-details', product.id]">
+<div class="border rounded-lg shadow-xl p-4 relative group cursor-pointer"
+     [routerLink]="['/product-details', product.productId]">
   <img
     [src]="product.imageUrl"
     [alt]="product.name"
     class="w-full h-48 object-cover mb-4 rounded-md"
     onerror="this.src='assets/placeholder.png'"/>
-   
+
   <p class="text-xl font-medium mb-2 text-gray-600">{{ product.name }}</p>
   <p class="text-gray-600 mb-2">{{ product.description | slice:0:100 }}...</p>
   <p class="font-medium mb-2">₹ {{ product.price.toFixed(2) }}</p>
-  <p class="mb-2 font-normal text-sm text-green-600">Free Delivery</p>
+  <p class="mb-2 font-normal text-sm text-gray-700">Free Delivery</p>
 
-  <button 
+  <button
     (click)="onAddToCart($event)"
-    class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition-colors"
+    class="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors"
     [disabled]="product.stock <= 0"
   >
     {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
   </button>
 
-  <button 
-    (click)="toggleWishlist($event)" 
+  <button
+    (click)="toggleWishlist($event)"
     class="absolute top-4 right-4 p-2 rounded-full transition-colors duration-300"
     [class.text-red-500]="isWishlisted"
     [class.text-gray-400]="!isWishlisted">
-    <ng-icon name="heroHeart"></ng-icon>
+    <ng-icon name="heroHeart" *ngIf="!isWishlisted" class="text-2xl"></ng-icon>
+    <ng-icon name="heroHeartSolid" *ngIf="isWishlisted" class="text-2xl"></ng-icon>
   </button>
 </div>
