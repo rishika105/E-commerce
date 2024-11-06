@@ -21,6 +21,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
+  showCheckout = false;
 
   constructor(private cartService: CartService, private router: Router) {}
 
@@ -31,7 +32,8 @@ export class CartComponent implements OnInit {
   updateQuantity(index: number, change: number) {
     const newQuantity = this.cartItems[index].quantity + change;
     if (newQuantity > 0) {
-      this.cartItems[index].quantity = newQuantity; // Update local quantity only
+      this.cartItems[index].quantity = newQuantity;
+      // Don't update the service yet - wait for Update Cart button
     }
   }
 
@@ -39,10 +41,12 @@ export class CartComponent implements OnInit {
     this.cartItems.forEach((item, index) => {
       this.cartService.updateItemQuantity(index, item.quantity);
     });
+    this.cartItems = this.cartService.getCartItems(); // Refresh cart items
+    this.cartService.saveCartToLocalStorage(); // Save updated cart to localStorage
   }
 
   returnToShop() {
-    this.router.navigate(['/home']); // Navigate to home page
+    this.router.navigate(['/home']);
   }
 
   getTotalPrice(): number {
@@ -55,13 +59,10 @@ export class CartComponent implements OnInit {
 
   removeFromCart(index: number) {
     this.cartService.removeFromCart(index);
-  }
-
-  applyCoupon() {
-    // Coupon code functionality removed
+    this.cartItems = this.cartService.getCartItems(); // Refresh cart items
   }
 
   goToCheckout() {
-    this.router.navigate(['/checkout']); // Adjust this route as needed
+    this.router.navigate(['/checkout']);
   }
 }

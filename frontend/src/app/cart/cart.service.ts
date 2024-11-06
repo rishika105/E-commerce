@@ -5,18 +5,14 @@ import { isPlatformBrowser } from '@angular/common';
   providedIn: 'root',
 })
 export class CartService {
-  applyCoupon(couponCode: string) {
-    throw new Error('Method not implemented.');
-  }
   private cart: any[] = [];
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) {
     if (isPlatformBrowser(this.platformId)) {
-      this.loadCartFromLocalStorage(); // Load cart from localStorage on service initialization
+      this.loadCartFromLocalStorage();
     }
   }
 
-  // Load cart from localStorage
   private loadCartFromLocalStorage() {
     if (isPlatformBrowser(this.platformId)) {
       const storedCart = localStorage.getItem('cart');
@@ -26,19 +22,16 @@ export class CartService {
     }
   }
 
-  // Save cart to localStorage
   saveCartToLocalStorage() {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem('cart', JSON.stringify(this.cart));
     }
   }
 
-  // Get all cart items
   getCartItems() {
-    return this.cart;
+    return [...this.cart]; // Return a copy of the cart array
   }
 
-  // Add an item to the cart
   addToCart(item: any) {
     const existingItemIndex = this.cart.findIndex(
       (cartItem) => cartItem.name === item.name
@@ -48,26 +41,23 @@ export class CartService {
     } else {
       this.cart.push({ ...item, quantity: 1 });
     }
-    this.saveCartToLocalStorage(); // Save updated cart to localStorage
+    this.saveCartToLocalStorage();
   }
 
-  // Update item quantity in the cart
- updateItemQuantity(index: number, newQuantity: number) {
+  updateItemQuantity(index: number, newQuantity: number) {
     if (newQuantity > 0 && index >= 0 && index < this.cart.length) {
       this.cart[index].quantity = newQuantity;
-      this.saveCartToLocalStorage(); // Save updated cart to localStorage
+      this.saveCartToLocalStorage();
     }
   }
 
-  // Remove item from the cart
   removeFromCart(index: number) {
     if (index >= 0 && index < this.cart.length) {
       this.cart.splice(index, 1);
-      this.saveCartToLocalStorage(); // Save updated cart to localStorage
+      this.saveCartToLocalStorage();
     }
   }
 
-  // Get the total price of the cart items
   getTotalPrice(): number {
     return this.cart.reduce(
       (acc, item) => acc + item.price * item.quantity,
@@ -75,13 +65,11 @@ export class CartService {
     );
   }
 
-  // Get the tax amount (example 10% tax rate)
   getTax(): number {
     const totalPrice = this.getTotalPrice();
-    return totalPrice * 0.1; // Assuming a 10% tax
+    return totalPrice * 0.1;
   }
 
-  // Get the grand total (total price + tax)
   getGrandTotal(): number {
     const totalPrice = this.getTotalPrice();
     const tax = this.getTax();

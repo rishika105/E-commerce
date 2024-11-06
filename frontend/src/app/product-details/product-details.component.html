@@ -1,46 +1,49 @@
 <div class="container mx-auto px-4 py-8">
   <ng-container *ngIf="product$ | async as product; else loading">
-    <div *ngIf="product; else notFound" class="max-w-4xl mx-auto">
+    <div *ngIf="product; else notFound" class="max-w-7xl mx-auto">
       <div class="bg-white rounded-lg shadow-lg overflow-hidden">
         <div class="md:flex">
           <!-- Product Image -->
           <div class="md:w-1/2 relative">
-            <!-- Wishlist Heart Icon -->
-           
             <img 
               [src]="product.imageUrl" 
               [alt]="product.name" 
-              class="w-full h-96 object-cover"
+              class="w-full h-[500px] object-contain p-4"
               onerror="this.src='assets/placeholder.png'"
             >
           </div>
           
           <!-- Product Details -->
           <div class="md:w-1/2 p-8">
-            <h1 class="text-2xl font-bold text-gray-800 mb-4">{{ product.name }}</h1>
-            <p class="text-gray-600 mb-4">{{ product.description }}</p>
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">{{ product.name }}</h1>
+            <p class="text-gray-600 mb-6 text-lg">{{ product.description }}</p>
             
-            <div class="mb-4">
-              <span class="text-3xl font-bold text-gray-900">₹{{ product.price.toFixed(2) }}</span>
+            <div class="mb-6">
+              <span class="text-4xl font-bold text-gray-900">₹{{ product.price.toFixed(2) }}</span>
             </div>
             
-            <div class="mb-4">
+            <div class="mb-6">
               <span class="text-sm text-gray-500">Stock Available:</span>
               <span class="ml-2 text-lg font-semibold {{ product.stock > 0 ? 'text-green-600' : 'text-red-600' }}">
                 {{ product.stock > 0 ? product.stock : 'Out of Stock' }}
               </span>
             </div>
 
+            <!-- Free Delivery -->
+            <div class="mb-6">
+              <p class="text-green-600 font-medium">Free Delivery</p>
+            </div>
+
             <!-- Category -->
             <div class="mb-6">
               <span class="text-sm text-gray-500">Category:</span>
-              <span class="ml-2 text-gray-700">{{ product.category ? product.category.name : 'N/A' }}</span>
+              <span class="ml-2 text-gray-700">{{ product.category?.name || 'N/A' }}</span>
             </div>
 
             <!-- Add to Cart Button -->
             <button 
               (click)="addToCart(product)"
-              class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition duration-200"
+              class="w-full bg-blue-600 text-white py-4 px-6 rounded-lg hover:bg-blue-700 transition duration-200 text-lg font-medium mb-4"
               [disabled]="product.stock <= 0"
             >
               {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
@@ -61,6 +64,6 @@
 
 <ng-template #notFound>
   <div class="text-center py-12">
-    <p class="text-gray-600">Product not found.</p>
+    <p class="text-xl text-gray-600">Product not found.</p>
   </div>
 </ng-template>

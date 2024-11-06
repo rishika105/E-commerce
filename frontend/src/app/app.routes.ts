@@ -1,9 +1,4 @@
-import { ManageCategoryComponent } from './dashboard/admin-dashboard/manage-category/manage-category.component';
-import { Component } from '@angular/core';
-import { AddCategoryComponent } from './dashboard/admin-dashboard/add-category/add-category.component';
-import { ProfileComponent } from './dashboard/profile/profile.component';
-import { AddressManagerComponent } from './dashboard/user-dashboard/address/address.component';
-import { Routes, CanActivate } from '@angular/router';
+import { Routes } from '@angular/router';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { AboutComponent } from './common/about/about.component';
@@ -20,10 +15,14 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { AddProductComponent } from './dashboard/seller-dashboard/add-product/add-product.component';
 import { ManageProductsComponent } from './dashboard/seller-dashboard/manage-products/manage-products.component';
 import { CategoryComponent } from './category/category.component';
-import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CartComponent } from './cart/cart.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { CheckoutComponent } from './checkout/checkout.component';
+import { ProfileComponent } from './dashboard/profile/profile.component';
+import { AddCategoryComponent } from './dashboard/admin-dashboard/add-category/add-category.component';
+import { ManageCategoryComponent } from './dashboard/admin-dashboard/manage-category/manage-category.component';
+import { AddressManagerComponent } from './dashboard/user-dashboard/address/address.component';
 
 export const routes: Routes = [
   {
@@ -100,6 +99,11 @@ export const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'checkout',
+    component: CheckoutComponent,
     canActivate: [AuthGuard]
   },
   {
