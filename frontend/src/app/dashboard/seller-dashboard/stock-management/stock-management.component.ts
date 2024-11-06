@@ -20,7 +20,7 @@ interface ProductStock {
   standalone: true,
   imports: [CommonModule, FormsModule]
 })
-export class StockManagementComponent implements OnInit {
+export class StocksManagementComponent implements OnInit {
   products: ProductStock[] = [];
   loading: boolean = true;
   selectedProducts: Set<number> = new Set();

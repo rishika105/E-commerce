@@ -27,6 +27,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { CartComponent } from './cart/cart.component';
 import { StockManagementComponent } from './seller-dashboard/stock-management/stock-management.component';
+import { StocksManagementComponent } from './dashboard/seller-dashboard/stock-management/stock-management.component';
 
 // open routes
 export const routes: Routes = [
@@ -88,7 +89,7 @@ export const routes: Routes = [
       { path: 'add-product', component: AddProductComponent},
       { path: 'manage-products', component: ManageProductsComponent},
       {path: 'edit-product/:id', component: AddProductComponent},
-      {path: 'stocks', component: StockManagementComponent}
+      {path: 'stocks', component: StocksManagementComponent}
 
     ],
     data: { roles: ['SELLER'] } // Only SELLER can access this route
