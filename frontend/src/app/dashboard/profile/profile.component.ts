@@ -93,19 +93,7 @@ export class ProfileComponent {
 
   closeModal() {
     this.isModalOpen = false;
-    this.resetForm();
-  }
-
-  confirmDelete() {
-    if (this.termsChecked && this.balanceChecked && this.serviceChecked) {
-      // Add delete logic here
-      console.log('Account deleted with feedback:', this.feedback);
-      this.closeModal();
-    }
-
-  }
-
-  resetForm() {this.termsChecked = false;
+    this.termsChecked = false;
     this.balanceChecked = false;
     this.serviceChecked = false;
     this.feedback = '';
@@ -113,5 +101,27 @@ export class ProfileComponent {
 
   canDelete(): boolean {
     return this.termsChecked && this.balanceChecked && this.serviceChecked;
+  }
+
+  confirmDelete() {
+    if (this.canDelete()) {
+      this.onDelete(); // Call the actual delete method
+    } else {
+      this.toastr.error("Please agree to all terms before proceeding.");
+    }
+  }
+
+  onDelete(): void {
+    this.isModalOpen = false;
+    this.profileService.deleteProfile().subscribe({
+      next: () => {
+        this.toastr.success("Deleted User Successfully!");
+        this.router.navigate(['/register']);
+      },
+      error: (error) => {
+        const errorMessage = error?.error?.message || 'Failed to delete profile';
+        this.toastr.error(errorMessage);
+      }
+    });
   }
 }
