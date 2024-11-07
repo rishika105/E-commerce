@@ -7,6 +7,7 @@ import { map, first, switchMap, tap, catchError } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 
 export interface Category {
+name: any;
   id: number;
   categoryName: string;
   description: string;
@@ -134,7 +135,7 @@ export class CategoryService {
         const headers = this.getHeaders(token);
         return this.http.get<Category>(`${this.apiUrl}/getCategorybyId/${id}`, { headers, withCredentials: true })
           .pipe(
-            tap(response => console.log('Get category by ID response:', response)),
+            tap(response => console.log('Get category by ID response')),
             catchError(this.handleError)
           );
       })

@@ -1,69 +1,69 @@
-import { Component, OnInit } from '@angular/core'; // Import necessary Angular core functionalities
-import { CartService } from './cart.service'; // Import CartService
-import { FormsModule } from '@angular/forms'; // Import FormsModule for template-driven forms
-import { Router, RouterLink, RouterOutlet } from '@angular/router'; // Import Router for navigation
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NgIconComponent } from '@ng-icons/core';
 import { CheckoutComponent } from '../checkout/checkout.component';
+import { CartService } from './cart.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
-  templateUrl: './cart.component.html', // Define the template URL
-  standalone: true, // Declare this component as a standalone component
-  imports: [CommonModule, FormsModule, NgIconComponent, RouterLink, RouterOutlet, CheckoutComponent], // Include necessary imports
+  templateUrl: './cart.component.html',
+  standalone: true,
+  imports: [
+    NgIconComponent,
+    RouterLink,
+    RouterOutlet,
+    CheckoutComponent,
+    FormsModule,
+    CommonModule,
+  ],
 })
-
-
-
 export class CartComponent implements OnInit {
-  cart: any[] = [];
-  couponCode: string = '';
+  cartItems: any[] = [];
+  showCheckout = false;
+  isCartEmpty = true;
 
-  constructor(private cartService: CartService, private router: Router) { }
+  constructor(
+    private cartService: CartService,
+    private router: Router,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
-    this.cart = this.cartService.getCartItems();
+    this.updateCartState();
   }
 
-  returnToShop() {
-    this.router.navigate(['/category']); // Navigate to category page
-  }
-
-  updateCart() {
-    this.cartService.saveCartToLocalStorage(); // Save the updated cart
-    alert("Cart updated successfully!");
-
-    if (this.couponCode) {
-      this.applyCoupon(); // Optionally reapply the coupon
-    }
-  }
-
-  removeProduct(index: number) {
-    this.cartService.removeFromCart(index);
-    this.cart = this.cartService.getCartItems(); // Refresh the cart
-  }
-
-  applyCoupon() {
-    console.log('Applying coupon:', this.couponCode);
-    // Add coupon application logic here
+  updateCartState() {
+    this.cartItems = this.cartService.getCartItems();
+    this.isCartEmpty = this.cartItems.length === 0;
   }
 
   updateQuantity(index: number, change: number) {
-    const item = this.cart[index];
-    const newQuantity = item.quantity + change;
-
+    const newQuantity = this.cartItems[index].quantity + change;
     if (newQuantity > 0) {
-      item.quantity = newQuantity;
-      this.cartService.updateItemQuantity(index, item.quantity);
+      this.cartService.updateItemQuantity(index, newQuantity);
+      this.updateCartState();
     }
   }
 
-  getTotal() {
+  returnToShop() {
+    this.router.navigate(['/home']);
+  }
+
+  getTotalPrice(): number {
     return this.cartService.getTotalPrice();
   }
 
-  getGrandTotal() {
+  getGrandTotal(): number {
     return this.cartService.getGrandTotal();
+  }
+
+  removeFromCart(index: number) {
+    this.toastr.success("Removed from cart");
+    this.cartService.removeFromCart(index);
+    this.updateCartState();
   }
 
   goToCheckout() {

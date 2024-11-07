@@ -19,7 +19,7 @@ export class UserDashboardComponent {
   constructor(
     private profileService: ProfileService,
     private store: Store<any>,
-    private ToastrService: ToastrService ,
+    private ToastrService: ToastrService,
   ) {}
 
   ngOnInit(): void {

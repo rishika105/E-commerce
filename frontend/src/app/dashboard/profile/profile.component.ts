@@ -27,6 +27,9 @@ export class ProfileComponent {
   serviceChecked = false;
   feedback = '';
 
+  loading : boolean = false;
+
+
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
@@ -57,7 +60,6 @@ export class ProfileComponent {
       });
       this.userName = profileData.name;
     });
-
   }
 
   toggleEdit(): void {
@@ -65,14 +67,18 @@ export class ProfileComponent {
   }
 
   onSubmit(): void {
+    this.loading = true;
     if (this.isEditing) {
       this.profileService.updateProfile(this.profileForm.value).subscribe({
         next: (response) => {
+          this.loading = false;
           this.isEditing = false; // Stop editing after successful update
           this.userName = this.profileForm.get('name')?.value; // Update userName
           this.toastr.success('Profile updated successfully!');
+
         },
         error: (error) => {
+          this.loading = false;
           console.error('Update profile error:', error);
           const errorMessage = error?.error?.message || 'Failed to update profile';
           this.toastr.error(errorMessage);
@@ -96,6 +102,7 @@ export class ProfileComponent {
       console.log('Account deleted with feedback:', this.feedback);
       this.closeModal();
     }
+
   }
 
   resetForm() {this.termsChecked = false;

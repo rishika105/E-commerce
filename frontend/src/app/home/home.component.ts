@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatCard, MatCardContent } from '@angular/material/card';
 import { NgIconComponent } from '@ng-icons/core';
-import {ToastrService } from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { Category, CategoryService } from '../api services/category.service';
 import { Product, ProductService } from '../api services/product.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,12 +18,10 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 })
 export class HomeComponent {
   categories: Category[] = [];
-  searchTerm: string = '';
-  searchResults: Product[] = [];
+  loading : boolean = false;
 
   constructor(
     private categoryService: CategoryService,
-    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
@@ -31,26 +29,19 @@ export class HomeComponent {
   }
 
   loadCategories(): void {
+    this.loading = true;
     this.categoryService.getCategories().subscribe(
       (data) => {
         this.categories = data;
+        this.loading = false;
       },
       (error) => {
         console.error('Error loading categories:', error);
+        this.loading = false;
       }
     );
   }
 
-  searchProducts(): void {
-    if (this.searchTerm.trim()) {
-      this.productService.searchProducts(this.searchTerm).subscribe(
-        (data) => {
-          this.searchResults = data;
-        },
-        (error) => {
-          console.error('Error searching products:', error);
-        }
-      );
-    }
-  }
+
+
 }

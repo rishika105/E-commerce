@@ -1,15 +1,6 @@
-<div class="border rounded-lg shadow-xl p-4 relative group">
-  <button
-    (click)="toggleWishlist($event)"
-    class="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/80 hover:bg-white transition-colors duration-200"
-    [title]="isInWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'">
-    <ng-icon
-      [name]="isInWishlist ? 'heroHeartSolid' : 'heroHeart'"
-      [class]="isInWishlist ? 'text-red-500' : 'text-gray-400 group-hover:text-gray-600'"
-      class="w-6 h-6 transition-colors duration-200">
-    </ng-icon>
-  </button>
 
+<div class="border rounded-lg shadow-xl p-4 relative group cursor-pointer"
+     [routerLink]="['/product-details', product.productId]">
   <img
     [src]="product.imageUrl"
     [alt]="product.name"
@@ -19,6 +10,22 @@
   <p class="text-xl font-medium mb-2 text-gray-600">{{ product.name }}</p>
   <p class="text-gray-600 mb-2">{{ product.description | slice:0:100 }}...</p>
   <p class="font-medium mb-2">₹ {{ product.price.toFixed(2) }}</p>
-  <p class="mb-2 font-normal text-sm text-green-600">Free Delivery</p>
+  <p class="mb-2 font-normal text-sm text-gray-700">Free Delivery</p>
 
-<div>
+  <button
+    (click)="onAddToCart($event)"
+    class="w-full bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-700 transition-colors"
+    [disabled]="product.stock <= 0"
+  >
+    {{ product.stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
+  </button>
+
+  <button
+    (click)="toggleWishlist($event)"
+    class="absolute top-4 right-4 p-2 rounded-full transition-colors duration-300"
+    [class.text-red-500]="isWishlisted"
+    [class.text-gray-400]="!isWishlisted">
+    <ng-icon name="heroHeart" *ngIf="!isWishlisted" class="text-2xl"></ng-icon>
+    <ng-icon name="heroHeartSolid" *ngIf="isWishlisted" class="text-2xl"></ng-icon>
+  </button>
+</div>
