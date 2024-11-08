@@ -49,7 +49,6 @@ export class NavbarComponent {
   // Function to navigate to the dashboard
   goToDashboard() {
     this.showProfileMenu = false;
-    // Your logic to navigate to the dashboard
     this.router.navigate(['/user-dashboard'])
   }
 

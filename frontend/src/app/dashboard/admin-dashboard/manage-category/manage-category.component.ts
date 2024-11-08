@@ -2,23 +2,27 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CategoryService, Category } from '../../../api services/category.service';
 import { Component } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { ConfirmationModalComponent } from '../../../common/confirmation-modal/confirmation-modal.component';
 
 
 @Component({
   selector: 'app-manage-category',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ConfirmationModalComponent],
   templateUrl: './manage-category.component.html',
   styles: ``
 })
 
 export class ManageCategoryComponent {
   categories: Category[] = [];
-  editingCategory: Category | null = null;  // Allow null values
-  errorMessage: string = '';
-  successMessage: string = '';
+  editingCategory: Category | null = null; // Allow null values
+  loading = false;
+  showDeleteModal = false;
+  categoryId: number | null = null;
 
-  constructor(private categoryService: CategoryService) {}
+
+  constructor(private categoryService: CategoryService, private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -30,22 +34,37 @@ export class ManageCategoryComponent {
         this.categories = data;
       },
       (error) => {
-        this.errorMessage = 'Error loading categories';
         console.error('Error loading categories:', error);
       }
     );
   }
 
-  deleteCategory(id: number): void {
-    this.categoryService.deleteCategory(id).subscribe(
+  delCategory(id: number){
+    this.categoryId = id;
+    this.showDeleteModal = true;
+  }
+
+  cancelDelete(){
+    this.showDeleteModal = false;
+  }
+
+  deleteCategory(): void {
+    if (!this.categoryId) {
+      this.toastr.error('Invalid category ID');
+      return;
+    }
+
+    this.loading = true;
+    this.showDeleteModal = false;
+    this.categoryService.deleteCategory(this.categoryId).subscribe(
       () => {
-        this.categories = this.categories.filter(category => category.id !== id);
-        this.successMessage = 'Category deleted successfully';
-        this.errorMessage = '';
+        this.loading = false;
+        this.toastr.success("Category deleted Sucessfully!")
+        this.categories = this.categories.filter(category => category.id !== this.categoryId);
       },
       (error) => {
-        this.errorMessage = 'Error deleting category';
-        this.successMessage = '';
+        this.loading = false;
+        this.toastr.error("Error deleting Category")
         console.error('Error deleting category:', error);
       }
     );
@@ -60,6 +79,7 @@ export class ManageCategoryComponent {
   }
 
   saveCategory(): void {
+    this.loading = true;
     if (this.editingCategory) {
       this.categoryService.updateCategory(this.editingCategory).subscribe(
         (updatedCategory) => {
@@ -67,13 +87,14 @@ export class ManageCategoryComponent {
           if (index !== -1) {
             this.categories[index] = updatedCategory;
           }
+          this.loading = false;
           this.editingCategory = null;  // Clear after saving
-          this.successMessage = 'Category updated successfully';
-          this.errorMessage = '';
+          this.toastr.success("Category updated successfully!");
+
         },
         (error) => {
-          this.errorMessage = 'Error updating category';
-          this.successMessage = '';
+          this.loading = false;
+           this.toastr.error("Error updating category");
           console.error('Error updating category:', error);
         }
       );
