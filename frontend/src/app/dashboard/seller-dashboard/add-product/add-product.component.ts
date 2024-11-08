@@ -149,8 +149,8 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit() {
-    if (!this.productForm.valid || (!this.isEditMode && !this.selectedFile && !this.imagePreview)) {
-      this.toastr.error(this.isEditMode ? "Please fill all required fields" : "Please fill all required fields and select an image");
+    if (!this.productForm.valid || !this.userId) {
+      this.toastr.error("Please fill all required fields");
       return;
     }
 
@@ -159,9 +159,6 @@ export class AddProductComponent implements OnInit {
 
     if (this.selectedFile) {
       formData.append('image', this.selectedFile);
-    } else if (this.isEditMode && this.imagePreview) {
-      // If editing and no new file is selected, keep the existing image
-      formData.append('imageUrl', this.imagePreview as string);
     }
 
     const productData = {
@@ -192,6 +189,12 @@ export class AddProductComponent implements OnInit {
       });
     } else {
       // Create new product
+      if (!this.selectedFile) {
+        this.toastr.error("Please select an image");
+        this.loading = false;
+        return;
+      }
+
       this.productService.createProduct(formData).subscribe({
         next: (response) => {
           this.loading = false;

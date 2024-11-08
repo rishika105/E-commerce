@@ -70,15 +70,22 @@ export class ProfileService {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         });
-        console.log('Authorization Header:', headers.get('Authorization'));
         return this.http.delete<any>(`${this.baseUrl}/profile/deleteUser`, { headers, withCredentials: true })
           .pipe(
             tap(
-              response => console.log('Profile response:', response),
-              error => console.error('Profile error:', error)
+              response => console.log('Delete profile response:', response),
+              error => {
+                console.error('Delete profile error:', error);
+                if (error.status === 403) {
+                  console.log('You are not authorized to delete this profile.');
+                } else {
+                  console.log('Failed to delete profile, please try again later.');
+                }
+              }
             )
           );
       })
     );
   }
+
 }
