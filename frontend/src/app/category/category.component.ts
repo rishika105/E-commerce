@@ -13,7 +13,7 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './category.component.html',
   styles: [],
   standalone: true,
-  imports: [CommonModule, ProductCardComponent]
+  imports: [CommonModule, ProductCardComponent],
 })
 export class CategoryComponent implements OnInit {
   categoryId: number = 0;
@@ -30,7 +30,7 @@ export class CategoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       this.categoryId = +params['id'];
       this.loadCategory();
       this.loadProducts();
@@ -45,7 +45,7 @@ export class CategoryComponent implements OnInit {
       error: (error) => {
         console.error('Error loading category:', error);
         this.category = null;
-      }
+      },
     });
   }
 
@@ -57,22 +57,22 @@ export class CategoryComponent implements OnInit {
       error: (error) => {
         console.error('Error loading products:', error);
         this.products = [];
-      }
+      },
     });
   }
 
   onAddToCart(product: Product): void {
     this.cartService.addToCart(product);
-    this.toastr.success("Added to Cart");
+    this.toastr.success('Added to Cart');
   }
 
   onAddToWishlist(product: Product): void {
     this.wishlistService.addToWishlist(product);
-    this.toastr.success("Added to Wishlist");
+    this.toastr.success('Added to Wishlist');
   }
 
   onRemoveFromWishlist(product: Product): void {
     this.wishlistService.removeFromWishlist(product.productId);
-    this.toastr.success("Removed from Wishlist");
+    this.toastr.success('Removed from Wishlist');
   }
 }

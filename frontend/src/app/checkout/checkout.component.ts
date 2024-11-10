@@ -15,7 +15,7 @@ export class CheckoutComponent implements OnInit {
   paymentMethod: string = '';
   couponCode: string = '';
   discount: number = 0;
-  
+
   billingDetails = {
     firstName: '',
     company: '',
@@ -24,10 +24,10 @@ export class CheckoutComponent implements OnInit {
     city: '',
     phone: '',
     email: '',
-    saveInfo: false
+    saveInfo: false,
   };
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService) {}
 
   ngOnInit(): void {
     this.cart = this.cartService.getCartItems();
@@ -51,8 +51,13 @@ export class CheckoutComponent implements OnInit {
   }
 
   placeOrder(): void {
-    if (!this.billingDetails.firstName || !this.billingDetails.streetAddress || 
-        !this.billingDetails.city || !this.billingDetails.phone || !this.billingDetails.email) {
+    if (
+      !this.billingDetails.firstName ||
+      !this.billingDetails.streetAddress ||
+      !this.billingDetails.city ||
+      !this.billingDetails.phone ||
+      !this.billingDetails.email
+    ) {
       alert('Please fill in all required fields');
       return;
     }
@@ -67,7 +72,7 @@ export class CheckoutComponent implements OnInit {
       cart: this.cart,
       paymentMethod: this.paymentMethod,
       totalPrice: this.getGrandTotal(),
-      discount: this.discount
+      discount: this.discount,
     };
 
     console.log('Order Placed:', orderDetails);
