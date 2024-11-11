@@ -6,8 +6,6 @@ import { NgIconComponent } from '@ng-icons/core';
   standalone: true,
   imports: [NgIconComponent],
   templateUrl: './about.component.html',
-  styles: ``
+  styles: ``,
 })
-export class AboutComponent {
-
-}
+export class AboutComponent {}
