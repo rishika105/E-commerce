@@ -183,48 +183,6 @@
     </div>
   </section>
 
-  <script>
-    function countdown() {
-      // Set the target date for the countdown (adjust to your sale end date)
-      const targetDate = new Date("Nov 20, 2024 00:00:00").getTime();
-
-      // Update the timer every second
-      const interval = setInterval(function () {
-        const now = new Date().getTime();
-        const timeRemaining = targetDate - now;
-
-        // Calculate days, hours, minutes, and seconds
-        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor(
-          (timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-
-        // Display the result
-        document.getElementById("days").textContent = days + " :";
-        document.getElementById("hours").textContent = hours + " :";
-        document.getElementById("minutes").textContent = minutes + " :";
-        document.getElementById("seconds").textContent = seconds;
-
-        // If the countdown is over, stop the interval
-        if (timeRemaining < 0) {
-          clearInterval(interval);
-          document.getElementById("days").textContent = "00 :";
-          document.getElementById("hours").textContent = "00 :";
-          document.getElementById("minutes").textContent = "00 :";
-          document.getElementById("seconds").textContent = "00";
-          alert("Flash Sale Ended!");
-        }
-      }, 1000);
-    }
-
-    // Start the countdown
-    countdown();
-  </script>
-
   <!-- Flash Sales Products -->
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
     <!-- Product Box 1 -->
@@ -383,12 +341,29 @@
         </div>
 
         <!-- Enhance Your Music Experience Section -->
-        <section class="mt-10 p-6 w-[1200px]">
-          <img
-            src="../../../assets/images/Enhance Your Music Experience.jpeg"
-            alt="JBL Speaker"
-            class="h-[450px] w-[1200px]"
-          />
+        <section class="mt-10 p-6 w-[1200px] relative overflow-hidden">
+          <p class="text-3xl font-medium mb-6">Best For You</p>
+          <!-- Images container -->
+          <div class="flex animate-slide w-[3600px]">
+            <!-- Image 1 -->
+            <img
+              src="../../../assets/images/Enhance Your Music Experience.jpeg"
+              alt="JBL Speaker"
+              class="h-[450px] w-[1200px] flex-shrink-0"
+            />
+            <!-- Image 2 -->
+            <img
+              src="../../../assets/images/ELE (1).jpg"
+              alt="Image 2"
+              class="h-[450px] w-[1200px] flex-shrink-0"
+            />
+            <!-- Image 3 -->
+            <img
+              src="../../../assets/images/su2 (1).jpg"
+              alt="Image 3"
+              class="h-[450px] w-[1200px] flex-shrink-0"
+            />
+          </div>
         </section>
       </div>
 
