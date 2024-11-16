@@ -1,88 +1,104 @@
 package com.ecom.models;
 
 import jakarta.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+@SuppressWarnings("ALL")
 @Entity
 @Table(name = "orders")
 public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long orderId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 
     @Column(nullable = false)
-    private double totalPrice;
+    private BigDecimal subtotal;
 
     @Column(nullable = false)
-    private String status;  // PENDING, SHIPPED, DELIVERED, CANCELLED
+    private BigDecimal grandTotal;
 
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    @Column(nullable = false)
+    private String paymentMethod;
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems;
+    @Column(nullable = false)
+    private LocalDateTime orderDate;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Set<OrderItem> orderItems = new HashSet<>();
 
     // Getters and Setters
-
     public Long getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public Customer getCustomer() {
+        return customer;
     }
 
-    public User getUser() {
-        return user;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public BigDecimal getSubtotal() {
+        return subtotal;
     }
 
-    public double getTotalPrice() {
-        return totalPrice;
+    public void setSubtotal(BigDecimal subtotal) {
+        this.subtotal = subtotal;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
+    public BigDecimal getGrandTotal() {
+        return grandTotal;
     }
 
-    public String getStatus() {
-        return status;
+    public void setGrandTotal(BigDecimal grandTotal) {
+        this.grandTotal = grandTotal;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public String getPaymentMethod() {
+        return paymentMethod;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public LocalDateTime getOrderDate() {
+        return orderDate;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public List<OrderItem> getOrderItems() {
+    public Set<OrderItem> getOrderItems() {
         return orderItems;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
+    public void setOrderItems(Set<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
-}
 
+    // Helper methods to manage bi-directional relationship
+    public void addOrderItem(OrderItem item) {
+        orderItems.add(item);
+        item.setOrder(this);
+    }
+
+    public void removeOrderItem(OrderItem item) {
+        orderItems.remove(item);
+        item.setOrder(null);
+    }
+
+    public Long getCustomerId() {
+        return customer != null ? customer.getId() : null;  // Get the actual customer ID
+    }
+}
