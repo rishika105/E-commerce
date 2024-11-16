@@ -11,7 +11,7 @@ module.exports = {
         },
       },
       animation: {
-        fade: "fade 9s infinite",
+        fade: "fade 5s infinite",
       },
     },
   },
