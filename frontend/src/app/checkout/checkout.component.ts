@@ -13,7 +13,6 @@ import { FormsModule } from '@angular/forms';
 export class CheckoutComponent implements OnInit {
   cart: any[] = [];
   paymentMethod: string = '';
-  couponCode: string = '';
   discount: number = 0;
   
   billingDetails = {
@@ -42,13 +41,6 @@ export class CheckoutComponent implements OnInit {
     return total - this.discount;
   }
 
-  applyCoupon(): void {
-    if (this.couponCode === 'DISCOUNT10') {
-      this.discount = this.getTotal() * 0.1;
-    } else {
-      this.discount = 0;
-    }
-  }
 
   placeOrder(): void {
     if (!this.billingDetails.firstName || !this.billingDetails.streetAddress || 
