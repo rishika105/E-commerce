@@ -1,12 +1,11 @@
-// product-details.component.ts
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
-import { Product, ProductService } from '../api services/product.service';
-import { WishlistService } from '../wishlist/wishlist.service';
-import { CartService } from '../cart/cart.service';
+import { Product, ProductService } from '../../api services/product.service';
+import { WishlistService } from '../../wishlist/wishlist.service';
+import { CartService } from '../../cart/cart.service';
 
 @Component({
   selector: 'app-product-details',

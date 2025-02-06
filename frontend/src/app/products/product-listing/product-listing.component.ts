@@ -1,11 +1,11 @@
-import { ProductService, Product } from './../api services/product.service';
-import { ProductCardComponent } from './../product-card/product-card.component';
+import { ProductService, Product } from '../../api services/product.service';
+import { ProductCardComponent } from '../product-card/product-card.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { WishlistService } from '../wishlist/wishlist.service';
+import { WishlistService } from '../../wishlist/wishlist.service';
 
 @Component({
   selector: 'app-product-listing',
@@ -18,7 +18,7 @@ export class ProductListingComponent implements OnInit {
   searchResults: Product[] = [];
   isSearchMode: boolean = false;
   searchTerm: string = '';
-  loading: boolean = true; // Start with loading set to true
+  loading: boolean = false; // Start with loading set to true
 
   constructor(
     private productService: ProductService,

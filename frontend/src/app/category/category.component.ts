@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Category, CategoryService } from '../api services/category.service';
 import { Product, ProductService } from '../api services/product.service';
 import { CartService } from '../cart/cart.service';
-import { ProductCardComponent } from '../product-card/product-card.component';
+import { ProductCardComponent } from '../products/product-card/product-card.component';
 import { WishlistService } from '../wishlist/wishlist.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -51,8 +51,8 @@ export class CategoryComponent implements OnInit {
 
   loadProducts(): void {
     this.productService.getProductsByCategory(this.categoryId).subscribe({
-      next: (products: Product[]) => {
-        this.products = products;
+      next: (response: any) => { // Change type to 'any' if response is wrapped in an object
+        this.products = response.products; // Extracting the array
       },
       error: (error) => {
         console.error('Error loading products:', error);
@@ -60,6 +60,7 @@ export class CategoryComponent implements OnInit {
       }
     });
   }
+
 
   onAddToCart(product: Product): void {
     this.cartService.addToCart(product);
