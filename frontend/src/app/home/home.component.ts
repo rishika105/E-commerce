@@ -7,7 +7,7 @@ import { Category, CategoryService } from '../api services/category.service';
 import { Product, ProductService } from '../api services/product.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { ProductCardComponent } from '../product-card/product-card.component';
+import { ProductCardComponent } from '../products/product-card/product-card.component';
 
 @Component({
   selector: 'app-home',

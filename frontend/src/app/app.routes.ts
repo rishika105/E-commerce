@@ -1,4 +1,4 @@
-import { ProductListingComponent } from './product-listing/product-listing.component';
+import { ProductListingComponent } from './products/product-listing/product-listing.component';
 import { SavedCardsComponent } from './dashboard/user-dashboard/saved-cards/saved-cards.component';
 import { SavedUPIComponent } from './dashboard/user-dashboard/saved-upi/saved-upi.component';
 import { ManageCategoryComponent } from './dashboard/admin-dashboard/manage-category/manage-category.component';
@@ -22,7 +22,7 @@ import { ResetPasswordComponent } from './auth/reset-password/reset-password.com
 import { AddProductComponent } from './dashboard/seller-dashboard/add-product/add-product.component';
 import { ManageProductsComponent } from './dashboard/seller-dashboard/manage-products/manage-products.component';
 import { CategoryComponent } from './category/category.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
+import { ProductDetailsComponent } from './products/product-details/product-details.component';
 import { CartComponent } from './cart/cart.component';
 import { StocksManagementComponent } from './dashboard/seller-dashboard/stock-management/stock-management.component';
 import { WishlistComponent } from './wishlist/wishlist.component';

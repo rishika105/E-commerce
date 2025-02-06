@@ -1,11 +1,12 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { CartService } from '../cart/cart.service';
-import { WishlistService } from '../wishlist/wishlist.service';
-import { Product } from '../api services/product.service';
+import { CartService } from '../../cart/cart.service';
+import { WishlistService } from '../../wishlist/wishlist.service';
+import { Product } from '../../api services/product.service';
 import { NgIconComponent } from '@ng-icons/core';
 import { ToastrService } from 'ngx-toastr';
+import { AuthService } from '../../api services/auth.service';
 
 @Component({
   selector: 'app-product-card',
@@ -20,10 +21,12 @@ export class ProductCardComponent implements OnInit {
 
   isWishlisted: boolean = false;
 
+
   constructor(
     private cartService: CartService,
     private wishlistService: WishlistService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+
   ) { }
 
   ngOnInit() {

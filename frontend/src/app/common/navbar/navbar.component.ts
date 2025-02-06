@@ -1,4 +1,4 @@
-import { ProductCardComponent } from './../../product-card/product-card.component';
+import { ProductCardComponent } from '../../products/product-card/product-card.component';
 import { Product, ProductService } from './../../api services/product.service';
 import { ToastrService } from 'ngx-toastr';
 import { Component, HostListener } from '@angular/core';
