@@ -38,11 +38,6 @@ export class ProductCardComponent implements OnInit {
     });
   }
 
-
-
-
-
-
   ngOnInit() {
     this.isWishlisted = this.wishlistService.isInWishlist(this.product.productId);
     this.wishlistService.getWishlistObservable().subscribe(() => {
@@ -73,6 +68,17 @@ export class ProductCardComponent implements OnInit {
   onAddToCart(event: Event): void {
     event.preventDefault();
     event.stopPropagation();
+
+     if(this.userRole === 'SELLER' || this.userRole === 'ADMIN'){
+      this.toastr.warning("Seller/Admin cannot add to cart");
+      return;
+    }
+
+    if(!this.isLoggedIn){
+      this.toastr.warning("Please login to add to cart");
+      return;
+    }
+    
     this.cartService.addToCart(this.product);
     this.toastr.success("Added to Cart");
   }
