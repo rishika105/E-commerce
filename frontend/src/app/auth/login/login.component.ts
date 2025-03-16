@@ -8,6 +8,8 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, of } from 'rxjs';
 
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,6 +21,8 @@ export class LoginComponent {
   loginForm: FormGroup;
   loading = false;
   loginError = false;
+  token = false;
+
 
   constructor(
     private fb: FormBuilder,
@@ -37,6 +41,14 @@ export class LoginComponent {
     this.store.select('auth').subscribe(authState => {
       this.loading = authState.loading;
     });
+
+    this.store.select('auth').subscribe(authState => {
+      this.token = authState.token;
+    });
+
+    if(this.token){
+      this.router.navigate(['/']);
+    }
   }
 
   onSubmitLogin() {
