@@ -1,7 +1,5 @@
 package com.ecom.models;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.*;
 
 @Entity
@@ -65,15 +63,5 @@ public class OrderItem {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public void setItemName(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setItemName'");
-    }
-
-    public void setItemPrice(BigDecimal bigDecimal) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setItemPrice'");
     }
 }
