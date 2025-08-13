@@ -1,0 +1,115 @@
+<div class="min-h-screen bg-gray-50 py-8">
+  <div class="container mx-auto px-4">
+    <p class="text-3xl font-medium mb-8 text-gray-800">Checkout</p>
+
+    <div class="flex flex-col lg:flex-row gap-8">
+      <!-- Billing Details Form -->
+      <div class="lg:w-2/3">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <p class="text-xl font-medium mb-6">Billing Details</p>
+          <form class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">First Name *</label>
+                <input type="text" [(ngModel)]="billingDetails.firstName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" name="firstName" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Company Name</label>
+                <input type="text" [(ngModel)]="billingDetails.company" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" name="company">
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Street Address *</label>
+              <input type="text" [(ngModel)]="billingDetails.streetAddress" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" name="streetAddress" required>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Apartment, suite, etc.</label>
+              <input type="text" [(ngModel)]="billingDetails.apartment" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" name="apartment">
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">City *</label>
+                <input type="text" [(ngModel)]="billingDetails.city" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" name="city" required>
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Phone *</label>
+                <input type="tel" [(ngModel)]="billingDetails.phone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" name="phone" required>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+              <input type="email" [(ngModel)]="billingDetails.email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" name="email" required>
+            </div>
+
+            <div class="flex items-center">
+              <input type="checkbox" id="save-info" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300 rounded" [(ngModel)]="billingDetails.saveInfo" name="save-info">
+              <label for="save-info" class="ml-2 text-sm text-gray-600">Save this information for next time</label>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Order Summary -->
+      <div class="lg:w-1/3">
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <p class="text-xl font-medium mb-6">Your Order</p>
+
+          <!-- Order Items -->
+          <div class="space-y-4 mb-6">
+            <div *ngFor="let item of cart" class="flex items-center justify-between py-4 border-b">
+              <div class="flex items-center">
+                <img [src]="item.imageUrl" [alt]="item.name" class="w-16 h-16 object-cover rounded-lg mr-4">
+                <div>
+                  <p class="font-medium text-gray-800">{{item.name}}</p>
+                  <p class="text-sm text-gray-500">Qty: {{item.quantity}}</p>
+                </div>
+              </div>
+              <span class="font-medium">{{item.price * item.quantity | currency:'INR':'symbol'}}</span>
+            </div>
+          </div>
+
+          <!-- Order Total -->
+          <div class="space-y-3 mb-6">
+            <div class="flex justify-between">
+              <span class="text-gray-600">Subtotal</span>
+              <span>{{getTotal() | currency:'INR':'symbol'}}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-600">Shipping</span>
+              <span class="text-green-600">Free</span>
+            </div>
+            <div class="flex justify-between border-t pt-3">
+              <span class="font-medium">Total</span>
+              <span class="font-medium text-xl text-red-600">{{getGrandTotal() | currency:'INR':'symbol'}}</span>
+            </div>
+          </div>
+
+
+
+          <!-- Payment Methods -->
+          <div class="space-y-4 mb-6">
+            <p class="font-medium text-2xl text-gray-800">Payment Method</p>
+            <div class="space-y-3">
+              <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="bank" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300">
+                <span class="ml-3">Bank Transfer</span>
+              </label>
+              <label class="flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50">
+                <input type="radio" name="payment" [(ngModel)]="paymentMethod" value="cod" class="h-4 w-4 text-red-600 focus:ring-red-500 border-gray-300">
+                <span class="ml-3">Cash on Delivery</span>
+              </label>
+            </div>
+          </div>
+
+          <button class="w-full py-4 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700 transition-colors" (click)="placeOrder()">
+            Place Order
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
