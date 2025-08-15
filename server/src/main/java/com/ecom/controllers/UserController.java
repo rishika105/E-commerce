@@ -66,8 +66,11 @@ public class UserController {
         // Store OTP with expiry time (2hrs)
         otpStorage.put(email, new OTP(otp, LocalDateTime.now().plusMinutes(120)));
 
+        String otpHtml = "<h2>Here is your one time password</h2>" +
+                "<p>OTP: <p>" + otp;
+
         // Send OTP to the email
-        emailSender.sendEmail(email, "Your OTP Code", "Your OTP code is: " + otp);
+        emailSender.sendEmail(email, "Send OTP success", otpHtml);
 
         // Successful OTP sending response
         response.put("status", "success");

@@ -10,11 +10,12 @@ import { heroCamera, heroCheckBadge, heroComputerDesktop, heroCurrencyDollar,
   import {heroHeartSolid, heroUserSolid, heroFolderSolid, heroWalletSolid, heroPowerSolid, heroFolderArrowDownSolid, heroChartBarSolid, heroSquaresPlusSolid,} from "@ng-icons/heroicons/solid"
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './common/navbar/navbar.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, FooterComponent, RouterLink, NgIconComponent, CommonModule, NavbarComponent],
+  imports: [RouterOutlet, FooterComponent, RouterLink, NgIconComponent, CommonModule, NavbarComponent, ReactiveFormsModule],
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
   viewProviders: [provideIcons({ heroUsers, heroPhone, heroEnvelope, heroCurrencyDollar, heroHome,

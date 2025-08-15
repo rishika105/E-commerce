@@ -8,8 +8,6 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError, of } from 'rxjs';
 
-
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

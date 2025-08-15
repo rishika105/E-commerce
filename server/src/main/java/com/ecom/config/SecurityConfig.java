@@ -48,7 +48,8 @@ public class SecurityConfig {
                                 "/api/products/allProducts",
                                 "/api/products/getById/**",
                                 "api/category/getCategorybyId/**",
-                                "api/products/search/**"
+                                "api/products/search/**",
+                                "api/contact"
                         ).permitAll()
                         .requestMatchers("/api/category/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER")
                         .requestMatchers("/api/products/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_SELLER")
