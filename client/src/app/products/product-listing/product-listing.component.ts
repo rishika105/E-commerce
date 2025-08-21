@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { WishlistService } from '../../wishlist/wishlist.service';
 
 @Component({
   selector: 'app-product-listing',
@@ -25,7 +24,7 @@ export class ProductListingComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private toastr: ToastrService,
-    private wishlistService: WishlistService
+
   ) {}
 
   ngOnInit(): void {
@@ -48,16 +47,17 @@ export class ProductListingComponent implements OnInit {
   searchProducts(searchTerm: string): void {
     this.loading = true; // Set loading true while fetching
     if (searchTerm.trim()) {
-      this.productService.searchProducts(searchTerm).subscribe(
-        (response: any) => {
-          this.searchResults = response.products;
-          this.loading = false; // Set loading false after data is fetched
-        },
-        (error) => {
-          console.error('Error fetching products:', error);
-          this.loading = false; // Set loading false even on error
-        }
-      );
+this.productService.searchProducts(searchTerm).subscribe({
+  next: (response: any) => {
+    this.searchResults = response.data;
+    // console.log(this.searchResults.length)
+    this.loading = false;
+  },
+  error: (error) => {
+    console.error('Error fetching products:', error);
+    this.loading = false;
+  }
+});
     } else {
       this.loading = false; // If searchTerm is empty, set loading false
     }
@@ -66,25 +66,18 @@ export class ProductListingComponent implements OnInit {
   // Get all products if no search term is provided
   getAllProducts(): void {
     this.loading = true; // Set loading true while fetching
-    this.productService.getAllProducts().subscribe(
-      (response: any) => {
-        this.searchResults = response.products;
-        this.loading = false; // Set loading false after data is fetched
-      },
-      (error) => {
-        console.error('Error fetching all products:', error);
-        this.loading = false; // Set loading false even on error
-      }
-    );
+   this.productService.getAllProducts().subscribe({
+  next: (response: any) => {
+    this.searchResults = response.data;
+    this.loading = false;
+  },
+  error: (error) => {
+    console.error('Error fetching all products:', error);
+    this.loading = false;
+  }
+});
+
   }
 
-  onAddToWishlist(product: Product): void {
-    this.wishlistService.addToWishlist(product);
-    this.toastr.success("Added to Wishlist");
-  }
 
-  onRemoveFromWishlist(product: Product): void {
-    this.wishlistService.removeFromWishlist(product.productId);
-    this.toastr.success("Removed from Wishlist");
-  }
 }

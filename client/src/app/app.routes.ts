@@ -23,10 +23,8 @@ import { AddProductComponent } from './dashboard/seller-dashboard/add-product/ad
 import { ManageProductsComponent } from './dashboard/seller-dashboard/manage-products/manage-products.component';
 import { CategoryComponent } from './category/category.component';
 import { ProductDetailsComponent } from './products/product-details/product-details.component';
-import { CartComponent } from './cart/cart.component';
 import { StocksManagementComponent } from './dashboard/seller-dashboard/stock-management/stock-management.component';
-import { WishlistComponent } from './wishlist/wishlist.component';
-import { CheckoutComponent } from './checkout/checkout.component';
+
 
 export const routes: Routes = [
   {
@@ -101,7 +99,7 @@ export const routes: Routes = [
       { path: 'address', component: AddressManagerComponent},
       {path: 'savedUPI', component: SavedUPIComponent},
       {path: 'savedCards', component: SavedCardsComponent},
-      {path: 'wishlist', component: WishlistComponent}
+      // {path: 'wishlist', component: WishlistComponent}
 
       // Add more routes here for other dashboard pages
     ],
@@ -116,26 +114,26 @@ export const routes: Routes = [
     path: 'product-details/:id',
     component: ProductDetailsComponent
   },
-  {
-    path: 'cart',
-    component: CartComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'checkout',
-    component: CheckoutComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'wishlist',
-    component: WishlistComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: 'cart',
-    component: CartComponent,
-    canActivate: [AuthGuard]
-  },
+  // {
+  //   path: 'cart',
+  //   component: CartComponent,
+  //   canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'checkout',
+  //   component: CheckoutComponent,
+  //   canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'wishlist',
+  //   component: WishlistComponent,
+  //   canActivate: [AuthGuard]
+  // },
+  // {
+  //   path: 'cart',
+  //   component: CartComponent,
+  //   canActivate: [AuthGuard]
+  // },
 
 
   // Default route

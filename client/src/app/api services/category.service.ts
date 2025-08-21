@@ -13,7 +13,6 @@ name: any;
   description: string;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -31,7 +30,7 @@ export class CategoryService {
       first(),
       map((authData) => {
         const token = authData?.token || (isPlatformBrowser(this.platformId) ? localStorage.getItem('token') : null) || '';
-        console.log('Token from store/localStorage:', token);
+        // console.log('Token from store/localStorage:', token);
         return token;
       })
     );

@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Category, CategoryService } from '../api services/category.service';
 import { Product, ProductService } from '../api services/product.service';
-import { CartService } from '../cart/cart.service';
 import { ProductCardComponent } from '../products/product-card/product-card.component';
-import { WishlistService } from '../wishlist/wishlist.service';
+
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -24,8 +23,6 @@ export class CategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private categoryService: CategoryService,
-    private cartService: CartService,
-    private wishlistService: WishlistService,
     private toastr: ToastrService
   ) {}
 
@@ -52,28 +49,12 @@ export class CategoryComponent implements OnInit {
   loadProducts(): void {
     this.productService.getProductsByCategory(this.categoryId).subscribe({
       next: (response: any) => { // Change type to 'any' if response is wrapped in an object
-        this.products = response.products; // Extracting the array
+        this.products = response.data; // Extracting the array
       },
       error: (error) => {
         console.error('Error loading products:', error);
         this.products = [];
       }
     });
-  }
-
-
-  onAddToCart(product: Product): void {
-    this.cartService.addToCart(product);
-    this.toastr.success("Added to Cart");
-  }
-
-  onAddToWishlist(product: Product): void {
-    this.wishlistService.addToWishlist(product);
-    this.toastr.success("Added to Wishlist");
-  }
-
-  onRemoveFromWishlist(product: Product): void {
-    this.wishlistService.removeFromWishlist(product.productId);
-    this.toastr.success("Removed from Wishlist");
   }
 }

@@ -9,13 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,20 +27,50 @@ public class ProductController {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @GetMapping("/allProducts")
+    private ResponseEntity<Map<String, Object>> createResponse(String message, Object data, HttpStatus status) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", message);
+        if (data != null) {
+            response.put("data", data);
+        }
+        return new ResponseEntity<>(response, status);
+    }
 
+    private ResponseEntity<Map<String, Object>> createErrorResponse(String message, String error, HttpStatus status) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", message);
+        response.put("error", error);
+        return new ResponseEntity<>(response, status);
+    }
+
+    @PostMapping(value = "/createProduct", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasRole('SELLER')")
+    public ResponseEntity<Map<String, Object>> createProduct(
+            @RequestPart("product") String productJson,
+            @RequestPart("image") MultipartFile image,
+            @AuthenticationPrincipal User user) {
+        try {
+            if (user == null) {
+                return createErrorResponse("Error creating product", "No authenticated user found", HttpStatus.UNAUTHORIZED);
+            }
+
+            Product product = objectMapper.readValue(productJson, Product.class);
+            product.setUser(user);
+            Product newProduct = productService.createProduct(product, image);
+
+            return createResponse("Product created successfully", newProduct, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return createErrorResponse("Error creating product", e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("/allProducts")
     public ResponseEntity<Map<String, Object>> getAllProducts() {
         try {
             List<Product> products = productService.getAllProducts();
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Products retrieved successfully");
-            response.put("products", products);  // Returning actual product list
-            return ResponseEntity.ok(response);
+            return createResponse("Products retrieved successfully", products, HttpStatus.OK);
         } catch (Exception e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Error retrieving products");
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return createErrorResponse("Error retrieving products", e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -51,67 +78,13 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> getProductById(@PathVariable Long id) {
         try {
             Product product = productService.getProductById(id);
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Product retrieved successfully");
-            response.put("product", product);
-            return ResponseEntity.ok(response);
+            return createResponse("Product retrieved successfully", product, HttpStatus.OK);
         } catch (Exception e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Error retrieving product");
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return createErrorResponse("Error retrieving product", e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping(value = "/createProduct", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
-    @PreAuthorize("hasRole('SELLER')")
-    public ResponseEntity<Map<String, Object>> createProduct(
-            @RequestPart(value = "product") String productJson,
-            @RequestPart("image") MultipartFile image,
-            @AuthenticationPrincipal User user) {
-        try {
-            // Add debug logging
-            System.out.println("Authentication Principal: " + user);
-            if (user != null) {
-                System.out.println("User ID: " + user.getId());
-                System.out.println("User Email: " + user.getEmail());
-                System.out.println("User Roles: " + user.getAuthorities());
-            } else {
-                System.out.println("User is null!");
-                // Get the current authentication object for debugging
-                Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-                System.out.println("Current Authentication: " + auth);
-                if (auth != null) {
-                    System.out.println("Auth Principal: " + auth.getPrincipal());
-                    System.out.println("Auth Authorities: " + auth.getAuthorities());
-                }
-            }
-            if (user == null) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("message", "Error creating product");
-                response.put("error", "No authenticated user found");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
-            }
-            Product product = objectMapper.readValue(productJson, Product.class);
-            product.setUser(user);  // Make sure user is set here
-            Product newProduct = productService.createProduct(product, image);
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Product created successfully");
-            response.put("product", newProduct);
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-
-        } catch (Exception e) {
-            System.out.println("Exception occurred: " + e.getMessage());
-            e.printStackTrace();
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Error creating product");
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        }
-    }
-
-    @PutMapping(value = "/updateProduct/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    @PutMapping(value = "/updateProduct/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasRole('SELLER')")
     public ResponseEntity<Map<String, Object>> updateProduct(@PathVariable Long id,
                                                              @RequestPart("product") String productJson,
@@ -121,26 +94,16 @@ public class ProductController {
 
             // Validate category and stock
             if (productDetails.getCategory() == null || productDetails.getCategory().getCategoryId() == null) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("message", "Category ID must not be null");
-                return ResponseEntity.badRequest().body(response);
+                return createErrorResponse("Category ID must not be null", null, HttpStatus.BAD_REQUEST);
             }
             if (productDetails.getStock() < 0) {
-                Map<String, Object> response = new HashMap<>();
-                response.put("message", "Stock cannot be negative");
-                return ResponseEntity.badRequest().body(response);
+                return createErrorResponse("Stock cannot be negative", null, HttpStatus.BAD_REQUEST);
             }
 
             Product updatedProduct = productService.updateProduct(id, productDetails, image);
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Product updated successfully");
-            response.put("product", updatedProduct);
-            return ResponseEntity.ok(response);
+            return createResponse("Product updated successfully", updatedProduct, HttpStatus.OK);
         } catch (Exception e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Error updating product");
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return createErrorResponse("Error updating product", e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -149,19 +112,11 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> updateStock(@PathVariable Long id, @RequestParam int quantity) {
         try {
             Product updatedProduct = productService.updateStock(id, quantity);
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Stock updated successfully");
-            response.put("product", updatedProduct);
-            return ResponseEntity.ok(response);
+            return createResponse("Stock updated successfully", updatedProduct, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", e.getMessage());
-            return ResponseEntity.badRequest().body(response);
+            return createErrorResponse(e.getMessage(), null, HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Error updating stock");
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+            return createErrorResponse("Error updating stock", e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -170,37 +125,29 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProduct(id);
-            return ResponseEntity.noContent().build();  // No content needed for delete
+            return ResponseEntity.noContent().build();
         } catch (Exception e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Error deleting product");
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return createErrorResponse("Error deleting product", e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @GetMapping("/search")
     public ResponseEntity<Map<String, Object>> searchProducts(@RequestParam String keyword) {
-        List<Product> products = productService.searchProducts(keyword);
-        Map<String, Object> response = new HashMap<>();
-        response.put("message", "Search completed successfully");
-        response.put("products", products);
-        return ResponseEntity.ok(response);
+        try {
+            List<Product> products = productService.searchProducts(keyword);
+            return createResponse("Search completed successfully", products, HttpStatus.OK);
+        } catch (Exception e) {
+            return createErrorResponse("Error searching products", e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<Map<String, Object>> getProductsByCategory(@PathVariable Long categoryId) {
         try {
             List<Product> products = productService.getProductsByCategory(categoryId);
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Products retrieved successfully");
-            response.put("products", products);
-            return ResponseEntity.ok(response);
+            return createResponse("Products retrieved successfully", products, HttpStatus.OK);
         } catch (Exception e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Error retrieving products");
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return createErrorResponse("Error retrieving products", e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -209,16 +156,9 @@ public class ProductController {
     public ResponseEntity<Map<String, Object>> getProductsBySeller(@PathVariable Long userId) {
         try {
             List<Product> products = productService.getProductsBySeller(userId);
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Products retrieved successfully");
-            response.put("products", products);
-            return ResponseEntity.ok(response);
+            return createResponse("Products retrieved successfully", products, HttpStatus.OK);
         } catch (Exception e) {
-            Map<String, Object> response = new HashMap<>();
-            response.put("message", "Error retrieving products");
-            response.put("error", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return createErrorResponse("Error retrieving products", e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
 }

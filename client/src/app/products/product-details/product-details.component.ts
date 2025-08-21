@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { switchMap, catchError } from 'rxjs/operators';
 import { Product, ProductService } from '../../api services/product.service';
-import { WishlistService } from '../../wishlist/wishlist.service';
-import { CartService } from '../../cart/cart.service';
 
 @Component({
   selector: 'app-product-details',
@@ -20,8 +18,7 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private wishlistService: WishlistService,
-    private cartService: CartService
+
   ) {
     this.product$ = this.route.params.pipe(
       switchMap(params => {
@@ -40,16 +37,5 @@ export class ProductDetailsComponent implements OnInit {
     // Product loading is handled by the product$ observable
   }
 
-  addToCart(product: Product): void {
-    this.cartService.addToCart(product);
-    // Optional: Add user feedback/notification here
-  }
-
-  addToWishlist(product: Product): void {
-    this.wishlistService.addToWishlist(product);
-  }
-
-  removeFromWishlist(productId: number): void {
-    this.wishlistService.removeFromWishlist(productId);
-  }
+  
 }

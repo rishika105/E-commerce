@@ -9,14 +9,19 @@
 ></app-confirmation-modal>
 
 <div class="container mx-auto px-4 py-8" *ngIf="!loading">
-  <p class="text-2xl font-medium mb-6 text-black-800 text-center">Manage Categories</p>
-
+  <p class="text-2xl font-medium mb-6 text-black-800 text-center">
+    Manage Categories
+  </p>
 
   <div class="bg-white p-6 rounded-lg shadow-md">
-
     <ul class="divide-y divide-gray-200">
-      <li *ngFor="let category of categories" class="py-4 flex justify-between items-center">
-        <ng-container *ngIf="editingCategory?.id !== category.id; else editForm">
+      <li
+        *ngFor="let category of categories"
+        class="py-4 flex justify-between items-center"
+      >
+        <ng-container
+          *ngIf="editingCategory?.id !== category.id; else editForm"
+        >
           <span class="text-black-800">{{ category.categoryName }}</span>
           <div class="flex gap-2">
             <button
@@ -60,8 +65,10 @@
     </ul>
   </div>
 
-<!-- Loading -->
-<div *ngIf="loading" class="mt-[150px] mb-[150px] mx-auto loader">
-  <p>Loading...</p>
-</div>
+  <!-- Loading -->
+  @if(loading){
+  <div class="mt-[150px] mb-[150px] mx-auto loader">
+    <p>Loading...</p>
+  </div>
+  }
 </div>

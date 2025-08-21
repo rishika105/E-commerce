@@ -41,11 +41,9 @@ public class ProductService {
 
     @Transactional
     public Product createProduct(Product product, MultipartFile image) throws IOException {
-        if (product.getCategory() == null || product.getCategory().getCategoryId() == null) {
-            throw new IllegalArgumentException("Category ID must not be null");
-        }
+        validateProduct(product);
 
-        // Ensure the category exists and is managed by the persistence context
+        // Set category from database
         Category category = categoryRepository.findById(product.getCategory().getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("Category not found with id: " + product.getCategory().getCategoryId()));
         product.setCategory(category);
@@ -54,48 +52,39 @@ public class ProductService {
         String imageUrl = cloudinaryService.uploadImage(image);
         product.setImageUrl(imageUrl);
 
-        // Set creation and update times
+        // Set timestamps
         LocalDateTime now = LocalDateTime.now();
         product.setCreatedAt(now);
         product.setUpdatedAt(now);
 
-        // Ensure stock is not negative
-        if (product.getStock() < 0) {
-            throw new IllegalArgumentException("Stock cannot be negative");
-        }
-
-        // Save the product
         return productRepository.save(product);
     }
 
     @Transactional
     public Product updateProduct(Long id, Product productDetails, MultipartFile image) throws Exception {
         Product product = getProductById(id);
+        validateProduct(productDetails);
+
+        // Update fields
         product.setName(productDetails.getName());
         product.setDescription(productDetails.getDescription());
         product.setPrice(productDetails.getPrice());
         product.setStock(productDetails.getStock());
+        product.setBrandName(productDetails.getBrandName());
 
-        if (productDetails.getCategory() == null || productDetails.getCategory().getCategoryId() == null) {
-            throw new IllegalArgumentException("Category ID must not be null");
-        }
-
+        // Set category from database
         Category category = categoryRepository.findById(productDetails.getCategory().getCategoryId())
                 .orElseThrow(() -> new IllegalArgumentException("Category not found with id: " + productDetails.getCategory().getCategoryId()));
         product.setCategory(category);
 
+        // Update image if provided
         if (image != null && !image.isEmpty()) {
             String imageUrl = cloudinaryService.uploadImage(image);
             product.setImageUrl(imageUrl);
         }
 
-        // Update the update time
+        // Update timestamp
         product.setUpdatedAt(LocalDateTime.now());
-
-        // Ensure stock is not negative
-        if (product.getStock() < 0) {
-            throw new IllegalArgumentException("Stock cannot be negative");
-        }
 
         return productRepository.save(product);
     }
@@ -104,11 +93,14 @@ public class ProductService {
     public Product updateStock(Long id, int quantity) throws Exception {
         Product product = getProductById(id);
         int newStock = product.getStock() + quantity;
+
         if (newStock < 0) {
             throw new IllegalArgumentException("Stock cannot be negative");
         }
+
         product.setStock(newStock);
         product.setUpdatedAt(LocalDateTime.now());
+
         return productRepository.save(product);
     }
 
@@ -123,9 +115,20 @@ public class ProductService {
     public List<Product> getProductsByCategory(Long categoryId) {
         return productRepository.findByCategoryCategoryId(categoryId);
     }
+
     public List<Product> getProductsBySeller(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
         return productRepository.findByUser(user);
+    }
+
+    private void validateProduct(Product product) {
+        if (product.getCategory() == null || product.getCategory().getCategoryId() == null) {
+            throw new IllegalArgumentException("Category ID must not be null");
+        }
+
+        if (product.getStock() < 0) {
+            throw new IllegalArgumentException("Stock cannot be negative");
+        }
     }
 }

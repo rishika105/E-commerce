@@ -11,6 +11,7 @@ export interface Product {
   price: number;
   description: string;
   stock: number;
+  brandName: string;
   category: {
     categoryId: number;
     categoryName: string;

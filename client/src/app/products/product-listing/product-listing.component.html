@@ -13,8 +13,7 @@
   <!-- Show product cards only if search results exist -->
   <div *ngIf="searchResults.length > 0; else noResults" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <app-product-card *ngFor="let product of searchResults" [product]="product"
-     (addToWishlist)="onAddToWishlist($event)"
-    (removeFromWishlist)="onRemoveFromWishlist($event)"></app-product-card>
+  ></app-product-card>
   </div>
 </div>
 

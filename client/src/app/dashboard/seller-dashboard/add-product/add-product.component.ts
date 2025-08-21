@@ -39,6 +39,7 @@ export class AddProductComponent implements OnInit {
       description: ['', Validators.required],
       price: ['', [Validators.required, Validators.min(0)]],
       stock: ['', [Validators.required, Validators.min(0)]],
+      brandName: ['', Validators.required],
       categoryId: ['', Validators.required],
     });
   }
@@ -71,6 +72,7 @@ export class AddProductComponent implements OnInit {
             description: product.description,
             price: product.price,
             stock: product.stock,
+            brandName: product.brandName,
             categoryId: product.category?.categoryId
           });
 
